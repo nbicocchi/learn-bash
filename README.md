@@ -6,7 +6,7 @@ e le principali system calls.
 ## Come usare il materiale ##
 L'intero materiale puo' essere scaricato con il comando seguente:
 
-* git clone https://agresearch@bitbucket.org/agr_unimore/operatingsystemsbsc.git
+* git clone https://github.com/nbicocchi/operatingsystemsbsc.git
 
 Il materiale puo' essere aggiornato e/o corretto durante lo svolgimento del corso.
 Per scaricare la versione piu' recente, entrare nella cartella del materiale e
