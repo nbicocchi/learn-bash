@@ -12,7 +12,7 @@ Il materiale puo' essere aggiornato e/o corretto durante lo svolgimento del cors
 Per scaricare la versione piu' recente, entrare nella cartella del materiale e
 digitare il comando seguente:
 
-* $ git pull
+* $ git pull (in caso di errori: git reset --hard; git pull)
 
 ## Moduli (Bash) ##
 
