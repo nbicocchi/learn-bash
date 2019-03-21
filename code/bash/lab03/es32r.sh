@@ -23,11 +23,11 @@ if [ ! -f "$2".2 -o ! -r "$2".2 ]; then
 fi
 
 # check lines and chars
-f1l=$(wc -l "$2".1)
-f1c=$(wc -c "$2".1)
+f1l=$(cat "$2".1 | wc -l)
+f1c=$(cat "$2".1 | wc -c)
 
-f2l=$(wc -l "$2".2)
-f2c=$(wc -c "$2".2)
+f2l=$(cat "$2".2 | wc -l)
+f2c=$(cat "$2".2 | wc -c)
 
 if [ "$f1l" -eq "$f2l" -a "$f1c" -eq "$f2c" ]; then
   echo $(pwd)
