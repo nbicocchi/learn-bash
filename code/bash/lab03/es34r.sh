@@ -20,7 +20,7 @@ for fname in *; do
   fi
     
   # check size
-  size=$(cat "$fname" | wc -c)
+  size=$(wc -c "$fname")
   if [ $(expr $size % 2) -ne 0 ]; then
     continue
   fi
