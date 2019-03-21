@@ -20,6 +20,6 @@ if [ ! -d "$1" -o ! -x "$1" ]; then
 fi
 
 export PATH=$(pwd):$PATH
-es43r.sh $*
+es32r.sh $*
 
 exit 0

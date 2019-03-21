@@ -244,7 +244,7 @@ http://tldp.org/HOWTO/Bash-Prog-Intro-HOWTO.html
 29. Creare lo script test.sh contenente la sola linea #!/bin/bash. A cosa serve questa linea?
 
 	```
-	$ echo "#!/bin/sh" > script.sh
+	$ echo '#!/bin/sh' > script.sh
 	```
 
 	Approfondimento: La linea #!/bin/sh definisce il percorso dell'interprete dei comandi 
