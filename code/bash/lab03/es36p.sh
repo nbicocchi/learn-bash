@@ -23,8 +23,9 @@ expr "$2" + 0 > /dev/null 2>&1
 case $? in
   0) ;; # result != 0
   1) ;; # result == 0
-  2) echo "$USAGE"; exit 1;; # syntax error, es. K='+'
-  3) echo "$USAGE"; exit 1;; # non-numeric argument, es. K='a'
+  2) echo "$USAGE"; 
+     exit 1
+     ;;
 esac
 
 if [ "$2" -le 0 ]; then
