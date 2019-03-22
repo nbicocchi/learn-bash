@@ -16,7 +16,7 @@ done
 match=N
 for fname in *; do
   if [ -f "$fname" -a -r "$fname" ]; then
-    lines=$(cat "$fname" | wc -l)
+    lines=$(wc -l < "$fname")
     if [ $lines -eq $2 ]; then
       match=Y
       sort "$fname" > "$fname".sort
