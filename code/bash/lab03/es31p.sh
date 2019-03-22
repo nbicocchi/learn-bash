@@ -23,5 +23,6 @@ echo "0" > /tmp/maxlevel
 export PATH=$(pwd):$PATH
 es31r.sh "$1" 0
 echo "max depth: $(cat /tmp/maxlevel)"
+rm -rf /tmp/maxlevel
 
 exit 0
