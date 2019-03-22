@@ -20,23 +20,13 @@ for fname in *; do
   fi
     
   if [ $(wc -l < "$fname") -eq $2 ]; then
-    echo $(pwd)
+    if [ "$match" == "N" ]; then
+      echo $(pwd)
+    fi
     match=Y
-    break
+    sort "$fname" > "$fname".sort
   fi
 done
     
-if [ "$match" == "Y" ]; then
-  for fname in *; do
-    if [ ! -f "$fname" -o ! -r "$fname" ]; then
-      continue
-    fi
-    
-    if [ $(wc -l < "$fname") -eq $2 ]; then
-      sort "$fname" > "$fname".sort
-    fi
-  done
-fi
-
 exit 0
 
