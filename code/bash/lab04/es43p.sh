@@ -10,18 +10,18 @@ fi
 case "$1" in 
   /*) ;;
   *) echo "$USAGE"
-     exit 1
-    ;;
+     exit 2
+     ;;
 esac
 
 if [ ! -d "$1" -o ! -x "$1" ]; then
   echo "$USAGE"
-  exit 1
+  exit 3
 fi
 
 case "$2" in
   */*) echo "$USAGE"
-       exit 1
+       exit 4
        ;;
   *) ;;
 esac
@@ -33,7 +33,7 @@ es43r.sh $*
 
 count=0
 if [ -f "/tmp/flist" ]; then
-  count=$(cat /tmp/flist | wc -l)
+  count=$(wc -l < /tmp/flist)
 fi
 
 echo "dirs created: $(expr 2 \* $count)"

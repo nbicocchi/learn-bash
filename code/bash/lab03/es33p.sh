@@ -11,26 +11,26 @@ fi
 case "$1" in
 	/*) ;;
 	*) echo "$USAGE"
-	   exit 1
+	   exit 2
 	   ;;
 esac
 
 if [ ! -d "$1" -o ! -x "$1" ]; then
 	echo "$USAGE"
-	exit 1
+	exit 3
 fi
 
 case "$2" in
 	[0-9]) ;;
 	*) echo "$USAGE"
-	   exit 1
+	   exit 4
 	   ;;
 esac
 
 case "$2" in
 	[0-9]) ;;
 	*) echo "$USAGE"
-	   exit 1
+	   exit 5
 	   ;;
 esac
 

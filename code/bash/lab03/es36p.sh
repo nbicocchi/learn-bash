@@ -10,13 +10,13 @@ fi
 case "$1" in 
   /*) ;;
   *) echo "$USAGE"
-     exit 1
+     exit 2
      ;;
 esac
 
 if [ ! -d "$1" -o ! -x "$1" ]; then
   echo "$USAGE"
-  exit 1
+  exit 3
 fi
 
 expr "$2" + 0 > /dev/null 2>&1
@@ -24,13 +24,13 @@ case $? in
   0) ;; # result != 0
   1) ;; # result == 0
   2) echo "$USAGE"; 
-     exit 1
+     exit 4
      ;;
 esac
 
 if [ "$2" -le 0 ]; then
   echo "$USAGE"
-  exit 1
+  exit 5
 fi
 
 export PATH=$(pwd):$PATH

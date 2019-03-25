@@ -23,7 +23,7 @@ echo "absolute current path -> " $(pwd) >> $TMPFILE
 
 for file in *; do
   if [ -f "$file" ]; then
-    echo "[F] " "$file" "l=" $(cat "$file" | wc -l) "c=" $(cat "$file" | wc -c) 
+    echo "[F] " "$file" "l=" $(wc -l < "$file") "c=" $(wc -c < "$file") 
   fi
 done
 

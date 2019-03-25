@@ -10,13 +10,13 @@ fi
 case "$1" in
   /*) ;;
   *)  echo "$USAGE"
-      exit 1
+      exit 2
       ;;
 esac
 
 if [ ! -d "$1" -o ! -x "$1" ]; then
   echo "$USAGE"
-  exit 1
+  exit 3
 fi
 
 echo "0" > /tmp/maxlevel

@@ -12,20 +12,20 @@ fi
 case "$1" in 
   /*) ;;
   *) echo "$USAGE"
-     exit 1
+     exit 2
     ;;
 esac
 
 # check if path is a directory and executable
 if [ ! -d "$1" -o ! -x "$1" ]; then
   echo "$USAGE"
-  exit 1
+  exit 3
 fi
 
 # check relative path
 case "$2" in
   */*) echo "$USAGE"
-       exit 1
+       exit 4
        ;;
   *) ;;
 esac
@@ -35,14 +35,15 @@ expr "$3" + 0 >/dev/null 2>&1
 case $? in
   0) ;; # result != 0
   1) ;; # result == 0
-  2) echo "$USAGE"; exit 1;; # syntax error, es. K='+'
-  3) echo "$USAGE"; exit 1;; # non-numeric argument, es. K='a'
+  2) echo "$USAGE"; 
+     exit 5
+     ;; 
 esac
 
 # check number greater than 0 (man test for other options)
 if [ "$3" -le 0 ]; then
   echo "$USAGE"
-  exit 1
+  exit 6
 fi
 
 # needed for global aggregates
@@ -55,7 +56,7 @@ FCR.sh $*
 # global aggregates computation
 count=0
 if [ -f "/tmp/flist" ]; then
-  count=$(cat /tmp/flist | wc -l)
+  count=$(wc -l < /tmp/flist)
 fi
 echo "found: "$count" files!"
 

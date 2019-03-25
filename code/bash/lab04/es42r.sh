@@ -27,7 +27,7 @@ rm -rf "$SUMFILE" >/dev/null 2>&1
 count=0
 for file in *; do
   if [ -f "$file" ]; then
-    if [ $(cat "$file" | wc -c) -gt "$3" ]; then
+    if [ $(wc -c < "$file") -gt "$3" ]; then
       if [ "$count" -eq 0 ]; then
         echo $(pwd)
       fi 

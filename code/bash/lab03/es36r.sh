@@ -22,8 +22,8 @@ for fname in *; do
   if [ $(wc -l < "$fname") -eq $2 ]; then
     if [ "$match" == "N" ]; then
       echo $(pwd)
+      match=Y
     fi
-    match=Y
     sort "$fname" > "$fname".sort
   fi
 done

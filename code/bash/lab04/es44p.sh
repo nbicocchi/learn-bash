@@ -14,13 +14,13 @@ for dname in $*; do
   case "$dname" in 
     /*) ;;
     *) echo "$USAGE"
-       exit 1
+       exit 2
        ;;
   esac
 
   if [ ! -d "$dname" -o ! -x "$dname" ]; then
     echo "$USAGE"
-    exit 1
+    exit 3
   fi
 done
 
@@ -34,14 +34,14 @@ for dname in $*; do
   
   n=0
   if [ -f /tmp/plist ]; then
-    n=$(cat /tmp/plist | wc -l)
+    n=$(wc -l < /tmp/plist)
   fi
   echo "[""$dname""]: $n"
 done 
 
 n=0
 if [ -f /tmp/flist ]; then
-  n=$(cat /tmp/flist | wc -l)
+  n=$(wc -l < /tmp/flist)
 fi
 echo "[full search]: $n"
 

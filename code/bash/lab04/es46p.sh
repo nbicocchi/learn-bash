@@ -14,26 +14,26 @@ expr "$n" + 0 >/dev/null 2>&1
 case $? in
   [0-1]) ;; 
   *) echo "$USAGE" 
-     exit 1
+     exit 2
      ;; 
 esac
 
 if [ "$n" -le 0 ]; then
   echo "$USAGE"
-  exit 1
+  exit 3
 fi
 
 for dname in $*; do
   case "$dname" in 
     /*) ;;
     *) echo "$USAGE"
-       exit 1
+       exit 4
        ;;
   esac
 
   if [ ! -d "$dname" -o ! -x "$dname" ]; then
     echo "$USAGE"
-    exit 1
+    exit 5
   fi
 done
 
@@ -44,7 +44,7 @@ for dname in $*; do
   es46r.sh "$dname" "$n"
 done
 
-echo "files created: $(cat /tmp/flist | wc -l)"
+echo "files created: $(wc -l < /tmp/flist)"
 for fname in $(cat /tmp/flist); do
   case "$fname" in 
     *noline) content="empty"

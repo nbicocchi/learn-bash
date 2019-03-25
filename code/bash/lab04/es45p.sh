@@ -12,7 +12,7 @@ shift
 
 case "$d" in 
   /*) echo "$USAGE"
-      exit 1
+      exit 2
       ;;
   *) ;;
 esac
@@ -21,13 +21,13 @@ for dname in $*; do
   case "$dname" in 
     /*) ;;
     *) echo "$USAGE"
-       exit 1
+       exit 3
        ;;
   esac
 
   if [ ! -d "$dname" -o ! -x "$dname" ]; then
     echo "$USAGE"
-    exit 1
+    exit 4
   fi
 done
 
@@ -38,7 +38,7 @@ for dname in $*; do
   es45r.sh "$dname" "$d"
 done
 
-echo "files created: $(cat /tmp/flist | wc -l)"
+echo "files created: $(wc -l < /tmp/flist)"
 for fname in $(cat /tmp/flist); do
   case "$fname" in 
     *noline) content="empty"
