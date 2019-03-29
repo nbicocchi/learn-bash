@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # $1 contains current dir
-# $2 contains dirname (simple)
+# $2 contains dirname (relative simple)
 # $3 contains phase (A/B)
 
 cd "$1"

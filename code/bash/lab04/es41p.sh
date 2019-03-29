@@ -27,7 +27,11 @@ case "$2" in
 esac
 
 export PATH=$(pwd):$PATH
-es41r.sh $* A
+for file in "$1"/*; do
+  if [ -d "$file" -a -x "$file" ]; then
+    es41r.sh "$file" "$2" A
+  fi
+done
 
 echo "Create missing folders (y/n)? "
 read ans
