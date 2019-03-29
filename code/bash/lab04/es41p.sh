@@ -1,44 +1,65 @@
 #!/bin/bash
 
-USAGE="usage: $0 dirname(abs) dirname(rel)"
+# Ho scelto bash...
+
+USAGE="usage: $0 dirname(abs) name(rel)"
 
 if [ $# -ne 2 ]; then
-  echo "$USAGE"
-  exit 1
+	echo "$USAGE"
+	exit 1
 fi
 
-case "$1" in 
-  /*) ;;
-  *) echo "$USAGE"
-     exit 2
-     ;;
+case "$1" in
+	/*) ;;
+	*) echo "$USAGE"
+	   exit 2
+	   ;;
 esac
 
 if [ ! -d "$1" -o ! -x "$1" ]; then
-  echo "$USAGE"
-  exit 3
+	echo "$USAGE"
+	exit 3
 fi
 
 case "$2" in
-  */*) echo "$USAGE"
-       exit 4
-       ;;
-  *) ;;
+	*/*) echo "$USAGE"
+		 exit 4
+		 ;;
+	*) ;;
 esac
 
-export PATH=$(pwd):$PATH
-for file in "$1"/*; do
-  if [ -d "$file" -a -x "$file" ]; then
-    es41r.sh "$file" "$2" A
-  fi
+export PATH=$(pwd):"$PATH"
+
+echo "phase A..."
+for fname in "$1"/*; do
+	if [ -d "$fname" -a -x "$fname" ]; then
+		testr.sh "$fname" $2 A
+	fi
 done
 
-echo "Create missing folders (y/n)? "
+echo -n "Continue with phase B (Y/N)? "
 read ans
+case "$ans" in
+	Y|y) ;;
+	N|n) exit 0
+		 ;;
+esac
 
-if [ "$ans" == "y" ]; then
-  es41r.sh $* B
-  es41r.sh $* A
-fi
+echo "phase B..."
+for fname in "$1"/*; do
+	if [ -d "$fname" -a -x "$fname" ]; then
+		testr.sh "$fname" $2 B
+	fi
+done
+
+echo "phase A..."
+for fname in "$1"/*; do
+	if [ -d "$fname" -a -x "$fname" ]; then
+		testr.sh "$fname" $2 A
+	fi
+done
 
 exit 0
+
+
+
