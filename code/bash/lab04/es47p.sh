@@ -29,20 +29,20 @@ rm -rf /tmp/flist >/dev/null 2>&1
 
 export PATH=$(pwd):$PATH
 for dname in $*; do
-  rm -rf /tmp/plist >/dev/null 2>&1
-  es44r.sh "$dname" "$fname"
+  es47r.sh "$dname" "$fname"
+done
   
-  n=0
-  if [ -f /tmp/plist ]; then
-    n=$(wc -l < /tmp/plist)
-  fi
-  echo "[""$dname""]: $n"
-done 
-
-n=0
 if [ -f /tmp/flist ]; then
-  n=$(wc -l < /tmp/flist)
+  echo "files found: $(wc -l < /tmp/flist)"
 fi
-echo "[full search]: $n"
+
+for line in $(cat /tmp/flist); do
+  fname=$(echo "$line" | cut -d ";" -f 1)
+  nlines=$(echo "$line" | cut -d ";" -f 2)
+  if [ $nlines -gt 5 ]; then
+    echo "$fname" "[lines="$nlines"]" "[last line]"
+    tail -n 1 "$fname"
+  fi
+done
 
 exit 0
