@@ -9,7 +9,7 @@ cd "$1"
 # recursion
 for fname in *; do
   if [ -d "$fname" -a -x "$fname" ]; then
-    $0 "$fname" "$2" "$3"
+    "$0" $(pwd)/"$fname" "$2" "$3"
   fi
 done
 

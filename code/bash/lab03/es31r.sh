@@ -8,7 +8,7 @@ cd "$1"
 # recursion
 for file in *; do
   if [ -d "$file" -a -x "$file" ]; then
-    $0 "$file" $(expr $2 + 1)
+    "$0" $(pwd)/"$file" $(expr $2 + 1)
   fi
 done
 
