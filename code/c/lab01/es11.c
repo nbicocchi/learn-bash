@@ -29,7 +29,7 @@ int main(int argc, char **argv) {
 	fprintf(stdout, "Hello World!\n");
 
 	char buffer[1024];
-        memset(buffer, 0, 1024);
+	memset(buffer, 0, 1024);
 	snprintf(buffer, sizeof(buffer), "Hello World!\n");
 	write(1, buffer, strlen(buffer));
 

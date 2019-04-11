@@ -1,0 +1,39 @@
+CC=gcc
+CFLAGS=-Wall -I../utils/
+HEADERS=../utils/utils.h
+LIBS=../utils/utils.c
+BINS=es11 es12 es13 es14 es15 es16 es17 es18 es19
+
+all: $(BINS)
+	
+
+clean:
+	rm -rf *.o $(BINS)
+
+es11: es11.c $(LIBS) $(HEADERS)
+	$(CC) $(CFLAGS) $(LIBS) es11.c  -o es11
+
+es12: es12.c $(LIBS) $(HEADERS)
+	$(CC) $(CFLAGS) $(LIBS) es12.c  -o es12
+
+es13: es13.c $(LIBS) $(HEADERS)
+	$(CC) $(CFLAGS) $(LIBS) es13.c  -o es13
+
+es14: es14.c $(LIBS) $(HEADERS)
+	$(CC) $(CFLAGS) $(LIBS) es14.c  -o es14
+
+es15: es15.c $(LIBS) $(HEADERS)
+	$(CC) $(CFLAGS) $(LIBS) es15.c  -o es15
+
+es16: es16.c $(LIBS) $(HEADERS)
+	$(CC) $(CFLAGS) $(LIBS) es16.c  -o es16
+
+es17: es17.c $(LIBS) $(HEADERS)
+	$(CC) $(CFLAGS) $(LIBS) es17.c  -o es17
+
+es18: es18.c $(LIBS) $(HEADERS)
+	$(CC) $(CFLAGS) $(LIBS) es18.c  -o es18
+
+es19: es19.c $(LIBS) $(HEADERS)
+	$(CC) $(CFLAGS) $(LIBS) es19.c  -o es19
+

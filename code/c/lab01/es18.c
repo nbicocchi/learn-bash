@@ -5,64 +5,50 @@
 #include <unistd.h>
 #include "utils.h"
 
-/* Reads a char from a file
- * @param filename, name of the file
- * @param index, index of the char to be read
- * @param side, side of the file (SEEK_SET, SEEK_END)
- */ 
-char read_char(char *filename, int index, int side) {
-    char c;
-    int nr;
-    int fd;
-    
-    /* apertura file */
-    if ((fd = open(filename, O_RDONLY)) < 0) {
-        zprintf(2, "error: open()\n");
-        exit(1);
-    }
-    
-    /* spostamento all'interno del file */
-    if (side == SEEK_SET) {
-        lseek(fd, (long) index, SEEK_SET);
-    } else if (side == SEEK_END) {
-        lseek(fd, -(long) (index + 1), SEEK_END);
-    }
-    
-    /* lettura di un byte */
-    nr = read(fd, &c, 1);
-    if (nr != 1) {
-        zprintf(2, "error: read()\n");
-        exit(1);
-    }
-    
-    /* chiusura file */
-    close(fd);
-    
-    return c;
-}
-
 int main (int argc, char **argv) {
-    char *usage = "usage: %s f1 .. fn (n must be even)\n";
-    char c;
-    int i;
+    char c, *usage = "usage: %s f1 .. fn (n must be even)\n";
+    int i, n, *fd;
     
-    if (argc < 2) {
+    /* checking command line parameters */
+    if (argc < 2 || (argc - 1) % 2 != 0) {
         zprintf(2, usage, argv[0]);
         exit(1);
     }
-    
-    if (((argc - 1) % 2) != 0) {
-        zprintf(2, usage, argv[0]);
+
+    /* allocating array for file descriptors */
+    fd = (int *)malloc((argc - 1) * sizeof(int));
+    if (fd == NULL) {
+        zprintf(2, "error: malloc()\n");
         exit(1);
     }
+
+    /* opening files */
+    for (i = 1; i < argc; i++) {
+        if ((fd[i - 1] = open(argv[i], O_RDONLY)) < 0) {
+            zprintf(2, "error: open()\n");
+            exit(1);
+        }
+    }
     
+    /* reading chars */
     for (i = 0; i < (argc - 1) / 2; i++) {
-        c = read_char(argv[i + 1], i , SEEK_SET);
+        lseek(fd[i], (long) i, SEEK_SET);
+        n = read(fd[i], &c, 1);
+        if (n != 1) break;
         write(1, &c, 1);
-        
-        c = read_char(argv[argc - i - 1], i , SEEK_END);
+
+        lseek(fd[argc - i - 2], -(long) (i + 1), SEEK_END);
+        n = read(fd[argc - i - 2], &c, 1);
+        if (n != 1) break;
         write(1, &c, 1);
     }
-    
+
+    /* closing files */
+    for (i = 1; i < argc; i++) {
+        close(fd[i - 1]);
+    }
+
+    /* exit */
+    if (n != 1) exit(1);
     exit(0);
 }
