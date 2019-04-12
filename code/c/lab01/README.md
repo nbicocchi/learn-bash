@@ -36,8 +36,10 @@ Ogni processo Unix, all'avvio, ha disponibili tre file descriptors: 0, 1, 2. Que
 
 07. (es17.c) Implementare una versione del comando head di Unix. Il comando head riporta su stdout le prime linee di un file. In assenza di opzioni sulla command line, le linee stampate sono 10 e il file di input e' stdin. Il comando accetta due parametri, il primo per impostare un numero di linee diverso da 10 e il secondo per aprire un file diverso da stdin.
 
-08. (es18.c) Si progetti un filtro che accetta N parametri che rappresentano nomi di file F1, . . . , FN e riporta su stdout un carattere per ogni file indicato. Il primo carattere del primo file F1, l’ultimo carattere dell’ultimo file FN, il secondo carattere del secondo file F2, il penultimo carattere del penultimo file FN-1 e cosi' di seguito. Nel caso in cui un file non abbia numero di caratteri sufficienti a consentire l’estrazione, il filtro deve terminare immediatamente con exit value pari a 1, mentre deve restituire 0 in caso contrario.
+08. (es18.c) Si progetti un filtro che accetta un singolo parametro (R). Il filtro deve riportare sullo standard output una selezione dei caratteri dello standard input: in particolare, si deve riportare in uscita un carattere se e solo se non compare nella stringa R oppure compare un numero di volte maggiore di 1.
 
-09. (es19.c) Si progetti un filtro che accetta un singolo parametro (R). Il filtro deve riportare sullo standard output una selezione dei caratteri dello standard input: in particolare, si deve riportare in uscita un carattere se e solo se non compare nella stringa R oppure compare un numero di volte maggiore di 1.
+09. (es19.c) Si progetti un filtro che accetta N parametri che rappresentano nomi di file F1, . . . , FN e riporta su stdout un carattere per ogni file indicato. Il primo carattere del primo file F1, l’ultimo carattere dell’ultimo file FN, il secondo carattere del secondo file F2, il penultimo carattere del penultimo file FN-1 e cosi' di seguito. Nel caso in cui un file non abbia numero di caratteri sufficienti a consentire l’estrazione, il filtro deve terminare immediatamente con exit value pari a 1, mentre deve restituire 0 in caso contrario.
+
+
 
 
