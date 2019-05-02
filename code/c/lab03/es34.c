@@ -12,7 +12,12 @@ int child(struct test_pipe *t, int *p) {
 	/* close write-side pipe */
 	close(p[1]);
 
-	/* read from pipe */
+	/* read data 
+	 * considerata l'atomicità di write(), il processo 
+	 * (a) o legge una struttura dati intera, 
+	 * (b) o si sospende fino al momento opportuno,
+	 * (c) o ottiene 0 per indicare che la pipe ha il lato scrittura chiuso
+	 */
 	if (read(p[0], t, sizeof(struct test_pipe)) != sizeof(struct test_pipe)) {
 		zprintf(2, "error: read()\n");
 		exit(1);
@@ -47,7 +52,10 @@ int father(struct test_pipe *t, int *p) {
 	zprintf(1, "[%d] (write) completed!\n", getpid());
 	
 	/* wait child before exit */
-	wait(&status);
+	if (wait(&status) == -1) {
+		zprintf(2, "error: wait()\n");
+		exit(1);
+	}
 	exit(0);
 }
 

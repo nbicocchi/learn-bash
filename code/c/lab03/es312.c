@@ -89,7 +89,10 @@ int child(char **argv, pipe_t *p, int child_n, int child_id) {
 	}
 
 	/* wait for nephew */
-	wait(NULL);
+	if (wait(NULL) == -1) {
+		zprintf(2, "error: wait()\n");
+		exit(1);
+	}
 
 	exit(0);
 }
@@ -115,7 +118,10 @@ int father(char **argv, pipe_t *p, int child_n) {
 	
 	/* wait for children */
 	for (i = 0; i < child_n; i++) {
-		wait(NULL);
+		if (wait(NULL) == -1) {
+			zprintf(2, "error: wait()\n");
+			exit(1);
+		}
 	}
 	
 	exit(0);
@@ -124,12 +130,13 @@ int father(char **argv, pipe_t *p, int child_n) {
 
 /* main function */
 int main(int argc, char **argv) {
+	char *usage = "usage: %s f1 .. fn\n";
 	int i, pid, child_n;
 	pipe_t *p;
 	
 	/* arguments check */
-	if (argc < 2) {
-		zprintf(1, "error: %s f1 .. fn\n", argv[0]);
+	if (argc != 2) {
+		zprintf(1, usage, argv[0]);
 		exit(1);
 	}
 	

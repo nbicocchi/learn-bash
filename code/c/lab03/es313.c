@@ -106,7 +106,10 @@ int father(struct test_primes *t, pipe_t *p, int child_n) {
 	
 	/* wait for children */
 	for (i = 0; i < child_n; i++) {
-		wait(NULL);
+		if (wait(NULL) == -1) {
+			zprintf(2, "error: wait()\n");
+			exit(1);
+		}
 	}
 	
 	exit(0);
@@ -115,20 +118,21 @@ int father(struct test_primes *t, pipe_t *p, int child_n) {
 
 /* main function */
 int main(int argc, char **argv) {
+	char *usage = "usage: %s nchildren\n";
 	int i, pid, child_n;
 	pipe_t *p;
 	struct test_primes t;
 	
 	/* arguments check */
-	if (argc < 2) {
-		zprintf(1, "error: %s n_children\n", argv[0]);
+	if (argc != 2) {
+		zprintf(1, usage, argv[0]);
 		exit(1);
 	}
 	
 	/* get child_n from command line */
 	child_n = atoi(argv[1]);
 	if (child_n <= 0) { 
-		zprintf(1, "error: n_children must be positive\n");
+		zprintf(1, usage, argv[0]);
 		exit(1);
 	}
 	

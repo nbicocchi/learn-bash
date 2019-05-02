@@ -60,12 +60,10 @@ int father(struct test_pipe *t, pipe_t *p, int child_n) {
 		clear_test_pipe(t);
 		
 		/* read data 
-		 * nota: nella pipe vengono inserite dai figli dei "blocchi"
-		 * di byte la cui dimensione e' quella di struct test_pipe.
-		 * visto che write() e' atomica, il padre o legge una intera struttura o
-		 * si sospende fino al momento della disponibilita'
-		 * o, ancora, ottiene 0 per indicare che la pipe
-		 * non ha dati e non ne potra' mai piu' avere (lato scrittura chiuso)
+		 * considerata l'atomicità di write(), il processo 
+		 * (a) o legge una struttura dati intera, 
+		 * (b) o si sospende fino al momento opportuno,
+		 * (c) o ottiene 0 per indicare che la pipe ha il lato scrittura chiuso
 		 */
 		nr = read(p[i][0], t, sizeof(struct test_pipe));
 		switch(nr) {
@@ -83,7 +81,10 @@ int father(struct test_pipe *t, pipe_t *p, int child_n) {
 	
 	/* wait for children */
 	for (i = 0; i < child_n; i++) {
-		wait(NULL);
+		if (wait(NULL) == -1) {
+			zprintf(2, "error: wait()\n");
+			exit(1);
+		}
 	}
 	
 	exit(0);
@@ -92,20 +93,21 @@ int father(struct test_pipe *t, pipe_t *p, int child_n) {
 
 /* main function */
 int main(int argc, char **argv) {
+	char *usage = "usage: %s nchildren\n";
 	int i, pid, child_n;
 	pipe_t *p;
 	struct test_pipe t;
 	
 	/* arguments check */
-	if (argc < 2) {
-		zprintf(1, "error: %s n_children\n", argv[0]);
+	if (argc != 2) {
+		zprintf(1, usage, argv[0]);
 		exit(1);
 	}
 	
 	/* get child_n from command line */
 	child_n = atoi(argv[1]);
 	if (child_n <= 0) { 
-		zprintf(1, "error: n_children must be positive\n");
+		zprintf(1, usage, argv[0]);
 		exit(1);
 	}
 	

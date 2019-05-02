@@ -57,7 +57,10 @@ int father(int *v, int *p) {
 	}
 	
 	/* wait child before exit */
-	wait(&status);
+	if (wait(&status) == -1) {
+		zprintf(2, "error: wait()\n");
+		exit(1);
+	}
 	exit(0);
 }
 

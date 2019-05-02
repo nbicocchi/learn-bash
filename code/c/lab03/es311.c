@@ -118,7 +118,10 @@ int node(pipe_t *p_in, int child_id, int level_current, int level_max, int *chil
 	
 		/* wait for children */
 		for (i = 0; i < child_n[level_current + 1]; i++) {
-			wait(NULL);
+			if (wait(NULL) == -1) {
+				zprintf(2, "error: wait()\n");
+				exit(1);
+			}
 		}
 	}
 	
@@ -128,11 +131,12 @@ int node(pipe_t *p_in, int child_id, int level_current, int level_max, int *chil
 
 /* main function */
 int main(int argc, char **argv) {
+	char *usage = "usage: %s child_l1 ... child_ln\n";
 	int i, *child_n;
 	
 	/* arguments check */
-	if (argc < 2) {
-		zprintf(1, "error: %s child_l1 ... child_ln\n", argv[0]);
+	if (argc != 2) {
+		zprintf(1, usage, argv[0]);
 		exit(1);
 	}
 	
