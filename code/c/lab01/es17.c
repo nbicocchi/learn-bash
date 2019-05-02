@@ -10,12 +10,13 @@ int main(int argc, char **argv) {
     char c;
     int lines = 0, fdin = 0, fdout = 1, n = 10;
 
+    if (argc > 3) {
+        zprintf(2, usage, argv[0]);
+        exit(1);
+    }
+
     if (argc == 2) n = atoi(argv[1]);
     if (argc == 3) fdin = open(argv[2], O_RDONLY);
-    if (argc > 3) {
-    	zprintf(2, usage, argv[0]);
-    	exit(1);
-    }
 
     while(read(fdin, &c, 1) > 0) {
         write(fdout, &c, 1);
