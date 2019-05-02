@@ -23,13 +23,14 @@ int main (int argc, char **argv) {
     }
 
     /* opening files */
-    for (i = 1; i < argc; i++) {
-        if ((fd[i - 1] = open(argv[i], O_RDONLY)) < 0) {
+    for (i = 0; i < argc - 1; i++) {
+    	zprintf(1, "f=%s\n", argv[i+1]);
+        if ((fd[i] = open(argv[i+1], O_RDONLY)) < 0) {
             zprintf(2, "error: open()\n");
             exit(1);
         }
     }
-    
+
     /* reading chars */
     for (i = 0; i < (argc - 1) / 2; i++) {
         lseek(fd[i], (long) i, SEEK_SET);
@@ -44,8 +45,8 @@ int main (int argc, char **argv) {
     }
 
     /* closing files */
-    for (i = 1; i < argc; i++) {
-        close(fd[i - 1]);
+    for (i = 0; i < argc - 1; i++) {
+        close(fd[i]);
     }
 
     /* exit */

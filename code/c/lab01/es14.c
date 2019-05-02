@@ -9,7 +9,7 @@ int main(int argc, char **argv) {
     char *usage = "usage: %s n\n";
     int n, fdout = 1;
     
-    if (argc < 2) {
+    if (argc != 2) {
         zprintf(2, usage, argv[0]);
         exit(1);
     } 

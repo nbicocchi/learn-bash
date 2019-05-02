@@ -13,7 +13,7 @@ int main(int argc, char **argv) {
     char *f, buffer[256];
     
     /* check parameters number */
-    if (argc < 4) {
+    if (argc != 4) {
         zprintf(2, usage, argv[0]);
         exit(1);
     } 

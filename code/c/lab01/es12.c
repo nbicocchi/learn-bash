@@ -9,7 +9,6 @@ int main(int argc, char **argv) {
     fprintf(stdout, "[int] %d\n", n);
     fprintf(stdout, "[char] %c\n", c);
     fprintf(stdout, "[char *] %s\n", str);
-    fprintf(stdout, "[(int)char *] %d\n", str);
     
     exit(0);
 }
