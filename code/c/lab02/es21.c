@@ -8,7 +8,6 @@
 
 int main(int argc, char **argv) {
 	pid_t pid;
-	int status;
 	
 	pid = fork();
 	switch (pid) {
@@ -17,7 +16,6 @@ int main(int argc, char **argv) {
 			exit(0);
 		default: /* father */
 			zprintf(1, "Hello, I'm the father! [fork() %d]\n", pid);
-			wait(&status);
 			exit(0);
 	}
 }
