@@ -7,23 +7,26 @@
 #include "utils.h"
 
 int main(int argc, char **argv) {
-	pid_t pid;
-	int status;
-	
-	pid = fork();
-	switch (pid) {
-		case -1: /* error */
-			zprintf(2, "error: fork()\n");
-			exit(1);
-		case 0: /* child */
-			zprintf(1, "Hello, I'm the child! [fork() %d]\n", pid);
-			exit(0);
-		default: /* father */
-			zprintf(1, "Hello, I'm the father! [fork() %d]\n", pid);
-			wait(&status);
-			zprintf(1, "[%d] Child exited %d\n", getpid(), WEXITSTATUS(status));
-			exit(0);
-	}
+    pid_t pid;
+    int status;
+    
+    pid = fork();
+    switch (pid) {
+        case -1: /* error */
+            zprintf(2, "error: fork()\n");
+            exit(1);
+        case 0: /* child */
+            zprintf(1, "Hello, I'm the child! [fork() %d]\n", pid);
+            exit(0);
+        default: /* father */
+            zprintf(1, "Hello, I'm the father! [fork() %d]\n", pid);
+            if ((pid = wait(&status)) == -1) {
+                zprintf(2, "error: wait()\n");
+                exit(1);
+            }
+            zprintf(1, "[%d] Child exited %d\n", getpid(), WEXITSTATUS(status));
+            exit(0);
+    }
 }
 
 

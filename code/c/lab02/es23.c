@@ -43,7 +43,10 @@ int main(int argc, char **argv) {
 	/* father */
 	zprintf(1, "[%d] Father starting...\n", getpid());
 	for (i = 0; i < n; i++) {
-		pid = wait(&status);
+		if ((pid = wait(&status)) == -1) {
+			zprintf(2, "error: wait()\n");
+			exit(1);
+		}
 		zprintf(1, "[%d] Child pid=%d exit=%d\n", getpid(), pid, WEXITSTATUS(status));
 	}
 	

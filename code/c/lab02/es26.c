@@ -13,7 +13,7 @@ int main(int argc, char **argv) {
 	pid_t pid;
 	int status;
 	
-	if (argc < 2) {
+	if (argc != 2) {
         zprintf(2, usage, argv[0]);
         exit(1);
     } 
@@ -23,13 +23,18 @@ int main(int argc, char **argv) {
 		case 0: /* child */
 			zprintf(1, "[%d] executing %s...\n", getpid(), argv[1]);
 			execlp(argv[1], argv[1], (char *)0, (char *)0); 
+			zprintf(2, "error: exec()\n");
+			exit(1);
 		case -1: /* error */
 			zprintf(2, "error: fork()\n");
 			exit(1);
 	}
 	
 	/* father */
-	pid = wait(&status);
+	if ((pid = wait(&status)) == -1) {
+		zprintf(2, "error: wait()\n");
+		exit(1);
+	}
 	zprintf(1, "[%d] Child pid=%d exit=%d\n", getpid(), pid, WEXITSTATUS(status));
 	exit(0);
 }

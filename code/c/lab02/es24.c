@@ -13,7 +13,7 @@ int child(int index) {
 }
 
 int main(int argc, char **argv) {
-	pid_t *pids;
+	pid_t pid, *pids;
 	int n = 1;
 	int i;
 	int opt;
@@ -44,7 +44,10 @@ int main(int argc, char **argv) {
 	/* father */
 	zprintf(1, "[%d] Father starting...\n", getpid());
 	for (i = n - 1; i >= 0; i--) {
-		waitpid(pids[i], &status, 0);
+		if ((pid = waitpid(pids[i], &status, 0)) == -1) {
+			zprintf(2, "error: waitpid()\n");
+			exit(1);
+		}
 		zprintf(1, "[%d] Child pid=%d exit=%d\n", getpid(), pids[i], WEXITSTATUS(status));
 	}
 	
