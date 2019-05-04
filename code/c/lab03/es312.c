@@ -7,15 +7,15 @@
 #include "utils.h"
 
 /* 
-	topology definition 
+    topology definition 
     
-	        F
-	        ^
-	        | 
-	 |----->|<----|
+            F
+            ^
+            | 
+     |----->|<----|
    p0|    p1|   p2|
      |      |     | 
-	c0     c1    c2
+    c0     c1    c2
      |      |     | 
     cmd0   cmd1  cmd2
 */
@@ -24,151 +24,158 @@
 typedef int pipe_t[2];
 
 int nephew(char **argv, pipe_t p, int child_n, int child_id) {
-	/* close unused pipe sides (shared with child)*/
-	close(p[0]);
+    /* close unused pipe sides (shared with child)*/
+    close(p[0]);
 
-	/* assign stdout to p_l2[1] */
-	close(1);
-	dup2(p[1], 1);
-	close(p[1]);
+    /* assign stdout to p_l2[1] */
+    close(1);
+    dup2(p[1], 1);
+    close(p[1]);
 
-	/* execute external cmd */
-	execlp("wc", "-l", "-l", argv[child_id + 1], (char *)0);
+    /* execute external cmd */
+    execlp("wc", "-l", "-l", argv[child_id + 1], (char *)0);
 
-	zprintf(1, "[%d] error exec()\n", getpid());
-	exit(1);
+    zprintf(1, "[%d] error exec()\n", getpid());
+    exit(EXIT_FAILURE);
 }
 
 /* child function */
 int child(char **argv, pipe_t *p, int child_n, int child_id) {
-	int i;
-	int lines;
-	int pid;
-	pipe_t p_l2;
-	char wc_stdout[8];
-	
-	/* close unused pipe sides (shared with father)*/
-	for (i = 0; i < child_n; i++) {
-		if (i != child_id) close(p[i][1]);
-		close(p[i][0]);
-	}
+    int i, pid, status;
+    int lines;
+    pipe_t p_l2;
+    char wc_stdout[8];
+    
+    /* close unused pipe sides (shared with father)*/
+    for (i = 0; i < child_n; i++) {
+        if (i != child_id) close(p[i][1]);
+        close(p[i][0]);
+    }
 
-	/* init pipe shared with nephew */
-	if (pipe(p_l2) < 0) { 
-		zprintf(1, "[%d] error pipe()\n", getpid());
-		exit(1);
-	}
+    /* init pipe shared with nephew */
+    if (pipe(p_l2) < 0) { 
+        zprintf(1, "[%d] error pipe()\n", getpid());
+        exit(EXIT_FAILURE);
+    }
 
-	pid=fork(); 
-	switch(pid) {
-		case 0: 
-			nephew(argv, p_l2, child_n, child_id);
-		case -1:
-			zprintf(1, "[%d] error fork()\n", getpid());
-			exit(1);
-	}	
+    pid=fork(); 
+    switch(pid) {
+        case 0: 
+            nephew(argv, p_l2, child_n, child_id);
+        case -1:
+            zprintf(1, "[%d] error fork()\n", getpid());
+            exit(EXIT_FAILURE);
+    }   
 
-	/* close unused pipe sides (shared with nephew)*/
-	close(p_l2[1]);
+    /* close unused pipe sides (shared with nephew)*/
+    close(p_l2[1]);
 
-	/* read from nephew */
-	if (read(p_l2[0], wc_stdout, sizeof(wc_stdout)) != sizeof(wc_stdout)) {
-		zprintf(1, "[%d] read() failed\n", getpid());
-		exit(1);
-	}
+    /* read from nephew */
+    if (read(p_l2[0], wc_stdout, sizeof(wc_stdout)) != sizeof(wc_stdout)) {
+        zprintf(1, "[%d] read() failed\n", getpid());
+        exit(EXIT_FAILURE);
+    }
 
-	/* this is for debug purposes */
-	/* wc implementations might change */
-	zprintf(1, "[%d] received from wc=\"%s\"\n", getpid(), wc_stdout);
-	lines = atoi(wc_stdout);
-	
-	/* write number of lines to father */
-	if (write(p[child_id][1], &lines, sizeof(int)) != sizeof(int)) {
-		zprintf(1, "[%d] write() failed\n", getpid());
-		exit(1);
-	}
+    /* this is for debug purposes */
+    /* wc implementations might change */
+    zprintf(1, "[%d] received from wc=\"%s\"\n", getpid(), wc_stdout);
+    lines = atoi(wc_stdout);
+    
+    /* write number of lines to father */
+    if (write(p[child_id][1], &lines, sizeof(int)) != sizeof(int)) {
+        zprintf(1, "[%d] write() failed\n", getpid());
+        exit(EXIT_FAILURE);
+    }
 
-	/* wait for nephew */
-	if (wait(NULL) == -1) {
-		zprintf(2, "error: wait()\n");
-		exit(1);
-	}
-
-	exit(0);
+    /* wait for nephew */
+    if ((pid = wait(&status)) == -1) {
+        zprintf(2, "error: wait()\n");
+        exit(EXIT_FAILURE);
+    }
+    if (!WIFEXITED(status)) {
+        zprintf(1, "[%d] Child %d exited abnormally\n", pid);
+        exit(EXIT_FAILURE);
+    }
+    zprintf(1, "[%d] Child pid=%d exit=%d\n", getpid(), pid, WEXITSTATUS(status));
+    exit(EXIT_SUCCESS);
 }
 
 /* father function */
 int father(char **argv, pipe_t *p, int child_n) {
-	int i;
-	int lines;
-	
-	/* close unused pipe sides */
-	for (i = 0; i < child_n; i++) { 
-		close(p[i][1]);
-	}
-	
-	/* wait for number of lines */		
-	for (i = 0; i < child_n; i++) {	
-		if (read(p[i][0], &lines, sizeof(int)) != sizeof(int)) {
-			zprintf(1, "[%d] read() failed\n", getpid());
-			exit(1);
-		}
-		zprintf(1, "[%d] received lines=%d from child=%d\n", getpid(), lines, i);
-	}
-	
-	/* wait for children */
-	for (i = 0; i < child_n; i++) {
-		if (wait(NULL) == -1) {
-			zprintf(2, "error: wait()\n");
-			exit(1);
-		}
-	}
-	
-	exit(0);
+    int i, pid, status;
+    int lines;
+    
+    /* close unused pipe sides */
+    for (i = 0; i < child_n; i++) { 
+        close(p[i][1]);
+    }
+    
+    /* wait for number of lines */      
+    for (i = 0; i < child_n; i++) { 
+        if (read(p[i][0], &lines, sizeof(int)) != sizeof(int)) {
+            zprintf(1, "[%d] read() failed\n", getpid());
+            exit(EXIT_FAILURE);
+        }
+        zprintf(1, "[%d] received lines=%d from child=%d\n", getpid(), lines, i);
+    }
+    
+    /* wait for children */
+    for (i = 0; i < child_n; i++) {
+        if ((pid = wait(&status)) == -1) {
+            zprintf(2, "error: wait()\n");
+            exit(EXIT_FAILURE);
+        }
+        if (!WIFEXITED(status)) {
+            zprintf(1, "[%d] Child %d exited abnormally\n", pid);
+            exit(EXIT_FAILURE);
+        }
+        zprintf(1, "[%d] Child pid=%d exit=%d\n", getpid(), pid, WEXITSTATUS(status));
+    }
+    exit(EXIT_SUCCESS);
 }
 
 
 /* main function */
 int main(int argc, char **argv) {
-	char *usage = "usage: %s f1 .. fn\n";
-	int i, pid, child_n;
-	pipe_t *p;
-	
-	/* arguments check */
-	if (argc != 2) {
-		zprintf(1, usage, argv[0]);
-		exit(1);
-	}
-	
-	/* get child_n from command line */
-	child_n = argc - 1;
-	
-	/* allocate memory for pipes */
-	p = (pipe_t *) malloc(sizeof(pipe_t) * (child_n));
-	if (p == NULL) {
-		zprintf(1, "[%d] error malloc()\n", getpid());
-		exit(1);
-	}
-	
-	/* init pipes */
-	for (i = 0; i < child_n; i++) { 
-		if (pipe(p[i]) < 0) { 
-			zprintf(1, "[%d] error pipe()\n", getpid());
-			exit(1);
-		}
-	}
-	
-	/* init child processes */
-	for (i=0; i < child_n; i++) { 
-		pid=fork(); 
-		switch(pid) {
-			case 0: 
-				child(argv, p, child_n, i);
-			case -1:
-				zprintf(1, "[%d] error fork()\n", getpid());
-				exit(1);
-		}
-	}
-	
-	father(argv, p, child_n);
+    char *usage = "usage: %s f1 .. fn\n";
+    int i, pid, child_n;
+    pipe_t *p;
+    
+    /* arguments check */
+    if (argc != 2) {
+        zprintf(1, usage, argv[0]);
+        exit(EXIT_FAILURE);
+    }
+    
+    /* get child_n from command line */
+    child_n = argc - 1;
+    
+    /* allocate memory for pipes */
+    p = (pipe_t *) malloc(sizeof(pipe_t) * (child_n));
+    if (p == NULL) {
+        zprintf(1, "[%d] error malloc()\n", getpid());
+        exit(EXIT_FAILURE);
+    }
+    
+    /* init pipes */
+    for (i = 0; i < child_n; i++) { 
+        if (pipe(p[i]) < 0) { 
+            zprintf(1, "[%d] error pipe()\n", getpid());
+            exit(EXIT_FAILURE);
+        }
+    }
+    
+    /* init child processes */
+    for (i=0; i < child_n; i++) { 
+        pid=fork(); 
+        switch(pid) {
+            case 0: 
+                child(argv, p, child_n, i);
+            case -1:
+                zprintf(1, "[%d] error fork()\n", getpid());
+                exit(EXIT_FAILURE);
+        }
+    }
+    
+    father(argv, p, child_n);
 }

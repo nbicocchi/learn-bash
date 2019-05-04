@@ -6,15 +6,15 @@
 #include "utils.h"
 
 int main(int argc, char **argv) {
-	int p[2];
-	
-	if (pipe(p) < 0) {
-		zprintf(2, "error: pipe()\n");
-		exit(1);
-	}
-	
-	zprintf(1, "p[0] (read side) = %d\n", p[0]);
-	zprintf(1, "p[1] (write side) = %d\n", p[1]);
-	
-	exit(0);
+    int p[2];
+    
+    if (pipe(p) < 0) {
+        zprintf(2, "error: pipe()\n");
+        exit(EXIT_FAILURE);
+    }
+    
+    zprintf(1, "p[0] (read side) = %d\n", p[0]);
+    zprintf(1, "p[1] (write side) = %d\n", p[1]);
+    
+    exit(EXIT_SUCCESS);
 }

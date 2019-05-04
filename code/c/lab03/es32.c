@@ -6,18 +6,18 @@
 #include "utils.h"
 
 int main(int argc, char **argv) {
-	int n = 0;
-	int p[2];
-	char c = 'a';
-	
-	if (pipe(p) < 0) {
-		zprintf(2, "error: pipe()\n");
-		exit(1);
-	}
-	
-	while(write(p[1], &c, 1) > 0) {
-		zprintf(1, "written %d bytes.\n", ++n);
-	}
-	
-	exit(0);
+    int n = 0;
+    int p[2];
+    char c = 'a';
+    
+    if (pipe(p) < 0) {
+        zprintf(2, "error: pipe()\n");
+        exit(EXIT_FAILURE);
+    }
+    
+    while(write(p[1], &c, 1) > 0) {
+        zprintf(1, "written %d bytes.\n", ++n);
+    }
+    
+    exit(EXIT_SUCCESS);
 }
