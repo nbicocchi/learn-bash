@@ -8,8 +8,8 @@
 #include "utils.h"
 
 int child(int index) {
-	zprintf(1, "[%d] Child %d starting...\n", getpid(), index);
-	exit(0);
+	zprintf(1, "[%d] Child %d started...\n", getpid(), index);
+	exit(EXIT_SUCCESS);
 }
 
 int main(int argc, char **argv) {
@@ -33,24 +33,27 @@ int main(int argc, char **argv) {
 	for (i = 0; i < n; i++) {
 		pids[i] = fork();
 		switch (pids[i]) {
-			case 0: /* child */
-				child(i);
 			case -1: /* error */
 				zprintf(2, "error: fork()\n");
-				exit(1);
+				exit(EXIT_FAILURE);
+			case 0: /* child */
+				child(i);
 		}
 	}
 	
 	/* father */
-	zprintf(1, "[%d] Father starting...\n", getpid());
+	zprintf(1, "[%d] Father started...\n", getpid());
 	for (i = n - 1; i >= 0; i--) {
 		if ((pid = waitpid(pids[i], &status, 0)) == -1) {
 			zprintf(2, "error: waitpid()\n");
-			exit(1);
+			exit(EXIT_FAILURE);
 		}
-		zprintf(1, "[%d] Child pid=%d exit=%d\n", getpid(), pids[i], WEXITSTATUS(status));
+		if (!WIFEXITED(status)) {
+			zprintf(1, "[%d] Child %d exited abnormally\n", pid);
+            exit(EXIT_FAILURE);
+        }
+		zprintf(1, "[%d] Child pid=%d exit=%d\n", getpid(), pid, WEXITSTATUS(status));
 	}
-	
 	free(pids);
-	exit(0);
+	exit(EXIT_SUCCESS);
 }

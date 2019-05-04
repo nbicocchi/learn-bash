@@ -23,30 +23,37 @@ int main(int argc, char **argv) {
     
     if (argc != 2) {
         zprintf(2, usage, argv[0]);
-        exit(1);
+        exit(EXIT_FAILURE);
     } 
     
     fd = open(argv[1], O_RDONLY);
     if (fd < 0) {
         zprintf(2, "error: open()\n");
-        exit(1);
+        exit(EXIT_FAILURE);
     } 
     
     pid = fork();
     switch (pid) {
-        case 0: /* child */
-            zprintf(1, "[%d] Child counted %d bytes\n", getpid(), read_bytes(fd));
-            exit(0);
         case -1: /* error */
             zprintf(2, "error: fork()\n");
-            exit(1);
-        default: /* father */
-            zprintf(1, "[%d] Father counted %d bytes\n", getpid(), read_bytes(fd));
-            if ((pid = wait(&status)) == -1) {
-                zprintf(2, "error: wait()\n");
-                exit(1);
-            }
-            zprintf(1, "[%d] Child exited %d\n", getpid(), WEXITSTATUS(status));
-            exit(0);
+            exit(EXIT_FAILURE);
+        case 0: /* child */
+            zprintf(1, "[%d] Child started...\n", getpid());
+            zprintf(1, "[%d] Child counted %d bytes\n", getpid(), read_bytes(fd));
+            exit(EXIT_SUCCESS);
     }
+    
+    /* father */   
+    zprintf(1, "[%d] Father started...\n", getpid());     
+    zprintf(1, "[%d] Father counted %d bytes\n", getpid(), read_bytes(fd));
+    if ((pid = wait(&status)) == -1) {
+        zprintf(2, "error: wait()\n");
+        exit(EXIT_FAILURE);
+    }
+    if (!WIFEXITED(status)) {
+        zprintf(1, "[%d] Child %d exited abnormally\n", pid);
+        exit(EXIT_FAILURE);
+    }
+    zprintf(1, "[%d] Child pid=%d exit=%d\n", getpid(), pid, WEXITSTATUS(status));
+    exit(EXIT_SUCCESS);
 }

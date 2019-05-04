@@ -12,11 +12,11 @@ int main(int argc, char **argv) {
 	pid = fork();
 	switch (pid) {
 		case 0: /* child */
-			zprintf(1, "Hello, I'm the child! [fork() %d]\n", pid);
-			exit(0);
+			zprintf(1, "[%d] Hello, I'm the child! [fork()=%d]\n", getpid(), pid);
+			exit(EXIT_SUCCESS);
 		default: /* father */
-			zprintf(1, "Hello, I'm the father! [fork() %d]\n", pid);
-			exit(0);
+			zprintf(1, "[%d] Hello, I'm the father! [fork()=%d]\n", getpid(), pid);
+			exit(EXIT_SUCCESS);
 	}
 }
 
