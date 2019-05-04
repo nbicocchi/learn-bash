@@ -8,50 +8,50 @@
 #include "utils.h"
 
 int child(int index) {
-	zprintf(1, "[%d] Child %d started...\n", getpid(), index);
-	exit(EXIT_SUCCESS);
+    zprintf(1, "[%d] Child %d started...\n", getpid(), index);
+    exit(EXIT_SUCCESS);
 }
 
 int main(int argc, char **argv) {
-	pid_t pid;
-	int n = 1;
-	int i;
-	int opt;
-	int status;
+    pid_t pid;
+    int n = 1;
+    int i;
+    int opt;
+    int status;
 
-	for (;;) {
-		opt = getopt(argc, argv, "n:");
-		if (opt == -1) break;
-		switch (opt) {
-			case 'n':
-				n = atoi(optarg);
-				break;
-		}
-	}
-	
-	for (i = 0; i < n; i++) {
-		pid = fork();
-		switch (pid) {
-			case -1: /* error */
-				zprintf(2, "error: fork()\n");
-				exit(EXIT_FAILURE);
-			case 0: /* child */
-				child(i);
-		}
-	}
-	
-	/* father */
-	zprintf(1, "[%d] Father started...\n", getpid());
-	for (i = 0; i < n; i++) {
-		if ((pid = wait(&status)) == -1) {
-			zprintf(2, "error: wait()\n");
-			exit(EXIT_FAILURE);
-		}
-		if (!WIFEXITED(status)) {
-			zprintf(1, "[%d] Child %d exited abnormally\n", pid);
+    for (;;) {
+        opt = getopt(argc, argv, "n:");
+        if (opt == -1) break;
+        switch (opt) {
+            case 'n':
+                n = atoi(optarg);
+                break;
+        }
+    }
+    
+    for (i = 0; i < n; i++) {
+        pid = fork();
+        switch (pid) {
+            case -1: /* error */
+                zprintf(2, "error: fork()\n");
+                exit(EXIT_FAILURE);
+            case 0: /* child */
+                child(i);
+        }
+    }
+    
+    /* father */
+    zprintf(1, "[%d] Father started...\n", getpid());
+    for (i = 0; i < n; i++) {
+        if ((pid = wait(&status)) == -1) {
+            zprintf(2, "error: wait()\n");
             exit(EXIT_FAILURE);
         }
-		zprintf(1, "[%d] Child pid=%d exit=%d\n", getpid(), pid, WEXITSTATUS(status));
-	}
-	exit(EXIT_SUCCESS);
+        if (!WIFEXITED(status)) {
+            zprintf(1, "[%d] Child %d exited abnormally\n", pid);
+            exit(EXIT_FAILURE);
+        }
+        zprintf(1, "[%d] Child pid=%d exit=%d\n", getpid(), pid, WEXITSTATUS(status));
+    }
+    exit(EXIT_SUCCESS);
 }
