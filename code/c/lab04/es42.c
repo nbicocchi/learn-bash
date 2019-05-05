@@ -12,8 +12,6 @@ char msg2[256];
 int main(int argc, char **argv) {
     int p[2]; 
     int nw, nr;
-    int status;
-    int pid;
     
     if (pipe(p) != 0) {
         zprintf(1, "[%d] error: pipe()\n", getpid());
@@ -39,15 +37,7 @@ int main(int argc, char **argv) {
     
     /* father */
     zprintf(1, "[%d] father started...\n", getpid());
-    if ((pid = wait(&status)) == -1) {
-        zprintf(1, "error: wait()\n");
-        exit(EXIT_FAILURE);
-    }
-    if (!WIFEXITED(status)) {
-        zprintf(1, "[%d] Child exited abnormally signal=%d\n", pid, WTERMSIG(status));
-        exit(EXIT_FAILURE);
-    }
-    zprintf(1, "[%d] Child pid=%d exit=%d\n", getpid(), pid, WEXITSTATUS(status));
+    wait_child();
     exit(EXIT_SUCCESS);
 }
 

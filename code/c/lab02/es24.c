@@ -13,11 +13,10 @@ int child(int index) {
 }
 
 int main(int argc, char **argv) {
-    pid_t pid, *pids;
+    pid_t *pids;
     int n = 1;
     int i;
     int opt;
-    int status;
 
     for (;;) {
         opt = getopt(argc, argv, "n:");
@@ -44,15 +43,7 @@ int main(int argc, char **argv) {
     /* father */
     zprintf(1, "[%d] Father started...\n", getpid());
     for (i = n - 1; i >= 0; i--) {
-        if ((pid = waitpid(pids[i], &status, 0)) == -1) {
-            zprintf(2, "error: waitpid()\n");
-            exit(EXIT_FAILURE);
-        }
-        if (!WIFEXITED(status)) {
-            zprintf(1, "[%d] Child pid=%d exit=abnormal\n", getpid(), pid);
-            exit(EXIT_FAILURE);
-        }
-        zprintf(1, "[%d] Child pid=%d exit=%d\n", getpid(), pid, WEXITSTATUS(status));
+        wait_child();
     }
     free(pids);
     exit(EXIT_SUCCESS);

@@ -37,8 +37,9 @@ typedef int pipe_t[2];
  */
 int node(pipe_t *p_in, int child_id, int level_current, int level_max, int *child_n) {
     pipe_t *p_out;
+    pid_t pid;
     char cmd = 'a';
-    int i, pid, status;
+    int i;
     
     if (level_current > 0) {
         /* close unused input pipe sides
@@ -115,17 +116,9 @@ int node(pipe_t *p_in, int child_id, int level_current, int level_max, int *chil
             }
         }
     
-        /* wait for children */
+        /* wait child before exit */
         for (i = 0; i < child_n[level_current + 1]; i++) {
-            if ((pid = wait(&status)) == -1) {
-                zprintf(1, "error: wait()\n");
-                exit(EXIT_FAILURE);
-            }
-            if (!WIFEXITED(status)) {
-                zprintf(1, "[%d] Child pid=%d exit=abnormal\n", getpid(), pid);
-                exit(EXIT_FAILURE);
-            }
-            zprintf(1, "[%d] Child pid=%d exit=%d\n", getpid(), pid, WEXITSTATUS(status));
+            wait_child();
         }
     }
     exit(EXIT_SUCCESS);

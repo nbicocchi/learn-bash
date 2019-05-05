@@ -28,7 +28,7 @@ void child(int index, int argc, char **argv) {
 
 int main(int argc, char **argv) {
     char *usage = "usage: %s cmd [opt]\n";
-    int pid, status;
+    pid_t pid;
 
     if (argc < 2) {
         zprintf(2, usage, argv[0]);
@@ -46,15 +46,7 @@ int main(int argc, char **argv) {
     
     /* father */
     zprintf(1, "[%d] Father started...\n", getpid());
-    if ((pid = wait(&status)) == -1) {
-        zprintf(2, "error: wait()\n");
-        exit(EXIT_FAILURE);
-    }
-    if (!WIFEXITED(status)) {
-        zprintf(1, "[%d] Child pid=%d exit=abnormal\n", getpid(), pid);
-        exit(EXIT_FAILURE);
-    }
-    zprintf(1, "[%d] Child pid=%d exit=%d\n", getpid(), pid, WEXITSTATUS(status));
+    wait_child();
     exit(EXIT_SUCCESS);
 }
 

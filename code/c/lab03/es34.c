@@ -35,8 +35,6 @@ int child(struct test_pipe *t, int *p) {
 
 /* father function */
 int father(struct test_pipe *t, int *p) {
-    int pid, status;
-
     zprintf(1, "[%d] father started...\n", getpid());
     
     /* close read-side pipe */
@@ -55,20 +53,12 @@ int father(struct test_pipe *t, int *p) {
     zprintf(1, "[%d] (write) completed!\n", getpid());
     
     /* wait child before exit */
-    if ((pid = wait(&status)) == -1) {
-        zprintf(1, "error: wait()\n");
-        exit(EXIT_FAILURE);
-    }
-    if (!WIFEXITED(status)) {
-        zprintf(1, "[%d] Child pid=%d exit=abnormal\n", getpid(), pid);
-        exit(EXIT_FAILURE);
-    }
-    zprintf(1, "[%d] Child pid=%d exit=%d\n", getpid(), pid, WEXITSTATUS(status));
+    wait_child();
     exit(EXIT_SUCCESS);
 }
 
 int main(int argc, char **argv) {
-    int pid;
+    pid_t pid;
     int p[2];
     struct test_pipe t;
     

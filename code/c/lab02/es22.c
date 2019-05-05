@@ -8,7 +8,6 @@
 
 int main(int argc, char **argv) {
     pid_t pid;
-    int status;
     
     pid = fork();
     switch (pid) {
@@ -22,15 +21,7 @@ int main(int argc, char **argv) {
 
     /* father */
     zprintf(1, "[%d] Hello, I'm the father! [fork()=%d]\n", getpid(), getpid(), pid);
-    if ((pid = wait(&status)) == -1) {
-        zprintf(2, "error: wait()\n");
-        exit(EXIT_FAILURE);
-    } 
-    if (!WIFEXITED(status)) {
-        zprintf(1, "[%d] Child pid=%d exit=abnormal\n", getpid(), pid);
-        exit(EXIT_FAILURE);
-    }
-    zprintf(1, "[%d] Child pid=%d exit=%d\n", getpid(), pid, WEXITSTATUS(status));
+    wait_child();
     exit(EXIT_SUCCESS);
 }
 

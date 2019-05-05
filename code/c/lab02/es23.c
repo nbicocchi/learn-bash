@@ -17,7 +17,6 @@ int main(int argc, char **argv) {
     int n = 1;
     int i;
     int opt;
-    int status;
 
     for (;;) {
         opt = getopt(argc, argv, "n:");
@@ -43,15 +42,7 @@ int main(int argc, char **argv) {
     /* father */
     zprintf(1, "[%d] Father started...\n", getpid());
     for (i = 0; i < n; i++) {
-        if ((pid = wait(&status)) == -1) {
-            zprintf(2, "error: wait()\n");
-            exit(EXIT_FAILURE);
-        }
-        if (!WIFEXITED(status)) {
-            zprintf(1, "[%d] Child pid=%d exit=abnormal\n", getpid(), pid);
-            exit(EXIT_FAILURE);
-        }
-        zprintf(1, "[%d] Child pid=%d exit=%d\n", getpid(), pid, WEXITSTATUS(status));
+        wait_child();
     }
     exit(EXIT_SUCCESS);
 }

@@ -34,13 +34,12 @@ int child(struct test_pipe *t, int *p) {
         zprintf(1, "[%d] write() failed\n", getpid());
         exit(EXIT_FAILURE);
     }
-    
     exit(EXIT_SUCCESS);
 }
 
 /* father function */
 int father(struct test_pipe *t, int *p, int child_n) {
-    int i, pid, status;
+    int i;
 
     zprintf(1, "[%d] father started...\n", getpid());
     
@@ -68,17 +67,9 @@ int father(struct test_pipe *t, int *p, int child_n) {
         zprintf(1, "[%d] message = %s\n", getpid(), t->msg);
     }
     
-    /* wait for children */
+    /* wait child before exit */
     for (i = 0; i < child_n; i++) {
-        if ((pid = wait(&status)) == -1) {
-            zprintf(1, "error: wait()\n");
-            exit(EXIT_FAILURE);
-        }
-        if (!WIFEXITED(status)) {
-            zprintf(1, "[%d] Child pid=%d exit=abnormal\n", getpid(), pid);
-            exit(EXIT_FAILURE);
-        }
-        zprintf(1, "[%d] Child pid=%d exit=%d\n", getpid(), pid, WEXITSTATUS(status));
+        wait_child();
     }
     exit(EXIT_SUCCESS);
 }
@@ -87,7 +78,8 @@ int father(struct test_pipe *t, int *p, int child_n) {
 /* main function */
 int main(int argc, char **argv) {
     char *usage = "usage: %s nchildren\n";
-    int i, pid, child_n;
+    pid_t pid;
+    int i, child_n;
     int p[2];
     struct test_pipe t;
     

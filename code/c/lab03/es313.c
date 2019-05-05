@@ -70,8 +70,7 @@ int child(struct test_primes *t, pipe_t *p, int child_n, int child_id) {
 
 /* father function */
 int father(struct test_primes *t, pipe_t *p, int child_n) {
-    int j;
-    int i, pid, status;
+    int i, j;
 
     zprintf(1, "[%d] father started...\n", getpid());
     
@@ -108,19 +107,10 @@ int father(struct test_primes *t, pipe_t *p, int child_n) {
         }
     }
     
-    /* wait for children */
+    /* wait child before exit */
     for (i = 0; i < child_n; i++) {
-        if ((pid = wait(&status)) == -1) {
-            zprintf(1, "error: wait()\n");
-            exit(EXIT_FAILURE);
-        }
-        if (!WIFEXITED(status)) {
-            zprintf(1, "[%d] Child pid=%d exit=abnormal\n", getpid(), pid);
-            exit(EXIT_FAILURE);
-        }
-        zprintf(1, "[%d] Child pid=%d exit=%d\n", getpid(), pid, WEXITSTATUS(status));
+        wait_child();
     }
-    
     exit(EXIT_SUCCESS);
 }
 
@@ -128,7 +118,8 @@ int father(struct test_primes *t, pipe_t *p, int child_n) {
 /* main function */
 int main(int argc, char **argv) {
     char *usage = "usage: %s nchildren\n";
-    int i, pid, child_n;
+    pid_t pid;
+    int i, child_n;
     pipe_t *p;
     struct test_primes t;
     

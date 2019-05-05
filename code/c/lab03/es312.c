@@ -43,8 +43,8 @@ int nephew(char **argv, pipe_t p, int child_n, int child_id) {
 
 /* child function */
 int child(char **argv, pipe_t *p, int child_n, int child_id) {
-    int i, pid, status;
-    int lines;
+	pid_t pid;
+    int i, lines;
     pipe_t p_l2;
     char wc_stdout[8];
 
@@ -92,22 +92,13 @@ int child(char **argv, pipe_t *p, int child_n, int child_id) {
     }
 
     /* wait for nephew */
-    if ((pid = wait(&status)) == -1) {
-        zprintf(1, "error: wait()\n");
-        exit(EXIT_FAILURE);
-    }
-    if (!WIFEXITED(status)) {
-        zprintf(1, "[%d] Child pid=%d exit=abnormal\n", getpid(), pid);
-        exit(EXIT_FAILURE);
-    }
-    zprintf(1, "[%d] Child pid=%d exit=%d\n", getpid(), pid, WEXITSTATUS(status));
+    wait_child();
     exit(EXIT_SUCCESS);
 }
 
 /* father function */
 int father(char **argv, pipe_t *p, int child_n) {
-    int i, pid, status;
-    int lines;
+    int i, lines;
 
     zprintf(1, "[%d] father started...\n", getpid());
     
@@ -125,17 +116,9 @@ int father(char **argv, pipe_t *p, int child_n) {
         zprintf(1, "[%d] received lines=%d from child=%d\n", getpid(), lines, i);
     }
     
-    /* wait for children */
+    /* wait child before exit */
     for (i = 0; i < child_n; i++) {
-        if ((pid = wait(&status)) == -1) {
-            zprintf(1, "error: wait()\n");
-            exit(EXIT_FAILURE);
-        }
-        if (!WIFEXITED(status)) {
-            zprintf(1, "[%d] Child %d exited abnormally\n", getpid(), pid);
-            exit(EXIT_FAILURE);
-        }
-        zprintf(1, "[%d] Child pid=%d exit=%d\n", getpid(), pid, WEXITSTATUS(status));
+        wait_child();
     }
     exit(EXIT_SUCCESS);
 }

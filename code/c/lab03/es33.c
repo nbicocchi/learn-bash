@@ -32,7 +32,7 @@ int child(int *v, int *p) {
 
 /* father function */
 int father(int *v, int *p) {
-    int i, pid, status;
+    int i;
 
     zprintf(1, "[%d] father started...\n", getpid());
 
@@ -59,20 +59,12 @@ int father(int *v, int *p) {
     }
     
     /* wait child before exit */
-    if ((pid = wait(&status)) == -1) {
-        zprintf(1, "error: wait()\n");
-        exit(EXIT_FAILURE);
-    }
-    if (!WIFEXITED(status)) {
-        zprintf(1, "[%d] Child pid=%d exit=abnormal\n", getpid(), pid);
-        exit(EXIT_FAILURE);
-    }
-    zprintf(1, "[%d] Child pid=%d exit=%d\n", getpid(), pid, WEXITSTATUS(status));
+    wait_child();
     exit(EXIT_SUCCESS);
 }
 
 int main(int argc, char **argv) {
-    int pid;
+    pid_t pid;
     int p[2];
     int v[SLOTS];
     

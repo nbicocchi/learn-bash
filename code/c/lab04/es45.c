@@ -34,7 +34,7 @@ int child() {
 
 /* father function */
 int father(int child_n, int *pids) {
-    int i, pid, status;
+    int i;
 
     zprintf(1, "[%d] father started...\n", getpid());
     
@@ -55,22 +55,17 @@ int father(int child_n, int *pids) {
     }
     
     /* wait child before exit */
-    if ((pid = wait(&status)) == -1) {
-        zprintf(1, "error: wait()\n");
-        exit(EXIT_FAILURE);
+    for (i = 0; i < child_n ; i++) { 
+        wait_child();
     }
-    if (!WIFEXITED(status)) {
-        zprintf(1, "[%d] Child exited abnormally\n", pid);
-        exit(EXIT_FAILURE);
-    }
-    zprintf(1, "[%d] Child pid=%d exit=%d\n", getpid(), pid, WEXITSTATUS(status));
     exit(EXIT_SUCCESS);
 }
 
 
 /* main function */
 int main(int argc, char **argv) {
-    int i, *pids, child_n;
+    pid_t *pids;
+    int i, child_n;
     
     /* arguments check */
     if (argc != 2) {
