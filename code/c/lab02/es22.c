@@ -27,10 +27,10 @@ int main(int argc, char **argv) {
         exit(EXIT_FAILURE);
     } 
     if (!WIFEXITED(status)) {
-        zprintf(1, "[%d] Child %d exited abnormally\n", pid);
+        zprintf(1, "[%d] Child pid=%d exit=abnormal\n", getpid(), pid);
         exit(EXIT_FAILURE);
     }
-    zprintf(1, "[%d] Child exited %d\n", getpid(), WEXITSTATUS(status));
+    zprintf(1, "[%d] Child pid=%d exit=%d\n", getpid(), pid, WEXITSTATUS(status));
     exit(EXIT_SUCCESS);
 }
 
