@@ -118,11 +118,11 @@ int node(pipe_t *p_in, int child_id, int level_current, int level_max, int *chil
         /* wait for children */
         for (i = 0; i < child_n[level_current + 1]; i++) {
             if ((pid = wait(&status)) == -1) {
-                zprintf(2, "error: wait()\n");
+                zprintf(1, "error: wait()\n");
                 exit(EXIT_FAILURE);
             }
             if (!WIFEXITED(status)) {
-                zprintf(1, "[%d] Child %d exited abnormally\n", pid);
+                zprintf(1, "[%d] Child pid=%d exit=abnormal\n", getpid(), pid);
                 exit(EXIT_FAILURE);
             }
             zprintf(1, "[%d] Child pid=%d exit=%d\n", getpid(), pid, WEXITSTATUS(status));
@@ -152,8 +152,6 @@ int main(int argc, char **argv) {
             exit(EXIT_FAILURE);
         }
     }
-    
     node((pipe_t *) NULL, 0, 0, argc - 1, child_n);
-    
 }
 

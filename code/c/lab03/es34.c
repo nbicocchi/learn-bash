@@ -8,18 +8,19 @@
 
 /* child function */
 int child(struct test_pipe *t, int *p) {
+    zprintf(1, "[%d] child started...\n", getpid());
 
     /* close write-side pipe */
     close(p[1]);
 
     /* read data 
-     * considerata l'atomicità di write(), il processo 
-     * (a) o legge una struttura dati intera, 
-     * (b) o si sospende fino al momento opportuno,
-     * (c) o ottiene 0 per indicare che la pipe ha il lato scrittura chiuso
+     * write() is atomic. read() can 
+     * (a) return a complete data structure 
+     * (b) suspend the process until data is available
+     * (c) return 0 for indicating that no one can write on the pipe
      */
     if (read(p[0], t, sizeof(struct test_pipe)) != sizeof(struct test_pipe)) {
-        zprintf(2, "error: read()\n");
+        zprintf(1, "error: read()\n");
         exit(EXIT_FAILURE);
     }
         
@@ -35,6 +36,8 @@ int child(struct test_pipe *t, int *p) {
 /* father function */
 int father(struct test_pipe *t, int *p) {
     int pid, status;
+
+    zprintf(1, "[%d] father started...\n", getpid());
     
     /* close read-side pipe */
     close(p[0]);
@@ -44,7 +47,7 @@ int father(struct test_pipe *t, int *p) {
     
     /* write on pipe */
     if (write(p[1], t, sizeof(struct test_pipe)) != sizeof(struct test_pipe)) {
-        zprintf(2, "error: write()\n");
+        zprintf(1, "error: write()\n");
         exit(EXIT_FAILURE);
     }
         
@@ -53,11 +56,11 @@ int father(struct test_pipe *t, int *p) {
     
     /* wait child before exit */
     if ((pid = wait(&status)) == -1) {
-        zprintf(2, "error: wait()\n");
+        zprintf(1, "error: wait()\n");
         exit(EXIT_FAILURE);
     }
     if (!WIFEXITED(status)) {
-        zprintf(1, "[%d] Child %d exited abnormally\n", pid);
+        zprintf(1, "[%d] Child pid=%d exit=abnormal\n", getpid(), pid);
         exit(EXIT_FAILURE);
     }
     zprintf(1, "[%d] Child pid=%d exit=%d\n", getpid(), pid, WEXITSTATUS(status));
@@ -71,7 +74,7 @@ int main(int argc, char **argv) {
     
     /* shared pipe */
     if (pipe(p) < 0) {
-        zprintf(2, "error: pipe()\n");
+        zprintf(1, "error: pipe()\n");
         exit(EXIT_FAILURE);
     }
     
@@ -79,11 +82,10 @@ int main(int argc, char **argv) {
     pid = fork();
     switch (pid) {
         case -1: /* error */
-            zprintf(2, "error: fork()\n");
+            zprintf(1, "error: fork()\n");
             exit(EXIT_FAILURE);
         case 0: /* child */
             child(&t, p);
     }
-    
     father(&t, p);
 }

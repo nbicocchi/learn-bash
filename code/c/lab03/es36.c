@@ -25,6 +25,8 @@ typedef int pipe_t[2];
 /* child function */
 int child(struct test_pipe *t, pipe_t *p, int child_n, int child_id) {
     int i;
+
+    zprintf(1, "[%d] child started...\n", getpid());
     
     /* close unused pipe sides */
     for (i = 0; i < child_n; i++) { 
@@ -50,6 +52,8 @@ int child(struct test_pipe *t, pipe_t *p, int child_n, int child_id) {
 int father(struct test_pipe *t, pipe_t *p, int child_n) {
     int i, pid, status;
     int nr;
+
+    zprintf(1, "[%d] father started...\n", getpid());
     
     /* close unused pipe sides */
     for (i = 0; i < child_n; i++) { 
@@ -83,11 +87,11 @@ int father(struct test_pipe *t, pipe_t *p, int child_n) {
     /* wait for children */
     for (i = 0; i < child_n; i++) {
         if ((pid = wait(&status)) == -1) {
-            zprintf(2, "error: wait()\n");
+            zprintf(1, "error: wait()\n");
             exit(EXIT_FAILURE);
         }
         if (!WIFEXITED(status)) {
-            zprintf(1, "[%d] Child %d exited abnormally\n", pid);
+            zprintf(1, "[%d] Child pid=%d exit=abnormal\n", getpid(), pid);
             exit(EXIT_FAILURE);
         }
         zprintf(1, "[%d] Child pid=%d exit=%d\n", getpid(), pid, WEXITSTATUS(status));
@@ -135,14 +139,13 @@ int main(int argc, char **argv) {
     for (i=0; i < child_n; i++) { 
         pid=fork(); 
         switch(pid) {
-            case 0: 
-                child(&t, p, child_n, i);
             case -1:
                 zprintf(1, "[%d] error fork()\n", getpid());
                 exit(EXIT_FAILURE);
+            case 0: 
+                child(&t, p, child_n, i);
         }
     }
-    
     father(&t, p, child_n);
 }
 

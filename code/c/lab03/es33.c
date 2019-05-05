@@ -11,6 +11,8 @@
 /* child function */
 int child(int *v, int *p) {
     int i;
+
+    zprintf(1, "[%d] child started...\n", getpid());
     
     /* close write-side pipe */
     close(p[1]);
@@ -18,7 +20,7 @@ int child(int *v, int *p) {
     for (i = 0; i < SLOTS; i++) {
         /* read from pipe */
         if (read(p[0], &v[i], sizeof(int)) != sizeof(int)) {
-            zprintf(2, "error: read()\n");
+            zprintf(1, "error: read()\n");
             exit(EXIT_FAILURE);
         }
         
@@ -31,6 +33,8 @@ int child(int *v, int *p) {
 /* father function */
 int father(int *v, int *p) {
     int i, pid, status;
+
+    zprintf(1, "[%d] father started...\n", getpid());
 
     /* close read-side pipe */
     close(p[0]);
@@ -46,7 +50,7 @@ int father(int *v, int *p) {
         
         /* write on pipe */
         if (write(p[1], &v[i], sizeof(int)) != sizeof(int)) {
-            zprintf(2, "error: write()\n");
+            zprintf(1, "error: write()\n");
             exit(EXIT_FAILURE);
         }
         
@@ -56,11 +60,11 @@ int father(int *v, int *p) {
     
     /* wait child before exit */
     if ((pid = wait(&status)) == -1) {
-        zprintf(2, "error: wait()\n");
+        zprintf(1, "error: wait()\n");
         exit(EXIT_FAILURE);
     }
     if (!WIFEXITED(status)) {
-        zprintf(1, "[%d] Child %d exited abnormally\n", pid);
+        zprintf(1, "[%d] Child pid=%d exit=abnormal\n", getpid(), pid);
         exit(EXIT_FAILURE);
     }
     zprintf(1, "[%d] Child pid=%d exit=%d\n", getpid(), pid, WEXITSTATUS(status));
@@ -74,7 +78,7 @@ int main(int argc, char **argv) {
     
     /* shared pipe */
     if (pipe(p) < 0) {
-        zprintf(2, "error: pipe()\n");
+        zprintf(1, "error: pipe()\n");
         exit(EXIT_FAILURE);
     }
     
@@ -82,7 +86,7 @@ int main(int argc, char **argv) {
     pid = fork();
     switch (pid) {
         case -1: /* error */
-            zprintf(2, "error: fork()\n");
+            zprintf(1, "error: fork()\n");
             exit(EXIT_FAILURE);
         case 0: /* child */
             child(v, p);

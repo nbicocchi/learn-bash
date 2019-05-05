@@ -20,6 +20,8 @@
 
 /* child function */
 int child(struct test_pipe *t, int *p) {
+    zprintf(1, "[%d] child started...\n", getpid());
+
     /* close unused pipe sides */
     close(p[0]); 
     
@@ -37,21 +39,23 @@ int child(struct test_pipe *t, int *p) {
 }
 
 /* father function */
-int father(struct test_pipe *t, int *p, int n_children) {
+int father(struct test_pipe *t, int *p, int child_n) {
     int i, pid, status;
+
+    zprintf(1, "[%d] father started...\n", getpid());
     
     /* close unused pipe sides */
     close(p[1]); 
     
-    for (i = 0; i < n_children; i++) { 
+    for (i = 0; i < child_n; i++) { 
         /* clear data structure */
         clear_test_pipe(t);
         
         /* read data 
-         * considerata l'atomicità di write(), il processo 
-         * (a) o legge una struttura dati intera, 
-         * (b) o si sospende fino al momento opportuno,
-         * (c) o ottiene 0 per indicare che la pipe ha il lato scrittura chiuso
+         * write() is atomic. read() can 
+         * (a) return a complete data structure 
+         * (b) suspend the process until data is available
+         * (c) return 0 for indicating that no one can write on the pipe
          */
         if (read(p[0], t, sizeof(struct test_pipe)) != sizeof(struct test_pipe)) {
             zprintf(1, "[%d] error read()\n", getpid());
@@ -65,13 +69,13 @@ int father(struct test_pipe *t, int *p, int n_children) {
     }
     
     /* wait for children */
-    for (i = 0; i < n_children; i++) {
+    for (i = 0; i < child_n; i++) {
         if ((pid = wait(&status)) == -1) {
-            zprintf(2, "error: wait()\n");
+            zprintf(1, "error: wait()\n");
             exit(EXIT_FAILURE);
         }
         if (!WIFEXITED(status)) {
-            zprintf(1, "[%d] Child %d exited abnormally\n", pid);
+            zprintf(1, "[%d] Child pid=%d exit=abnormal\n", getpid(), pid);
             exit(EXIT_FAILURE);
         }
         zprintf(1, "[%d] Child pid=%d exit=%d\n", getpid(), pid, WEXITSTATUS(status));
@@ -83,9 +87,7 @@ int father(struct test_pipe *t, int *p, int n_children) {
 /* main function */
 int main(int argc, char **argv) {
     char *usage = "usage: %s nchildren\n";
-    int i;
-    int pid;
-    int n_children;
+    int i, pid, child_n;
     int p[2];
     struct test_pipe t;
     
@@ -95,9 +97,9 @@ int main(int argc, char **argv) {
         exit(EXIT_FAILURE);
     }
     
-    /* get n_children from command line */
-    n_children = atoi(argv[1]);
-    if (n_children <= 0) { 
+    /* get child_n from command line */
+    child_n = atoi(argv[1]);
+    if (child_n <= 0) { 
         zprintf(1, usage, argv[0]);
         exit(EXIT_FAILURE);
     }
@@ -109,17 +111,16 @@ int main(int argc, char **argv) {
     }
     
     /* init child processes */
-    for (i=0; i < n_children; i++) { 
+    for (i=0; i < child_n; i++) { 
         pid=fork(); 
         switch(pid) {
-            case 0: 
-                child(&t, p);
             case -1:
                 zprintf(1, "[%d] error fork()\n", getpid());
                 exit(EXIT_FAILURE);
+            case 0: 
+                child(&t, p);
         }
     }
-    
-    father(&t, p, n_children);
+    father(&t, p, child_n);
 }
 

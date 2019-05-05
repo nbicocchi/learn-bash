@@ -18,6 +18,5 @@ int main(int argc, char **argv) {
     while(write(p[1], &c, 1) > 0) {
         zprintf(1, "written %d bytes.\n", ++n);
     }
-    
     exit(EXIT_SUCCESS);
 }
