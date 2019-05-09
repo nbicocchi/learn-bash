@@ -16,7 +16,6 @@
    p0|    p1|   p2|
      |      |     | 
     c0     c1    c2
-    
 */
 
 /* when multiple pipes are needed this definition is useful */
