@@ -3,6 +3,7 @@
 #include <stdarg.h>
 #include <unistd.h>
 #include <string.h>
+#include <sys/wait.h>
 #include "utils.h"
 
 /* Fill struct test_pipe using parameters */
