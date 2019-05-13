@@ -7,11 +7,10 @@
 #include "utils.h"
 
 char msg[] = "Hello World!";
-char msg2[256];
 
 int main(int argc, char **argv) {
     int p[2]; 
-    int nw, nr;
+    int nw;
     
     if (pipe(p) != 0) {
         zprintf(1, "[%d] error: pipe()\n", getpid());
@@ -30,8 +29,7 @@ int main(int argc, char **argv) {
         case 0: 
             zprintf(1, "[%d] child started...\n", getpid());
             nw = write(p[1], msg, strlen(msg)); 
-            nr = read(p[0], msg2, sizeof(msg2));
-            zprintf(1, "[%d] [nr=%d] [nw=%d] msg received: %s\n", getpid(), nr, nw, msg2);
+            zprintf(1, "[%d] [nw=%d]\n", getpid(), nw);
             exit(EXIT_SUCCESS);
     }
     

@@ -7,7 +7,6 @@
 #include "utils.h"
 
 char msg[] = "Hello World!";
-char msg2[256];
 
 void sig_handler(int s) {
     zprintf(1, "[%d] received signal %d\n", getpid(), s);
@@ -16,7 +15,7 @@ void sig_handler(int s) {
 
 int main(int argc, char **argv) {
     int p[2]; 
-    int nw, nr;
+    int nw;
     
     if (pipe(p) != 0) {
         zprintf(1, "[%d] error: pipe()\n", getpid());
@@ -36,9 +35,7 @@ int main(int argc, char **argv) {
             zprintf(1, "[%d] child started...\n", getpid());
             signal(SIGPIPE, sig_handler);
             nw = write(p[1], msg, strlen(msg));
-            nr = read(p[0], msg2, sizeof(msg2));
-            
-            zprintf(1, "[%d] [nr=%d] [nw=%d] msg received: %s\n", getpid(), nr, nw, msg2);
+            zprintf(1, "[%d] [nw=%d]\n", getpid(), nw);
             exit(EXIT_SUCCESS);
     }
     
