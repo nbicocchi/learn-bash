@@ -36,7 +36,7 @@ int child(struct test_primes *t, pipe_t *p, int child_n, int child_id) {
 
     zprintf(1, "[%d] child started...\n", getpid());
     
-    /* close unused pipe sides (shared with father)*/
+    /* close unused pipe sides */
     for (i = 0; i < child_n; i++) {
         if (i != child_id) {
             close(p[i*2][0]);
@@ -49,7 +49,7 @@ int child(struct test_primes *t, pipe_t *p, int child_n, int child_id) {
         }
     }
 
-    /* read from father */
+    /* wait for father */ 
     if (read(p[child_id*2][0], t, sizeof(struct test_primes)) != sizeof(struct test_primes)) {
         zprintf(1, "[%d] read() failed\n", getpid());
         exit(1);
@@ -60,7 +60,7 @@ int child(struct test_primes *t, pipe_t *p, int child_n, int child_id) {
         t->is_prime[i] = is_prime(i);
     }
     
-    /* write number of lines to father */
+    /* write to father */
     if (write(p[child_id*2+1][1], t, sizeof(struct test_primes)) != sizeof(struct test_primes)) {
         zprintf(1, "[%d] write() failed\n", getpid());
         exit(1);
@@ -86,7 +86,7 @@ int father(struct test_primes *t, pipe_t *p, int child_n) {
         t->is_prime[i] = 0;
     }
 
-    /* write number of lines to father */
+    /* write to child */
     for (i = 0; i < child_n; i++) { 
         if (write(p[i*2][1], t, sizeof(struct test_primes)) != sizeof(struct test_primes)) {
             zprintf(1, "[%d] write() failed\n", getpid());
@@ -94,7 +94,7 @@ int father(struct test_primes *t, pipe_t *p, int child_n) {
         }
     }
     
-    /* wait for number of lines */      
+    /* read results */      
     for (i = 0; i < child_n; i++) { 
         if (read(p[i*2+1][0], t, sizeof(struct test_primes)) != sizeof(struct test_primes)) {
             zprintf(1, "[%d] read() failed\n", getpid());
