@@ -50,9 +50,9 @@ In questo modo, informiamo il kernel riguardo l'utilizzo delle varie pipe e verr
 01. (es31.c) Invocare la system call pipe() e visualizzare il valore dei file descriptor generati.
 
 02. (es32.c) Verificare la capacita' massima di una pipe scrivendo su di essa fino alla saturazione. Cosa succede chiudendo il lato scrittura della pipe?
-Nota: Per eseguire questa prova è sufficiente un solo processo ed una pipe aperta sia in lettura che scrittura. Ricordarsi che system call write() è bloccante!
+Nota: Per eseguire questa prova è sufficiente un solo processo ed una pipe aperta sia in lettura che scrittura. Ricordarsi che system call write() è bloccante quando la pipe è piena!
 
-03. (es33.c) Scrivere un sorgente C in cui due processi comunicano attraverso una pipe. In particolare il padre invia un vettore di 16 interi (32bit) al figlio che li visualizza ed esce. Verificare cosa succede in caso la pipe venga utilizzata nella direzione opposta (il figlio invia l'array di interi al padre). Cosa è necessario fare per invertire il verso della comunicazione?
+03. (es33.c) Scrivere un sorgente C in cui due processi comunicano attraverso una pipe. In particolare il padre invia un vettore di 16 interi (uno alla volta) al figlio che li visualizza ed esce. Verificare cosa succede in caso la pipe venga utilizzata nella direzione opposta (il figlio invia l'array di interi al padre). Cosa è necessario fare per invertire il verso della comunicazione?
 
 04. (es34.c) Scrivere un sorgente C in cui due processi comunicano attraverso una pipe. In particolare il padre invia una struttura dati test_pipe (vedi utils.h) al figlio che la visualizza ed esce.
 
