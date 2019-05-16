@@ -8,7 +8,7 @@ Note: per utilizzare questa guida con vim utilizzare i seguenti due comandi
 ```
 
 ## Introduzione ##
-La comunicazione (e sincronizzazione) fra processi può essere effettuata attraverso le system call read() e write() utilizzate per leggere e scrivere sui lati di una pipe condivisa. Un processo può rimanere bloccato su una chiamata read() in attesa di dati e, non appena i dati sono resi risponibili da una chiamata write(), il processo viene sbloccato e riceve i dati di cui era in attesa.
+La comunicazione (e sincronizzazione) fra processi può essere effettuata attraverso le system call read() e write() utilizzate per leggere e scrivere su una pipe, un file, una socket, etc. Un processo può rimanere bloccato su una chiamata read() in attesa di dati. Non appena i dati sono disponibili, il processo viene sbloccato e riceve i dati di cui era in attesa.
 
 Una seconda forma di comunicazione fra processi (IPC) è basata sull'utilizzo di segnali. Un segnale è una notifica asincrona inviata da un processo (o dal kernel stesso) ad un altro processo. Quando un segnale viene inviato, il processo viene interrotto (durante una qualunque istruzione non atomica). Se il processo ricevente ha resistrato un handler per il segnale ricevuto, l'handler viene eseguito. In caso contrario, viene eseguito l'handler di default.
 
@@ -59,11 +59,11 @@ CTRL-Z -> SIGSTOP(18)
 CTRL-T -> SIGINFO(29)
 ```
 
-Ogni processo può definire funzioni handler per gestire i segnali in arrivo. Utilizzando la system call signal(int sig, sig_t func) è infatti possibile associare il segnale sig alla funzione func. E' interessante notare come la system call signal() ritorni inoltre un tipo sig_t (puntatore a funzione) all'handler associato in precedenza. Questa caratteristica può essere utilizzata, ad esempio, per sostituire temporaneamente l'handler di default per poi riassociarlo al segnale.
+Ogni processo può definire funzioni handler (callback) per gestire i segnali in arrivo. Utilizzando la system call signal(int sig, sig_t func) è infatti possibile associare il segnale sig alla funzione func. E' interessante notare come la system call signal() ritorni inoltre un tipo sig_t (puntatore a funzione) all'handler associato in precedenza. Questa caratteristica può essere utilizzata, ad esempio, per sostituire temporaneamente l'handler di default per poi riassociarlo al segnale.
 
 Si ricordi che non è possibile definire un handler per tutti i segnali. In particolare per i segnali SIGKILL e SIGSTOP non è possibile definire alcun handler alternativo. SIGKILL determina la terminazione immediata del processo. SIGSTOP sospende il processo. L'esecuzione riprende ricevendo il segnale SIGCONT.
 
-Interessante notare come la procedura di shutdown dei sistemi Unix sia basata sui segnali. In particolare, a tutti i processi viene inviato il segnale SIGTERM per consentire loro di intercettarlo e terminare in modo "soft". Dopo un'attesa predefinita, il kernel invia a tutti i processi restanti il segnale SIGKILL (non intercettabile) per chiuderli forzatamente.
+Interessante notare come la procedura di shutdown dei sistemi Unix sia basata sui segnali. In particolare, a tutti i processi viene inviato il segnale SIGTERM per consentire loro di intercettarlo e terminare in modo "graceful". Dopo un'attesa predefinita, il kernel invia a tutti i processi restanti il segnale SIGKILL (non intercettabile) per chiuderli forzatamente.
 
 ## Esercizi ##
 01. (es41.c) Progettare un applicativo che stampi la stringa "Hello ", si sospenda per 3 secondi, e stampi la stringa "World!\n". Si veda la system call sleep().

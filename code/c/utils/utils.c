@@ -59,4 +59,3 @@ void wait_child() {
         zprintf(1, "[%d] child pid=%d signal=%d (stopped)\n", getpid(), pid, WSTOPSIG(status));
     }
 }
-
