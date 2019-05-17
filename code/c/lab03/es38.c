@@ -28,7 +28,7 @@ int child(struct test_pipe *t, pipe_t *p, int child_n, int child_id) {
     zprintf(1, "[%d] child started...\n", getpid());
     
     /* close unused pipe sides */
-    for (i = 0; i < child_n; i++) {
+    for (i = 0; i < child_n + 1; i++) {
         if (i != child_id + 1) close(p[i][1]);
         if (i != child_id) close(p[i][0]);
     }
@@ -62,9 +62,9 @@ int father(struct test_pipe *t, pipe_t *p, int child_n) {
     zprintf(1, "[%d] father started...\n", getpid());
     
     /* close unused pipe sides */
-    for (i = 0; i < child_n; i++) { 
+    for (i = 0; i < child_n + 1; i++) { 
         if (i != 0) close(p[i][1]);
-        if (i != child_n - 1) close(p[i][0]);
+        if (i != child_n) close(p[i][0]);
     }
     
     zprintf(1, "[%d] writing to child 0...\n", getpid());

@@ -35,7 +35,7 @@ int nephew(char **argv, pipe_t p, int child_n, int child_id) {
     close(p[1]);
 
     /* execute external cmd */
-    execlp("wc", "-l", "-l", argv[child_id + 1], (char *)0);
+    execlp("wc", "-l", argv[child_id + 1], (char *)0);
 
     zprintf(1, "[%d] error exec()\n", getpid());
     exit(EXIT_FAILURE);
