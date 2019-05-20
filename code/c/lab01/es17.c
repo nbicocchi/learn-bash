@@ -6,7 +6,7 @@
 #include "utils.h"
 
 int main(int argc, char **argv) {
-	char *usage = "usage: %s [n] [filename]\n";
+    char *usage = "usage: %s [n] [filename]\n";
     char c;
     int lines = 0, fdin = 0, fdout = 1, n = 10;
 
@@ -15,7 +15,14 @@ int main(int argc, char **argv) {
         exit(1);
     }
 
-    if (argc == 2) n = atoi(argv[1]);
+    if (argc >= 2){
+        n = atoi(argv[1]);
+        if(n==10){
+            zprintf(2,"Il primo parametro deve essere diverso da 10\n");
+            exit(2);
+        }
+    }
+
     if (argc == 3) fdin = open(argv[2], O_RDONLY);
 
     while(read(fdin, &c, 1) > 0) {
