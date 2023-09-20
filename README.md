@@ -89,6 +89,8 @@ Note:
 * expr obsoleto $(())
 * esempi read
 * uso di $@
+* spiegare spellcheck
+* chiarire [[ ]]
 
 ## Moduli C
 [M1] Introduzione al linguaggio C
