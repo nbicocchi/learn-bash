@@ -78,7 +78,8 @@ L'esame consiste in 2 esercizi (1x Bash, 1x C) che gli studenti sono tenuti a sv
 * Costrutti condizionali
 * Costrutti iterativi
 * Funzioni
-* Trattamento argomenti con getopts
+* Trattamento argomenti avanzato (getopts)
+* Script multi-file
 * Buone pratiche
 
 ## Moduli C
