@@ -75,9 +75,11 @@ L'esame consiste in 2 esercizi (1x Bash, 1x C) che gli studenti sono tenuti a sv
 
 [M3] Bash Scripting
 * Scrittura ed esecuzione
-* Costrutti condizionali (test, if, case)
-* Costrutti iterativi (for, while)
-* Argomenti avanzati (funzioni, getopts, buone pratiche, etc)
+* Costrutti condizionali
+* Costrutti iterativi
+* Funzioni
+* Trattamento argomenti con getopts
+* Buone pratiche
 
 ## Moduli C
 [M1] Introduzione al linguaggio C
