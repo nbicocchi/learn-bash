@@ -40,6 +40,6 @@ Per utilizzare questa guida con vim utilizzare i seguenti due comandi
 
 **usage: $0 [-h] -d dirname f1 .. fn**
 
-09. (es49.sh) Lo script prevede un numero variabile di parametri che rappresentano nomi assoluti di directory (d1, ..., dn). Lo script prevede inoltre l'utilizzo del parametro -t per specificare un'estensione di file. Lo script calcola la dimensione media (in bytes) dei file che terminano con l'estensione indicata per ogni directory indicata e mostra il risultato ordinato in modo decrescente.
+09. (es49.sh) Lo script prevede un numero variabile di parametri che rappresentano nomi assoluti di directory (d1, ..., dn). Lo script prevede inoltre l'utilizzo del parametro -t per specificare un'estensione di file. Lo script calcola la dimensione media (in bytes) dei file che terminano con l'estensione indicata per ogni directory indicata.
 
 **usage: $0 [-h] -t extension d1 .. dn**

@@ -9,8 +9,7 @@ while getopts "d:h" o; do
     case "$o" in
         d)  D="$OPTARG"
             case "$D" in 
-                /*) [ ! -d "$D" ] && usage
-                    [ ! -x "$D" ] && usage
+                /*) [ ! -d "$D" ] || [ ! -x "$D" ] && usage
                     ;;
                 *)  usage
                     ;;
@@ -24,24 +23,26 @@ while getopts "d:h" o; do
 done
 
 # Shift parameters away. In this case, useless.
-shift $(expr $OPTIND - 1)
+shift $(( OPTIND - 1 )) 
 
 # Check if parameters have been acquired
 [ $# -eq 0 ] && usage
 [ -z "$D" ] && usage
 
-for file in $*; do
+for file in "$@"; do
     case "$file" in
-        */*)    usage
-                ;;
-        *)      ;;
+        */*)    
+            usage
+            ;;
+        *)
+            ;;
     esac
 done
 
 # Main body
 missing=false
 missing_list=""
-for file in $*; do
+for file in "$@"; do
     nfound=$(find "$D" -type f -name "$file" 2>/dev/null | wc -l)
     if [ "$nfound" -eq 0 ]; then
         missing=true

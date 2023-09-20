@@ -11,8 +11,7 @@ while getopts "d:h" o; do
     case "$o" in
         d)  D="$OPTARG"
             case "$D" in 
-                /*) [ ! -d "$D" ] && usage
-                    [ ! -x "$D" ] && usage
+                /*) [ ! -d "$D" ] || [ ! -x "$D" ] && usage
                     ;;
                 *)  usage
                     ;;
@@ -26,7 +25,7 @@ while getopts "d:h" o; do
 done
 
 # Shift parameters away. In this case, useless.
-shift $(expr $OPTIND - 1)
+shift $(( OPTIND - 1 ))
 
 # Check if parameters have been acquired
 [ $# -eq 0 ] && usage
@@ -38,9 +37,9 @@ rm -rf "$LOG"
 dirs=$(find "$D" -type d 2>/dev/null)
 for dir in $dirs; do
     found=0
-    for file in $*; do
-        if [ -f "$dir"/"$file" -a -r "$dir"/"$file" ]; then
-            found=$(expr $found + 1)
+    for file in "$@"; do
+        if [ -f "$dir"/"$file" ] && [ -r "$dir"/"$file" ]; then
+            found=$(( found + 1 ))
         fi
     done
     if [ $found -gt 0 ]; then

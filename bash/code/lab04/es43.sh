@@ -19,8 +19,14 @@ while getopts "f:l:h" o; do
             esac
             ;;
         l)  LINES="$OPTARG"
-            expr "$LINES" + 0 1>/dev/null 2>&1 || usage
-            [ "$LINES" -ge 2 ] || usage
+            case "$LINES" in
+              ''|*[!0-9]*)
+                usage
+                ;;
+              *)
+                [ "$LINES" -lt 2 ] && usage 
+                ;;
+            esac
             ;;
         h)  usage
             ;;
@@ -30,30 +36,30 @@ while getopts "f:l:h" o; do
 done
 
 # Shift parameters away. $1 become first directory
-shift $(expr $OPTIND - 1)
+shift $(( OPTIND - 1 ))
 
 # Check parameters
 [ $# -lt 1 ] && usage
 [ -z "$F" ] && usage
 
 # Check dirs
-for dname in $*; do
+for dname in "$@"; do
   case "$dname" in 
-    /*) ;;
-    *)  usage
-        ;;
+    /*) 
+      [ ! -d "$dname" ] || [ ! -x "$dname" ] && usage
+      ;;
+    *)  
+      usage
+      ;;
   esac
-
-  [ ! -d "$dname" ] && usage
-  [ ! -x "$dname" ] && usage
 done
 
 # Main body
 rm -rf "$LOG"
-for dname in $*; do
+for dname in "$@"; do
   list=$(find "$dname" -type f -readable -name "$F" 2>/dev/null)
   for item in $list; do
-    if [ $(cat "$item" | wc -l) -ge "$LINES" ]; then
+    if [ "$(wc -l < "$item")" -ge "$LINES" ]; then
       echo "$item"
       tail -n 2 "$item" | head -n 1 >> "$LOG"
     fi

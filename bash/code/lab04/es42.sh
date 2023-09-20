@@ -23,35 +23,35 @@ while getopts "f:h" o; do
 done
 
 # Shift parameters away. $1 become first directory
-shift $(expr $OPTIND - 1)
+shift $(( OPTIND - 1 ))
 
 # Check parameters
 [ $# -lt 1 ] && usage
 [ -z "$F" ] && usage
 
 # Check dirs
-for dname in $*; do
+for dname in "$@"; do
   case "$dname" in 
-    /*) ;;
-    *)  usage
-        ;;
+    /*) 
+      [ ! -d "$dname" ] || [ ! -x "$dname" ] && usage
+      ;;
+    *)  
+      usage
+      ;;
   esac
-
-  [ ! -d "$dname" ] && usage
-  [ ! -x "$dname" ] && usage
 done
 
 # Main body
 tsize=0
-for dname in $*; do
+for dname in "$@"; do
   dsize=0
   list=$(find "$dname" -type f -readable -name "$F" 2>/dev/null)
   for item in $list; do
-    size=$(cat "$item" | wc -c)
-    dsize=$(expr "$dsize" + "$size")
+    size=$(wc -c < "$item")
+    dsize=$(( dsize + size ))
     echo "$item" ["$size" bytes]
   done
-  tsize=$(expr "$tsize" + "$dsize")
+  tsize=$(( tsize + dsize ))
   echo ["$dname": "$dsize" bytes]
 done
 

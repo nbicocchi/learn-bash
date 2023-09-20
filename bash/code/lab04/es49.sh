@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LOG=/tmp/script.log
+DEBUG=N
 
 usage() { 
     echo "usage: $0 [-h] -t extension d1 .. dn" 1>&2 
@@ -19,13 +19,13 @@ while getopts "t:h" o; do
 done
 
 # Shift parameters away. In this case, useless.
-shift $(expr $OPTIND - 1)
+shift $(( OPTIND - 1 ))
 
 # Check if parameters have been acquired
 [ $# -eq 0 ] && usage
 [ -z "$EXT" ] && usage
 
-for dir in $*; do
+for dir in "$@"; do
     case "$dir" in
         /*) ;;
         *)  usage
@@ -34,10 +34,9 @@ for dir in $*; do
 done
 
 # Main body
-rm -rf "$LOG"
 echo "processing..."
-for dir in $*; do
-    files=$(find "$dir" -type f -readable -name '*'$EXT 2>/dev/null)
+for dir in "$@"; do
+    files=$(find "$dir" -type f -readable -name '*'"$EXT" 2>/dev/null)
 
     if [ -z "$files" ]; then
         average=0
@@ -45,18 +44,14 @@ for dir in $*; do
         tsize=0
         nfiles=0
         for file in $files; do
-            size=$(cat "$file" | wc -c)
-            tsize=$(expr "$tsize" + "$size")
-            nfiles=$(expr "$nfiles" + 1)
+            size=$(wc -c < "$file")
+            tsize=$(( tsize + size ))
+            nfiles=$(( nfiles + 1 ))
+            [ $DEBUG = "Y" ] && echo ["$nfiles"] [size="$size"] "$file"
         done
-        average=$(expr "$tsize" / "$nfiles")
+        average=$(( tsize / nfiles ))
     fi
-
-    echo "$average;$dir"
-    echo "$average;$dir" >> "$LOG"    
+    echo "$dir"\;"$nfiles"\;"$average"  
 done
-
-echo "summary..."
-sort -rn "$LOG"
 
 exit 0

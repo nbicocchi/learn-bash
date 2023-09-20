@@ -25,31 +25,31 @@ while getopts "f:h" o; do
 done
 
 # Shift parameters away. $1 become first directory
-shift $(expr $OPTIND - 1)
+shift $(( OPTIND - 1 ))
 
 # Check parameters
 [ $# -lt 1 ] && usage
 [ -z "$F" ] && usage
 
 # Check dirs
-for dname in $*; do
+for dname in "$@"; do
   case "$dname" in 
-    /*) ;;
-    *)  usage
-        ;;
+    /*) 
+      [ ! -d "$dname" ] || [ ! -x "$dname" ] && usage
+      ;;
+    *)  
+      usage
+      ;;
   esac
-
-  [ ! -d "$dname" ] && usage
-  [ ! -x "$dname" ] && usage
 done
 
 # Main body
 rm -rf "$LOG"
-for dname in $*; do
+for dname in "$@"; do
   list=$(find "$dname" -type f -readable -name "$F" 2>/dev/null)
   for item in $list; do
-    bytes=$(cat "$item" | wc -c)
-    lines=$(cat "$item" | wc -l)
+    bytes=$(wc -c < "$item")
+    lines=$(wc -l < "$item")
     echo "$item"
     echo "$item":"$bytes":"$lines" >> "$LOG"
   done

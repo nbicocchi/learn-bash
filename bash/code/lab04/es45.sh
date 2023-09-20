@@ -18,33 +18,33 @@ while getopts "h" o; do
 done
 
 # Shift parameters away. $1 become first directory
-shift $(expr $OPTIND - 1)
+shift $(( OPTIND - 1 ))
 
 # Check parameters
 [ $# -lt 1 ] && usage
 
 # Check dirs
-for dname in $*; do
+for dname in "$@"; do
   case "$dname" in 
-    /*) ;;
-    *)  usage
-        ;;
+    /*) 
+      [ ! -d "$dname" ] || [ ! -x "$dname" ] && usage
+      ;;
+    *)  
+      usage
+      ;;
   esac
-
-  [ ! -d "$dname" ] && usage
-  [ ! -x "$dname" ] && usage
 done
 
 # Main body
 rm -rf "$LINKDIR"
 mkdir -p "$LINKDIR"
 count=0
-for dname in $*; do
+for dname in "$@"; do
   list=$(find "$dname" -type f -readable -mtime -1 2>/dev/null)
   for item in $list; do
     echo "$item"
-    ln -s "$item" "$LINKDIR"/$(basename "$item")."$count"
-    count=$(expr "$count" + 1)
+    ln -s "$item" "$LINKDIR"/"$(basename "$item")"."$count"
+    count=$(( count + 1 ))
   done
 done
 
