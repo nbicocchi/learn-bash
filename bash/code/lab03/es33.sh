@@ -15,7 +15,7 @@ case "$1" in
        ;;
 esac
 
-if [ ! -d "$1" -o ! -x "$1" ]; then
+if [ ! -d "$1" ] || [ ! -x "$1" ]; then
     echo "$USAGE"
     exit 1
 fi
@@ -28,14 +28,10 @@ case "$2" in
 esac
 
 # Main body
-list=$(find "$1" -type f -readable 2>/dev/null)
+list=$(find "$1" -type f -name "*$2*" -readable 2>/dev/null)
 for item in $list; do
-    echo "$item" | grep "$2" 1>/dev/null 2>&1
-    if [ $? -eq 0 ]; then
-        cat "$item" | grep "$2" 1>/dev/null 2>&1
-        if [ $? -eq 0 ]; then
-            echo "$item"
-        fi
+    if grep "$2" <"$item" 1>/dev/null 2>&1; then
+        echo "$item"
     fi
 done
 

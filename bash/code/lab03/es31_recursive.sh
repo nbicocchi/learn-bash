@@ -7,17 +7,17 @@ recurse_dir() {
   # $1 is the directory name
   # $2 is current depth level 
 
-  cd "$1"
+  cd "$1" || return
     
   # Scan for sub-directories
   for fname in *; do
-    if [ -d "$fname" -a -x "$fname" ]; then
-      recurse_dir "$fname" $(expr "$2" + 1)
+    if [ -d "$fname" ] && [ -x "$fname" ]; then
+      recurse_dir "$fname" $(( "$2" + 1 ))
     fi
   done
 
   # Process current directory
-  echo ["$2"] $(pwd) 
+  echo ["$2"] "$(pwd)" 
 
   cd ..
 }
@@ -35,7 +35,7 @@ case "$1" in
       ;;
 esac
 
-if [ ! -d "$1" -o ! -x "$1" ]; then
+if [ ! -d "$1" ] || [ ! -x "$1" ]; then
   echo "$USAGE"
   exit 1
 fi

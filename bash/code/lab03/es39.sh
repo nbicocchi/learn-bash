@@ -15,7 +15,7 @@ case "$1" in
      ;;
 esac
 
-if [ ! -d "$1" -o ! -x "$1" ]; then
+if [ ! -d "$1" ] || [ ! -x "$1" ]; then
   echo "$USAGE"
   exit 1
 fi
@@ -35,11 +35,11 @@ case "$3" in
 esac
 
 # Main body
-count_f1=$(find "$1" -type f -readable -name "$2" | wc -l 2>/dev/null)
-count_f2=$(find "$1" -type f -readable -name "$3" | wc -l 2>/dev/null)
+count_f1=$(find "$1" -type f -readable -name "$2" 2>/dev/null | wc -l)
+count_f2=$(find "$1" -type f -readable -name "$3" 2>/dev/null | wc -l)
 
-if [ "$count_f1" -gt 0 -a "$count_f2" -gt 0 ]; then
-  echo "Test passed for" "$1" 
+if [ "$count_f1" -gt 0 ] && [ "$count_f2" -gt 0 ]; then
+  echo "Test passed:" "$1" 
   echo "$2": "$count_f1"
   echo "$3": "$count_f2"
 fi

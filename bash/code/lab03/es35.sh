@@ -18,21 +18,24 @@ case "$1" in
      ;;
 esac
 
-if [ ! -d "$1" -o ! -x "$1" ]; then
+if [ ! -d "$1" ] || [ ! -x "$1" ]; then
   echo "$USAGE"
   exit 1
 fi
 
-expr "$2" + 0 1>/dev/null 2>&1
-if [ $? -gt 1 -o "$2" -lt 0 ]; then
-  echo "$USAGE"; 
-  exit 1
-fi
+case "$2" in
+  ''|*[!0-9]*)
+    echo "$USAGE"
+    exit 1
+    ;;
+  *) 
+    ;;
+esac
 
 # Main body
 list=$(find "$1" -type d -executable 2>/dev/null)
 for item in $list; do
-  nfiles=$(find "$item" -maxdepth 1 -type f -size +$2c | wc -l 2>/dev/null)
+  nfiles=$(find "$item" -maxdepth 1 -type f -size +"$2"c | wc -l 2>/dev/null)
   if [ "$nfiles" -ge 1 ]; then
     echo "$nfiles":"$item"
   fi

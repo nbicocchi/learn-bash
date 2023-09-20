@@ -7,13 +7,13 @@ if [ $# -ne 2 ]; then
   exit 1
 fi
 
-if [ ! -d "$1" -o ! -w "$1" ]; then
+if [ ! -d "$1" ] || [ ! -w "$1" ]; then
   echo "$USAGE"
   exit 1
 fi
 
-cd "$1"
-echo $(pwd) > "$2"
+cd "$1" || exit 1
+pwd > "$2"
 
 exit 0
 

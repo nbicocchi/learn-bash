@@ -15,7 +15,7 @@ case "$1" in
      ;;
 esac
 
-if [ ! -d "$1" -o ! -x "$1" ]; then
+if [ ! -d "$1" ] || [ ! -x "$1" ]; then
   echo "$USAGE"
   exit 1
 fi
@@ -30,11 +30,12 @@ esac
 # Main body
 n=0
 list=$(find "$1" -type f -readable -name "$2" 2>/dev/null)
-for item in $list; do
-  echo "$item"
-  rm -rf /tmp/link_"$n"
-  ln -s "$item" /tmp/link_"$n"
-  n=$(expr "$n" + 1)
+for src in $list; do
+  dst=/tmp/link_"$n"
+  echo "$src" "-->" "$dst" 
+  rm -rf "$dst"
+  ln -s "$src" "$dst"
+  n=$(( n + 1 ))
 done
 
 exit 0

@@ -7,7 +7,7 @@ if [ $# -ne 1 ]; then
   exit 1
 fi
 
-if [ ! -d "$1" -o ! -r "$1" ]; then
+if [ ! -d "$1" ] || [ ! -r "$1" ]; then
   echo "$USAGE"
   exit 1
 fi

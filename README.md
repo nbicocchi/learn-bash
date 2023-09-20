@@ -131,3 +131,10 @@ L'esame consiste in 2 esercizi (1x Bash, 1x C) che gli studenti sono tenuti a sv
 * Apertura, chiusura, posizione corrente
 * Lettura e scrittura (con e senza formattazione)
 * Flussi standard (stdin, stdout, stderr)
+
+
+Note:
+* -a -o deprecato
+* case per verificare se è un numero
+* if e while possono valutare direttamente comando senza [] oppure $?
+* expr obsoleto $(())
