@@ -104,8 +104,7 @@ $ echo $PATH
 **read** legge una linea da stdin e la inserisce in una variabile. Utile per interazione con utente.
 
 ```shell
-$ echo "digit exit to quit..."
-$ read answer
+$ read -p "What is your name? " answer
 $ echo "$answer"
 ```
 
@@ -560,7 +559,7 @@ PWD=/home/nicola
 
 # Espansioni
 
-## Metacaratteri 
+## Espansione metacaratteri 
 La shell riconosce caratteri speciali (wild cards)
 
 \* = una qualunque stringa di zero o più caratteri in un nome di file
@@ -610,20 +609,48 @@ $ ls [a-c,1-3]*[c,f]?
 $ ls *\** 
 ```
 
-## Esecuzione in-line
+## Espansione esecuzione in-line
 E' possibile eseguire un comando ed utilizzarne l'output all'interno di un altro comando attraverso la sintassi **$( cmd )**
 
 ```shell
-$ echo $(pwd)  
-/home/nicola  
-$ echo $(expr 2 + 3)  
+$ dirname=$(pwd)  
+$ echo $dirname  
+/home/nicola
+
+$ list=$(find /etc -type f 2>/dev/null)  
+$ echo $list
+/etc/ld.so.conf
+/etc/lsb-release
+/etc/ostree-mkinitcpio.conf
+/etc/adjtime
+/etc/dhcpcd.conf
+...
+```
+
+## Espansione aritmetica
+E' possibile eseguire operazioni aritmetiche attraverso la sintassi **$(( cmd ))**
+
+```shell
+$ echo $(( 2 + 4 ))  
+6
+$ echo $(( 2 + 3 * 2 ))  
+11
+$ echo $(( (2 + 3) * 3 ))
+15
+```
+
+All'interno di questo tipo di espansione, le variabili sono identificate dal loro nome (non dal valore! e.g. $a, $b)
+
+```shell
+$ a=2; b=3
+$ echo $(( a + b ))  
 5
 ```
 
 ## Inibizione
-Ogni volta che utilizziamo un comando che contiene variabili, metacaratteri o esecuzioni inline, la shell espande in loro contenuto nell'ordine che segue:
+Ogni volta che utilizziamo un comando che contiene variabili, metacaratteri o espansioni, la shell li sostituisce nell'ordine seguente:
 
-1. **$( )** sono eseguiti e sostituiti con il risultato prodotto  
+1. **\$( ) e \$(( ))** sono sostituiti con il risultato prodotto  
 2. Variabili sono espanse nei valori corrispondenti 
 3. Metacaratteri sono espansi nei nomi di file corrispondendi
 

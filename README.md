@@ -82,16 +82,6 @@ L'esame consiste in 2 esercizi (1x Bash, 1x C) che gli studenti sono tenuti a sv
 * Script multi-file
 * Buone pratiche
 
-Note:
-* -a -o deprecato
-* case per verificare se è un numero
-* if e while possono valutare direttamente comando senza [] oppure $?
-* expr obsoleto $(())
-* esempi read
-* uso di $@
-* spiegare spellcheck
-* chiarire [[ ]]
-
 ## Moduli C
 [M1] Introduzione al linguaggio C
 * Identificatori

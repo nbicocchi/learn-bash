@@ -830,7 +830,6 @@ $ find /etc -size +1M     # cerca dentro /etc percorsi che rappresentano file pi
 
 ```
 
-
 ## date
 **date** mostra la data corrente (è possibile configurare il formato)
 
@@ -843,12 +842,11 @@ $ date +%d-%m-%y
 ```
 
 ## expr
-**expr** è utilizzato per eseguire operazioni matematiche. Spesso utile negli script in abbinamento a costrutti iterativi.  
+**expr** è utilizzato per eseguire operazioni matematiche. Il suo utilizzo negli script è sconsigliato (vedi espansione aritmetica).
 
 * operazioni aritmetiche: +, -, *, /, %  
 * operazioni di confronto: <, <=, ==, !=, >=, >  
 * operazioni logiche: &, |
-
 
 ```shell
 $ expr 2 \* 6  

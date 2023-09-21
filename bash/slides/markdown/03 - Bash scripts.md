@@ -51,11 +51,12 @@ $ script.sh
 ```
 
 ## Variabili speciali
-All'interno di uno script Bash è possibile accedere ad un gruppo di variabili speciali che rendono possibile lo sviluppo
+All'interno di uno script Bash è possibile accedere ad un gruppo di [variabili speciali](https://tiswww.case.edu/php/chet/bash/bashref.html#Special-Parameters) che rendono possibile lo sviluppo
 
 * **$0** Il nome dello script in esecuzione  
 * **$1, $2,...., $n** n-esimo parametro passato da linea di comando  
 * **$*** tutti i parametri passati a linea di comando
+* **$@** tutti i parametri passati a linea di comando
 * **$#** numero di parametri da linea di comando  
 * **$$** PID della shell che esegue lo script
 * **$?** valore di ritorno dell'ultimo comando eseguito  
@@ -80,6 +81,16 @@ echo [$#] $*  # mostra [numero dei parametri] tutti i parametri
 [7] -b -c -d -e -f -g -h
 [4] -e -f -g -h
 ```
+
+## ShellCheck (static analysis)
+[ShellCheck](https://github.com/koalaman/shellcheck) è uno strumento GPLv3 che fornisce avvisi e suggerimenti per gli script di shell bash:
+
+Gli obiettivi di ShellCheck sono:
+
+* Evidenziare e chiarire i tipici problemi di sintassi dei principianti che fanno sì che una shell fornisca messaggi di errore criptici.
+* Evidenziare e chiarire i tipici problemi semantici di livello intermedio che causano un comportamento strano e controintuitivo.
+* Evidenziare sottili difetti, casi limite, e insidie ​​che potrebbero causare il fallimento dello script in circostanze future.
+
 
 # Costrutti condizionali
 
@@ -135,24 +146,22 @@ EXPRESSION1 -o EXPRESSION2    either EXPRESSION1 or EXPRESSION2 is true
 
 Ad esempio:
 
-verifica che /etc/passwd sia un file e leggibile  
-
 ```shell
 $ test -f /etc/passwd -a -r /etc/passwd; echo $?
 0
-```
 
-verifica che /etc/passwd sia un file oppure una directory  
-
-```shell
-$ test -f /etc/passwd -o -d /etc/passwd; echo $?
+$ test ! -d /etc/passwd -o ! -w /etc/passwd; echo $?
 0
 ```
 
-verifica che /etc/passwd non sia una directory e non sia scrivibile  
+Nonostante sia ancora supportata questa sintassi è sconsiglita e da sostiture con **&&** e **||**
+
 
 ```shell
-$ test ! -d /etc/passwd -o ! -w /etc/passwd; echo $?
+$ test -f /etc/passwd && test -r /etc/passwd; echo $?
+0
+
+$ test ! -d /etc/passwd || test ! -w /etc/passwd; echo $?
 0
 ```
 
@@ -169,12 +178,15 @@ $ which [
 ```
 
 ```shell
-$ [ -r /etc/passwd ]; echo $?  
+$ [ -f /etc/passwd ] && [ -r /etc/passwd ]; echo $?
+0
+
+$ [ ! -d /etc/passwd ] || [ ! -w /etc/passwd ]; echo $?
 0
 ```
 
 ## if
-Il costrutto if non consente solo di verificare una condizione ma anche di eseguire istruzioni in caso la condizione risulti vera o falsa.
+**if** consente di verificare il valore di ritorno di un comando e eseguire istruzioni differenziate in caso la condizione risulti vera o falsa.
 
 ```shell
 if test condizione; then
@@ -209,16 +221,22 @@ fi
 Ad esempio:
 
 ```shell
-if [ -f /etc/passwd -a -r /etc/passwd ]; then
-  echo “/etc/passwd è un file leggibile!”
+if [ -f "$1" ] && [ -r "$1" ]; then
+  echo "$1" è un file leggibile!
+fi
+```
+
+```shell
+if [ ! -d "$1" ] || [ ! -x "$1" ]; then
+  echo "$1" non è una directory eseguibile!
 fi
 ```
 
 ```shell
 if [ $# -ne 3 ]; then
-  echo “params != 3”
+  echo "params != 3"
 else
-  echo “params == 3”
+  echo "params == 3"
 fi
 ```
 
@@ -232,35 +250,24 @@ else
 fi
 ```
 
-## &&, ||
-In caso una condizione determini l'esecuzione di poche istruzioni è possibile utilizzare una forma sintetica (&&,||). 
+In caso una condizione determini l'esecuzione di poche istruzioni e non sia necessario differenziare il caso di successo da quello di fallimento (ma eseguirne uno solo) è possibile utilizzare una forma sintetica (&&,||) che non prevede l'utilizzo di **if**
 
 ```shell
-$ [ 1 –eq 0 ] && echo “pass”           # 
-$ [ 1 –eq 1 ] && echo “pass”           # pass
-$ [ 1 –eq 0 ] || echo “fail”           # fail
-$ [ 1 –eq 1 ] || echo “fail”           #
-$ [ 1 –eq 1 ] && (echo “pass”; pwd)    # pass /home/nicola
+$ [ 1 –eq 0 ] && echo "pass"           # 
+$ [ 1 –eq 1 ] && echo "pass"           # pass
+$ [ 1 –eq 0 ] || echo "fail"           # fail
+$ [ 1 –eq 1 ] || echo "fail"           #
+$ [ 1 –eq 1 ] && (echo "pass"; pwd)    # pass /home/nicola
 ```
 
-Gli operatori && e || possono anche sostituire gli operatori -a e -o per combinare logicamente condizioni di test trattandole come comandi separati
+**if** può essere utilizzato per valutare l'esito di comandi arbitrari, non solo di **test**. Nell'esempio sotto, **grep** ritorna 0 in caso la stringa *nicola* sia trovata all'interno di */etc/passwd*
 
 ```shell
-# /etc/passwd è un file E è scrivibile
-$ test -f /etc/passwd && test -w /etc/passwd; echo $?
-1
-
-# /etc/passwd è un file O è scrivibile
-$ test -f /etc/passwd || test -w /etc/passwd; echo $?
-0
-
-# /etc/passwd è un file E è scrivibile
-$ [ -f /etc/passwd ] && [ -w /etc/passwd ]; echo $?
-1
-
-# /etc/passwd è un file O è scrivibile
-$ [ -f /etc/passwd ] || [ -w /etc/passwd ]; echo $?
-0
+if grep nicola /etc/passwd; then
+  echo "nicola è un utente del sistema"
+else
+  echo "nicola NON è un utente del sistema"
+fi
 ```
 
 ## Pattern matching
@@ -280,32 +287,32 @@ ABCDEF      ABCNN*      No
 Il costrutto test / [ ] non supporta pattern matching!
 
 ## [[ ]]
-Il costrutto [[ ]] che si comporta come [ ] aggiungendo (fra altre) la funzione di pattern matching
+Il costrutto [[ ]] che si comporta come [ ] aggiungendo (fra altre) la funzione di [pattern matching](https://www.gnu.org/software/bash/manual/html_node/Pattern-Matching.html). Per approfondire, leggi [qui](http://mywiki.wooledge.org/BashFAQ/031).
 
 ```shell
 # [ ] fallisce
-if [ “$1” == n?co* ]; then
-  echo “success”
+if [ "$1" == n?co* ]; then
+  echo "success"
 fi
 
-if [ “$1” != [0-9]* ]; then
-  echo “success”
+if [ "$1" != [0-9]* ]; then
+  echo "success"
 fi
 ```
 
 ```shell
 # [[ ]] pattern matching
-if [[ “$1” == n?co* ]]; then
-  echo “success”
+if [[ "$1" == n?co* ]]; then
+  echo "success"
 fi
 
-if [[ “$1” != [0-9]* ]]; then
-  echo “success”
+if [[ "$1" != [0-9]* ]]; then
+  echo "success"
 fi
 ```
 
 ## case
-Il costrutto switch-case che abbina il pattern matching alla possibilità di eseguire più confronti in modo sintetico (evitando else if)
+Il costrutto switch-case che abbina il [pattern matching](https://www.gnu.org/software/bash/manual/html_node/Pattern-Matching.html) alla possibilità di eseguire più confronti in modo sintetico (evitando else if)
 
 ```shell
 case espressione in
@@ -326,23 +333,33 @@ case espressione in
 esac
 ```
 
+In questo esempio, **case** viene utilizzato per determinare il tipo di percorso rappresentato dalla variabile **$1**
+
 ```shell
-#!/bin/bash
-if [ $# -ne 1 ]; then
-  echo "usage: $0 arg"
-  exit 1
-fi
-
 case "$1" in
-  /*) echo "Percorso assoluto"
-      ;;
-  */*) echo "Percorso relativo"
-       ;;
-  *) echo ”Nome semplice"
-     ;;
+  /*) 
+    echo "Percorso assoluto"
+    ;;
+  */*) 
+    echo "Percorso relativo"
+    ;;
+  *) 
+    echo "Nome semplice di file"
+    ;;
 esac
+```
 
-exit 0
+In questo esempio, **case** viene utilizzato per determinare se la variabile **$1** contiene un valore numerico oppure no.
+
+```shell
+case "$1" in
+  ''|*[!0-9]*)
+    echo "Il parametro non è numerico"
+    ;;
+  *) 
+    echo "Il parametro è numerico"
+    ;;
+esac
 ```
 
 ---
@@ -408,7 +425,7 @@ done
 i=10 
 while [ "$i" -gt 0 ]; do
   echo $i
-  i=$(expr $i - 1)
+  i=$(( i - 1 ))
 done
 ```
 
@@ -457,23 +474,22 @@ nomefunzione() {
 L'esempio seguente definisce una funzione che ritorna 0 in caso il primo parametro sia una directory eseguibile, 1 viceversa.
 
 ```shell
-#!/bin/bash  
+#!/bin/bash
 
-process() {  
-  echo -n "$1"
-  [ -d "$1" -a -x "$1" ] && return 0  
-  return 1  
+process() {
+  [ -d "$1" ] && [ -x "$1" ] && return 0
+  return 1
 }
- 
-for f in $*: do  
-  process "$f"  
-  if [ $? -eq 0 ]; then  
-    echo " [pass]"  
-  else  
-    echo " [fail]"  
-  fi  
+
+for f in "$@"; do
+  echo -n "$1"
+  if process "$f"; then
+    echo " [pass]"
+  else
+    echo " [fail]"
+  fi
 done
- 
+
 exit 0
 ```
 
@@ -484,10 +500,9 @@ $ vim lib.sh
 
 #!/bin/bash 
 process() {  
-  echo -n "$1"  
-  [ -d "$1" -a -x "$1 ] && return 0
-  return 1
- }
+  [ -d "$1" ] && [ -x "$1" ] && return 0  
+  return 1  
+}
 ```
 
 ``` shell 
@@ -499,16 +514,16 @@ $ vim script.sh
  # oppure  
  # . lib.sh
  
-for f in $*; do  
-  process "$f"  
-  if [ $? -eq 0 ]; then  
-    echo " [pass]"  
-  else  
+for f in "$@"; do
+  echo -n "$1"
+  if process "$f"; then
+    echo " [pass]"
+  else
     echo " [fail]"
   fi
 done
- 
- exit 0
+
+exit 0
 ```
 
 ## Arrays
@@ -568,14 +583,18 @@ Funzione standard (**builtin**) per gestire parametri a linea di comando. Esiste
 ```shell
 while getopts "m:dh" o; do  
   case "$o" in  
-     m) MESSAGE="$OPTARG"  
-       ;;  
-     d) DEBUG=TRUE  
-       ;;
-     h) usage  
-       ;;  
-     *) usage  
-       ;;  
+    m) 
+      MESSAGE="$OPTARG"  
+      ;;  
+    d) 
+      DEBUG=TRUE  
+      ;;
+    h) 
+      usage  
+      ;;  
+    *) 
+      usage  
+      ;;  
   esac  
 done
 shift $(expr $OPTIND - 1)
@@ -599,14 +618,18 @@ usage() {
 # In case of optional [] parameters default values are overriden
 while getopts "m:dh" o; do
     case "$0" in
-          m) MESSAGE="$OPTARG"
-             ;;
-          d) DEBUG=TRUE
-             ;;
-          h) usage
-             ;;
-          *) usage
-             ;;
+        m) 
+          MESSAGE="$OPTARG"
+          ;;
+        d) 
+          DEBUG=TRUE
+          ;;
+        h) 
+          usage
+          ;;
+        *) 
+          usage
+          ;;
     esac
 done
 # Shift parameters away. $1 becomes filename
@@ -653,7 +676,7 @@ if [ $# -ne 1 ]; then
 	usage
 fi
 	
-if [ ! -d "$1" -o ! -x "$1" ]; then
+if [ ! -d "$1" ] || [ ! -x "$1" ]; then
   usage
 fi
   
@@ -661,11 +684,11 @@ fi
 F=0; D=0
 for fname in "$1"/*; do
 	if [ -f "$fname" ]; then
-	  F=$(expr $F + 1)
+	  F=$(( F + 1 ))
 	fi
 	
   if [ -d "$fname" ]; then
-	  D=$(expr $D + 1)
+	  D=$(( D + 1 ))
 	fi
 done
 	
