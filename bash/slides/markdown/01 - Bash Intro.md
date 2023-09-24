@@ -126,6 +126,7 @@ Nella maggiorparte dei sistemi Unix, l'ambiente grafico è slegato dal resto del
 ![](images/de-cinnamon.png)
 ![](images/de-elementary.jpeg)
 ![](images/de-hyprland.png)
+![](images/de-hyprland.avif)
 
 ## Shell
 Programma che permette di far interagire l'utente con il sistema operativo tramite comandi inseriti in modo interattivo da tastiera oppure letti in modo automatico da file (script). Gli script shell sono la base della maggior parte degli automatismi nei sistemi Unix.
