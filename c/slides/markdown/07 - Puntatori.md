@@ -213,7 +213,7 @@ int main(void) {
 ```
 
 # Vettori di stringhe
-![Vettore di Stringhe](./images/vettore_stringhe.jpg)
+![Vettore di Stringhe](./images/vettore_stringhe.avif)
 
 # Vettori di stringhe
 ```c
@@ -459,7 +459,7 @@ p2 = p1;
 * Il secondo (puntatore a puntatore) richiede un meccanismo più complesso per allocare e disallocare la memoria, ma consente l'uso di indicizzazione esplicita (matrix[i][j])
 
 # Allocazione dinamica e matrici
-![Allocazione_matrici](./images/matrici_memoria.jpg)
+![Allocazione_matrici](./images/matrici_memoria.avif)
 
 # Allocazione dinamica e matrici (singolo puntatore)
 ```c

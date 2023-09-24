@@ -54,7 +54,7 @@ printf("%d\n", mat[2][6]);
 * *Una matrice viene allocata in memoria per righe*. Si parte dall'indirizzo dell'elemento con indice [0][0] (&mat[0][0] oppure mat) e si prosegue memorizzando in successione tutti i valori della matrice, riga dopo riga.
 
 # Le matrici: allocazione in memoria
-![Allocazione Matrici](./images/allocazione_matrice.jpg)
+![Allocazione Matrici](./images/allocazione_matrice.avif)
 
 # Le matrici: inizializzazione
 * Quando viene dichiarata, una matrice può anche essere inizializzata specificando un elenco di valori per i suoi elementi
@@ -176,7 +176,7 @@ pt_ptr = &pt;
 ```
 
 # Esempio (struct punto)
-![Allocazione Matrici](./images/allocazione_struct.jpg)
+![Allocazione Matrici](./images/allocazione_struct.avif)
 
 
 # Accesso ai campi

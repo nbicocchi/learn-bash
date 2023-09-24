@@ -15,10 +15,10 @@ lang: it
 # Introduzione a Unix
 
 ## Total Market Share
-![Total Market Share](images/total-market-share.jpeg)
+![Total Market Share](images/total-market-share.avif)
 
 ## Mobile Market Share
-![Mobile Market Share](images/mobile-market-share.png)
+![Mobile Market Share](images/mobile-market-share.avif)
 
 ## Unix
 Si tratta di un sistema operativo multiutente e multitasking che fornisce una piattaforma stabile, efficiente e flessibile per varie attività di elaborazione. È stato sviluppato nel 1969 presso i Bell Labs da Ken Thompson e Dennis Ritchie. Nel corso degli anni, Unix si è evoluto e sono state create molte varianti, tra cui Linux, Android, MacOS, IoS. Storia completa [qui](https://en.wikipedia.org/wiki/History_of_Unix).
@@ -31,7 +31,7 @@ Il sistema operativo Unix può essere riassunto in base alle seguenti caratteris
 * **Aperto**: soprattutto nelle versioni più recenti le caratteristiche di Unix si sono via via uniformate allo standard POSIX. Inoltre, Unix realizza alcuni dei più diffusi servizi e protocolli di comunicazione della rete Internet.
 
 ## Varianti Unix
-![](images/genealogia-famiglia-unix.jpeg)
+![](images/genealogia-famiglia-unix.avif)
 
 ## Varianti Linux
 
@@ -60,7 +60,7 @@ Quattro livelli fondamentali:
 * **Sistema di base**: si tratta di una gruppo di programmi e librerie necessari all'utilizzo del sistema. Il solo kernel sarebbe inutilizzabile.
 * **Processi utente**: si tratta dei programmi in esecuzione, gestiti dal kernel. Collettivamente, costituiscono lo spazio utente e sono noti anche solo come processi. Il kernel consente anche la comunicazione tra questi processi e server, un'attività nota come comunicazione tra processi o IPC.
 
-![Architettura interna](images/architettura-interna.jpeg)
+![Architettura interna](images/architettura-interna.avif)
 
 ## Kernel
 Il kernel è il componente principale di un sistema operativo e l'interfaccia primaria tra l'hardware di un sistema e i suoi processi, ai quali consente di comunicare gestendo le risorse nel modo più efficiente possibile.
@@ -78,13 +78,13 @@ Se implementato in maniera corretta, il kernel opera autonomamente all'interno d
 
 Il codice dei programmi viene eseguito sulle CPU in modalità kernel o in modalità utente. Il codice eseguito con la modalità kernel ha accesso illimitato all'hardware, mentre la modalità utente limita l'accesso di CPU e memoria. 
 
-![Interazione Kernel-Applicazioni](images/interazione-kernel-applicazioni.jpeg)
+![Interazione Kernel-Applicazioni](images/interazione-kernel-applicazioni.avif)
 
 ## Quanto è complesso un kernel
 * 20K SLOC (XV6), https://github.com/mit-pdos/xv6-public
 * 30M SLOC (Linux Kernel 5), https://www.kernel.org/
 
-![Linux kernel map](images/linux-kernel-map.jpeg)
+![Linux kernel map](images/linux-kernel-map.avif)
 
 
 # Fondamenti per l'utilizzo pratico
@@ -103,7 +103,7 @@ Per chiudere un terminale:
 * logout
 * ^d
 
-![Terminale testuale](images/terminale-testuale.png)
+![Terminale testuale](images/terminale-testuale.avif)
 
 ## Ambiente grafico
 Caratteristiche:
@@ -122,10 +122,9 @@ Nella maggiorparte dei sistemi Unix, l'ambiente grafico è slegato dal resto del
 
 [unixporn](https://www.reddit.com/r/unixporn/) è un canale Reddit dedicato alla condivisione di configurazioni di ambienti grafici Unix. Alcuni esempi sotto: 
 
-![](images/de-gnome-mac.png)
-![](images/de-cinnamon.png)
-![](images/de-elementary.jpeg)
-![](images/de-hyprland.png)
+![](images/de-gnome-mac.avif)
+![](images/de-cinnamon.avif)
+![](images/de-elementary.avif)
 ![](images/de-hyprland.avif)
 
 ## Shell
@@ -368,9 +367,9 @@ File come risorsa logica costituita da sequenza di bit, a cui viene dato un nome
 
 I file ordinari si dividono in:
 * **file di testo**: leggibile da un essere umano. I dati contenuti rappresentano caratteri (ASCII o Unicode)  
-* **file binarii**: richiede specifica interpretazione di un software per essere letto (mp3, jpg, mp4)  
+* **file binarii**: richiede specifica interpretazione di un software per essere letto (mp3, avif, mp4)  
 
-Si definisce **estensione** il gruppo di 2-4 caratteri terminali del nome di un file che alcuni sistemi, ad esempio Windows utilizzano per rappresentare il tipo del file (ad es. img.png, song.mp3 etc). I sistemi Unix analizzano invece il contenuto del file per determinarne il tipo. 
+Si definisce **estensione** il gruppo di 2-4 caratteri terminali del nome di un file che alcuni sistemi, ad esempio Windows utilizzano per rappresentare il tipo del file (ad es. img.avif, song.mp3 etc). I sistemi Unix analizzano invece il contenuto del file per determinarne il tipo. 
 
 ```
 $ file /etc/passwd                                              
@@ -402,7 +401,7 @@ Un file system può essere accoppiato a un mount point tramite l'operazione di *
 
 Per motivi di efficienza, le scritture su di un file system sono eseguite in blocco, al momento più favorevole. Estrarre fisicamente un dispositivo senza aver smontato il suo file system può portare corruzione dei dati!
 
-![esempio-mount](images/esempio-mount.jpeg)
+![esempio-mount](images/esempio-mount.avif)
 
 
 ## Percorsi assoluti e relativi
@@ -436,11 +435,11 @@ Per ogni utilizzatore, si distinguono tre diritti di accesso al file:
 * **scrittura** (w=write) 
 * **esecuzione** (x=execute) (per una directory significa list del contenuto)  
 
-![file e metadati](images/file-e-metadati.jpeg)
+![file e metadati](images/file-e-metadati.avif)
 
 Per ogni terna, per ogni bit di protezione: 1 = *attivato*, 0 = *disattivato*. Nell'esempio seguente, il proprietario del file ha tutti i diritti attivati, mentre gli utenti del suo gruppo, e tutti gli altri utenti possono solo leggere il file.
 
-![bit di protezione](images/bit-di-protezione.jpeg)
+![bit di protezione](images/bit-di-protezione.avif)
 
 ## SUID, SGID, Sticky
 **SUID (Set User ID)**: si applica ad un file di programma eseguibile. Se attivo, l'utente che esegue assume i diritti del proprietario (per la durata dell'esecuzione).
@@ -476,7 +475,7 @@ $ sudo chown root:root test.txt
 ```
 
 ## Nomi assoluti e relativi
-![nomi assoluti e relativi](images/nomi-assoluti-e-relativi.jpeg)
+![nomi assoluti e relativi](images/nomi-assoluti-e-relativi.avif)
 
 ## i-node
 Ogni file può avere uno o più nomi simbolici ma è associato un solo **i-node**
@@ -500,7 +499,7 @@ struct inode {
 };
 ```
 
-![i-node](images/i-node.jpeg)
+![i-node](images/i-node.avif)
 
 ## Links
 I **link hard** sono nomi logici diversi riferiti allo stesso inode (allo stesso file fisico, permessi, data di modifica, owner etc). Il sistema operativo gestisce la molteplicità di nomi logici: il file fisico (inode) è eliminato solo quando il numero di nomi logici è pari a zero.
@@ -653,7 +652,7 @@ $ ps auxf
 ## top
 **top** mostra la lista dei processi attivi (dinamica).
 
-![](images/top.png)
+![](images/top.avif)
 
 **top - linea #1**
 * Ora attuale (21:34:21)
@@ -677,11 +676,11 @@ $ ps auxf
 
 ## htop, btop, gtop
 
-![](images/top-htop.png)
+![](images/top-htop.avif)
 
-![](images/top-btop.png)
+![](images/top-btop.avif)
 
-![](images/top-gtop.png)
+![](images/top-gtop.avif)
 
 ## kill
 **kill** invia dei segnali (ogni segnale è identificato da un numero intero < 255) ai processi (la comunicazione è mediata dal kernel). Ad esempio, ^C che interrompe il processo in esecuzione è uno shortcut di tastiera per inviare al processo in esecuzione il segnale **SIGINT (n=2)**. Vedi:

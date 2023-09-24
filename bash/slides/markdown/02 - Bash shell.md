@@ -214,7 +214,7 @@ Ridirezione dell'output
 $ comando > fileout   # sovrascrive fileout  
 $ comando >> fileout  # aggiunge alla fine di fileout
 ```  
-![](images/flussi-dati.jpeg)
+![](images/flussi-dati.avif)
 
 Ad esempio:
 
@@ -253,10 +253,10 @@ $ who >> users
 
 ## Implementazione ridirezione
 Ridirezione in input
-![implementazione ridirezione input](images/implementazione-ridirezione-input.jpeg)
+![implementazione ridirezione input](images/implementazione-ridirezione-input.avif)
 
 Ridirezione in output
-![implementazione ridirezione output](images/implementazione-ridirezione-output.jpeg)
+![implementazione ridirezione output](images/implementazione-ridirezione-output.avif)
 
 
 ## Separazione stdout, stderr
@@ -410,7 +410,7 @@ $ false || ls
 Desktop  Devel  Documents  Downloads...
 ```
 
-![Combinare comandi (&&, ||)](images/combinare-comandi.jpeg)
+![Combinare comandi (&&, ||)](images/combinare-comandi.avif)
 
 ## Pipes 
 La seguente scrittura è formalmente corretta ma poco efficiente. L'output del primo comando viene scritto su disco solo per essere letto dal secondo comando.
@@ -432,7 +432,7 @@ La comunicazione fra i due processi non è diretta ma è mediata dal kernel.
 $ sort /etc/passwd | head -n 10 
 ```
 
-![implementazione pipes](images/implementazione-pipes.jpeg)
+![implementazione pipes](images/implementazione-pipes.avif)
 
 Esempi:
 ```shell

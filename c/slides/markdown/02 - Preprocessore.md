@@ -13,7 +13,7 @@ lang: it
 ---
 
 # Processo di compilazione
-![Processo di compilazione](./images/compilazione.png)
+![Processo di compilazione](./images/compilazione.avif)
 
 # Compilazione
 

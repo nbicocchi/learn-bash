@@ -19,7 +19,7 @@ lang: it
 * *Tipi derivati C*: array, struct, union, tipi definiti dall'utente (aggregazioni di tipi base)
 
 # Tipi di dato
-![Variabili memoria](./images/variabile_memoria.jpg)
+![Variabili memoria](./images/variabile_memoria.avif)
 
 
 # Dichiarazione di variabili
@@ -81,7 +81,7 @@ unsigned long long n2 = 0x7fULL // 127 (unsigned long long) in esadecimale
 ```
 
 # Letterali numeriche
-![Letterali Numerici](./images/literals_interi.png)
+![Letterali Numerici](./images/literals_interi.avif)
 
 
 # Variabili costanti (di sola lettura)
@@ -143,7 +143,7 @@ short s1, s2 = 33, s3;
 
 
 # Memoria
-![Layout memoria](./images/memory_layout.png)
+![Layout memoria](./images/memory_layout.avif)
 
 
 # I tipi di dati numerici interi
@@ -175,7 +175,7 @@ short s1, s2 = 33, s3;
 | -128                | 1 0 0 0 0 0 0 0              |
 
 # I tipi di dati numerici interi (rappresentazione)
-![Complemento a 2](./images/rappresentazione_int.png)
+![Complemento a 2](./images/rappresentazione_int.avif)
 
 
 # I tipi di dati numerici interi (extra)
@@ -227,7 +227,7 @@ short s1, s2 = 33, s3;
 * N = -1 x **Sign** x **Mantissa** x 2^**Exponent**
 * The exponent can be computed from bits 24-31 by subtracting 127. The mantissa is stored in bits 1-23. An invisible leading bit (i.e. it is not actually stored) with value 1.0 is placed in front, then bit 23 has a value of 1/2, bit 22 has value 1/4 etc. As a result, the mantissa has a value between 1.0 and 2. If the exponent reaches -127 (binary 00000000), the leading 1 is no longer used to enable gradual underflow.
 
-![double](./images/rappresentazione_double_float.png)
+![double](./images/rappresentazione_double_float.avif)
 
 # I tipi di dati numerici in virgola mobile (IEEE 754)
 
@@ -374,7 +374,7 @@ num2 = *p;
 * In pratica, dopo l'assegnamento effettuato precedentemente, alla variabile *num2* viene assegnato il valore 3
 
 # Puntatori
-![Puntatore](./images/puntatore.jpg)
+![Puntatore](./images/puntatore.avif)
 
 # Puntatori
 * Come tutte le variabili, i puntatori sono caratterizzati da un proprio indirizzo e da una dimensione 
@@ -439,7 +439,7 @@ int num[5];
 
 
 # Vettori
-![Array](./images/puntatore_vettore.jpg)
+![Array](./images/puntatore_vettore.avif)
 
 # Vettori
 * Gli elementi di un vettore vengono sempre memorizzati in  aree contigue della memoria. In questo modo l'indirizzo dell'elemento di indice i può essere ricavato con un semplice calcolo

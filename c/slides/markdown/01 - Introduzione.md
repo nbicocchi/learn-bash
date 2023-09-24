@@ -82,7 +82,7 @@ int main(){
 ```
 
 # Processo di compilazione
-![Processo di compilazione](images/compilazione.png)
+![Processo di compilazione](images/compilazione.avif)
 
 # Keywords
 * **Codice sorgente**: file di testo che contiene il software scritto dallo sviluppatore
@@ -230,7 +230,7 @@ int main() {
 ```
 
 # Variabili
-![Variabili](images/variabili.jpg)
+![Variabili](images/variabili.avif)
 
 # Espressioni
 * *Un programma C e' una sequenza di espressioni. Le espressioni sono combinazioni di variabili, costanti, chiamate a funzione, e operatori*

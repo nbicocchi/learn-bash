@@ -180,7 +180,7 @@ int main() {
 ```
 
 # Passaggio per valore (copia del valore)
-![Passaggio di parametri per valore](./images/passaggio_valore.png)
+![Passaggio di parametri per valore](./images/passaggio_valore.avif)
 
 
 # Passaggio per riferimento (copia del riferimento)
@@ -204,7 +204,7 @@ int main() {
 ```
 
 # Passaggio per riferimento (copia del riferimento)
-![Passaggio di parametri per valore](./images/passaggio_riferimento.png)
+![Passaggio di parametri per valore](./images/passaggio_riferimento.avif)
 
 
 # Passaggio di puntatori const
@@ -247,7 +247,7 @@ printf("%s\n", settimana[0]); /* Output: lunedi */
 ```
 
 # Vettori di puntatori (a carattere)
-![Puntatore a puntatore a carattere](./images/puntatore_puntatore_char.png)
+![Puntatore a puntatore a carattere](./images/puntatore_puntatore_char.avif)
 
 # Passaggio di parametri al programma principale
 * E' possibile passare parametri *dalla shell* ad *un programma C* utilizzando parametri opzionali della funzione main()
