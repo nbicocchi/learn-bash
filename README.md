@@ -1,4 +1,4 @@
-# Programmazione di Sistema (DIEF, UNIMORE)
+# Learn Bash
 
 ## Software
 * [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
