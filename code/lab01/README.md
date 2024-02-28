@@ -8,183 +8,246 @@ Per utilizzare questa guida con vim utilizzare i seguenti due comandi
 >:set number
 
 ## Esercizi 
-1. Elencare i file nella directory corrente
-2. Elencare i file nella directory corrente visualizzando i permessi associati, comprendendo anche i file nascosti (che iniziano con punto)
-3. Visualizzare il percorso assoluto della directory corrente
-4. Spostarsi alla radice del filesystem
-5. Ritornare alla propria home indicandone il nome in modo assoluto
-6. Spostarsi alla radice del filesystem
-7. Ritornare alla propria home utilizzando il comando cd senza argomenti
-8. Copiare il file /etc/passwd nella directory corrente
-9. Copiare il file /etc/passwd nella directory corrente attribuendo al nuovo file il nome passwd.alt
-10. Verificare che i file passwd e passwd.alt siano identici utilizzando il comando diff
-11. Cancellare i file passwd e passwd.alt con un'unica istruzione
-12. Utilizzare cat e la ridirezione in input per visualizzare il contenuto di /etc/passwd
-13. Utilizzare echo e la ridirezione della shell per creare un file test contenente la linea "GNU is Not Unix" 
-14. Invocare cat per visualizzare il contenuto del file test
-15. Rendere il file test leggibile da tutti gli utenti
-16. Rendere il file test leggibile e scrivibile dal solo proprietario
-17. Costruire un link hard da test a test2
-18. Costruire un link soft (simbolico) da test a test3. Qual'e' la differenza fra la copia di un file e la creazione di link hard e link soft?
-19. Creare una directory nella propria home di nome testdir
-20. Invocare ls per visualizzare il contenuto di testdir
-21. Creare un file vuoto all'interno di testdir senza cambiare directory
-22. Eliminare la directory testdir
-23. Combinare il comando ps aux con il comando grep usando un file temporaneo per individuare i processi che eseguono una shell (e.g., bash, mosh, dash, sh)
-24. Combinare il comando ps aux con il comando grep usando una pipe per individuare i processi che eseguono una shell (e.g., bash, mosh, dash, sh)
-25. Cosa e' cambiato? Il sistema operativo ha creato un file temporaneo oppure no?
-26. Utilizzare i comandi ps, grep e wc per contare i processi che eseguono con i diritti del nostro utente e salvare risultato all'interno di un file di log
-27. Invocare i comandi true e false e visualizzarne il valore di uscita
-28. Utilizzare il comando expr per sommare e moltiplicare 3 e 7
-29. Creare la variabile d'ambiente LOGFILE ed assegnarle il valore "service.log"
-30. Visualizzare il contenuto della variabile LOGFILE
-31. Verificare che LOGFILE sia una variabile d'ambiente
-32. Visualizzare PID della shell correntemente in esecuzione
-33. Visualizzare il nome del proprio utente
-34. Creare lo script test.sh contenente la sola linea #!/bin/bash. A cosa serve questa linea?
-35. Aggiungere a test.sh la linee "echo Hello World!" e "exit 0"
-36. Rendere eseguibile test.sh
-37. Eseguire test.sh
-38. Spostare test.sh all'interno della cartella /tmp
-39. Eseguire test.sh rimanendo nella propria home directory
-40. Aprire la pagina di manuale del comando apropos. Successivamente, utilizzare apropos per cercare le pagine di manuale del comando basename
+1. Posizionarsi all'interno della propria home directory (*cd*)
+2. Elencare i file nella directory corrente (*ls*)
+3. Elencare i file nella directory corrente visualizzandone i permessi associati ed includendo anche i file nascosti (i.e., file che iniziano con il carattere .) (*ls*)
+4. Visualizzare il percorso assoluto della directory corrente (*pwd*)
+5. Spostarsi alla radice del filesystem (*cd*)
+6. Spostarsi nella propria home directory utilizzando percorso assoluto (*cd*)
+7. Spostarsi nella radice del filesystem utilizzando un percorso relativo (*cd*)
+8. Ritornare alla propria home utilizzando il comando cd senza argomenti (*cd*)
+9. Copiare il file /etc/passwd nella directory corrente (*cp*)
+10. Copiare il file /etc/passwd nella directory corrente attribuendo al nuovo file il nome passwd.alt (*cp*)
+11. Rinominare il file passwd.alt in passwd.alt.bak (*mv*)
+11. Verificare che i file passwd e passwd.alt.bak siano identici (*diff*)
+12. Verificare che il file passwd contenga la stringa root (*grep*)
+13. Contare il numero di caratteri di cui è composto il file passwd (*wc*)
+14. Contare il numero di linee di cui è composto il file passwd (*wc*)
+15. Cancellare i file passwd e passwd.alt.bak con un'unica istruzione (*rm*)
+16. Creare un file vuoto di nome test (*touch*)
+17. Utilizzando un editor di testo, scrivere all'interno del file test la stringa 'Hello World!' (*nano/micro/vim*)
+18. Visualizzare il contenuto del file test (*cat*)
+19. Rendere il file test leggibile da tutti gli utenti (*chmod*)
+20. Rendere il file test leggibile e scrivibile dal solo proprietario (*chmod*)
+21. Costruire un link hard da test a test2 (*ln*)
+22. Costruire un link soft (simbolico) da test a test3 (*ln*)
+23. Rendere il link test3 *stale* (*rm*)
+24. Creare una directory di nome testdir nella propria home directory (*mkdir*)
+25. Verificare che testdir sia vuota (*ls*)
+26. Creare un file vuoto di nome empty all'interno di testdir senza cambiare directory (*touch*)
+27. Eliminare la directory testdir (*rm/rmdir*)
+28. Visualizzare PID della shell correntemente in esecuzione (*ps*)
+29. Visualizzare il nome del processo con PID = 1 (*ps*)
+30. Visualizzare il nome del proprio utente (*whoami*)
+31. Visualizzare il nome dei gruppi a cui appartiene il proprio utente (*id*)
+32. Utilizzando un editor di testo, creare un file test.sh contenente le seguenti linee:
+
+```
+#!/bin/bash
+echo "Hello World!"
+exit 0
+```
+
+34. Rendere eseguibile test.sh (*chmod*)
+35. Eseguire test.sh
+36. Spostare test.sh all'interno della cartella /tmp (*mv*)
+37. Eseguire test.sh rimanendo nella propria home directory
+38. Mostrare il numero di inode del file test.sh (*stat*)
+39. Acquisire i diritti di amministrazione (*sudo*)
+40. Creare l'utente giuda (*adduser*)
+41. Cambiare la password dell'utente giuda (*passwd*)
+42. Eliminare l'utente giuda (*deluser*)
+43. Abbandonare i diritti di amministrazione (*exit*)
+44. Cambiare la password del proprio utente (*passwd*)
+45. Visualizzare il percorso completo del comando ls (*which*)
+46. Visualizzare il contenuto html della pagina https://www.gnome.org (*curl*)
+47. Visualizzare la data corrente nel formato gg-mm-aaaa (*date*)
+48. Utilizzare il comando expr per sommare e moltiplicare 3 e 7 (*expr*)
+49. Utilizzare il comando expr per sottrarre e dividere 9 e 3 (*expr*)
+50. Avviare il comando mc su un terminale e chiuderlo utilizzando un secondo terminale (*kill/killall*)
+
+---
+
+101. Invocare i comandi *true* e false e visualizzarne il valore di uscita
+102. Utilizzare cat e la ridirezione in input per visualizzare il contenuto di /etc/passwd
+103. Utilizzare echo e la ridirezione della shell per creare un file test contenente la linea "GNU is Not Unix" 
+104. Combinare il comando ps aux con il comando grep usando un file temporaneo per individuare i processi che eseguono una shell (e.g., bash, mosh, dash, sh)
+105. Combinare il comando ps aux con il comando grep usando una pipe per individuare i processi che eseguono una shell (e.g., bash, mosh, dash, sh)
+106. Cosa e' cambiato? Il sistema operativo ha creato un file temporaneo oppure no?
+107. Utilizzare i comandi ps, grep e wc per contare i processi che eseguono con i diritti del nostro utente e salvare risultato all'interno di un file di log
+108. Creare la variabile d'ambiente LOGFILE ed assegnarle il valore "service.log"
+109. Visualizzare il contenuto della variabile LOGFILE
+110. Verificare che LOGFILE sia una variabile d'ambiente
 
 ## Soluzioni 
-1. Elencare i file nella directory corrente
->$ ls
 
-2. Elencare i file nella directory corrente visualizzando i permessi associati, comprendendo anche i file nascosti (che iniziano con punto)
->$ ls -al
+1. Posizionarsi all'interno della propria home directory (*cd*)
+> cd
 
-3. Visualizzare il percorso assoluto della directory corrente
->$ pwd
+2. Elencare i file nella directory corrente (*ls*)
+> ls
 
-4. Spostarsi alla radice del filesystem
->$ cd /
+3. Elencare i file nella directory corrente visualizzandone i permessi associati ed includendo anche i file nascosti (i.e., file che iniziano con il carattere .) (*ls*)
+> ls -al
 
-5. Ritornare alla propria home indicandone il nome in modo assoluto
->$ cd /home/nicola # oppure
->
->$ cd "$HOME"
+4. Visualizzare il percorso assoluto della directory corrente (*pwd*)
+> pwd
 
-6. Spostarsi alla radice del filesystem
->$ cd /
+5. Spostarsi alla radice del filesystem (*cd*)
+> cd /
 
-7. Ritornare alla propria home utilizzando il comando cd senza argomenti
-> $ cd
+6. Spostarsi nella propria home directory utilizzando percorso assoluto (*cd*)
+> cd /home/nome_utente
 
-8. Copiare il file /etc/passwd nella directory corrente
-> $ cp /etc/passwd .
+7. Spostarsi nella radice del filesystem utilizzando un percorso relativo (*cd*)
+> cd ../..
 
-9. Copiare il file /etc/passwd nella directory corrente attribuendo al nuovo file il nome passwd.alt
-> $ cp /etc/passwd passwd.alt
+8. Ritornare alla propria home (*cd*)
+> cd
 
-10. Verificare che i file passwd e passwd.alt siano identici utilizzando il comando diff
->$ diff passwd passwd.alt; echo $?
+9. Copiare il file /etc/passwd nella directory corrente (*cp*)
+> cp /etc/passwd .
 
-11. Cancellare i file passwd e passwd.alt con un'unica istruzione
-> $ rm passwd*
+10. Copiare il file /etc/passwd nella directory corrente attribuendo al nuovo file il nome passwd.alt (*cp*)
+> cp /etc/passwd passwd.alt
 
-12. Utilizzare cat e la ridirezione in input per visualizzare il contenuto di /etc/passwd
-> cat < /etc/passwd 
+11. Rinominare il file passwd.alt in passwd.alt.bak (*mv*)
+> mv passwd.alt passwd.alt.bak
 
-13. Utilizzare echo e la ridirezione della shell per creare un file test contenente la linea "GNU is Not Unix" 
->$ echo "GNU is Not Unix" > test
+11. Verificare che i file passwd e passwd.alt.bak siano identici (*diff*)
+> diff passwd passwd.alt.bak
 
-14. Invocare cat per visualizzare il contenuto del file test
-> $ cat test
+12. Verificare che il file passwd contenga la stringa root (*grep*)
+> grep root /etc/passwd
 
-15. Rendere il file test leggibile da tutti gli utenti
-> $ chmod a+r test
+13. Contare il numero di caratteri di cui è composto il file passwd (*wc*)
+> wc -c passwd
 
-16. Rendere il file test leggibile e scrivibile dal solo proprietario
-> $ chmod 600 test
+14. Contare il numero di linee di cui è composto il file passwd (*wc*)
+> wc -l passwd
 
-17. Costruire un link hard da test a test2
+15. Cancellare i file passwd e passwd.alt.bak con un'unica istruzione (*rm*)
+> rm passwd*
+
+16. Creare un file vuoto di nome test (*touch*)
+> touch test
+
+17. Utilizzando un editor di testo, scrivere all'interno del file test la stringa 'Hello World!' (*nano/micro/vim*)
+> nano test
+
+18. Visualizzare il contenuto del file test (*cat*)
+> cat test
+
+19. Rendere il file test leggibile da tutti gli utenti (*chmod*)
+> chmod 444 test
+
+20. Rendere il file test leggibile e scrivibile dal solo proprietario (*chmod*)
+> chmod 600 test
+
+21. Costruire un link hard da test a test2 (*ln*)
 > ln test test2
 
-18. Costruire un link soft (simbolico) da test a test3. Qual'e' la differenza fra la copia di un file e la creazione di link hard e link soft?
-> $ ln -s test test3
->
-> La differenza sostanziale fra copia, link hard e link soft consiste nel modo 
-in cui viene utilizzato lo spazio fisico sul disco. In particolare: (a) cp duplica i dati, (b) ln crea un riferimento a dati esistenti, (c) ln -s crea un piccolo file che contiene il percorso di un secondo file (e.g., collegamenti di windows)
+22. Costruire un link soft (simbolico) da test a test3 (*ln*)
+> ln -s test test3
 
-19. Creare una directory nella propria home di nome testdir
->$ mkdir testdir
+23. Rendere il link test3 *stale* (*rm*)
+> rm test
 
-20. Invocare ls per visualizzare il contenuto di testdir
->$ ls testdir
+24. Creare una directory di nome testdir nella propria home directory (*mkdir*)
+> mkdir testdir
 
-21. Creare un file vuoto all'interno di testdir senza cambiare directory
->$ touch testdir/empty
+25. Verificare che testdir sia vuota (*ls*)
+> ls -al testdir
 
-22. Eliminare la directory testdir
->$ rm -r testdir # oppure
->
-> $ rm -rf testdir
+26. Creare un file vuoto di nome empty all'interno di testdir senza cambiare directory (*touch*)
+> touch testdir/empty
 
-23. Combinare il comando ps aux con il comando grep usando un file temporaneo per individuare i processi che eseguono una shell (e.g., bash, mosh, dash, sh)
->$ ps aux > tempfile; grep bash tempfile 
+27. Eliminare la directory testdir (*rm/rmdir*)
+> rm -rf testdir
 
-24. Combinare il comando ps aux con il comando grep usando una pipe per individuare i processi che eseguono una shell (e.g., bash, mosh, dash, sh)
->ps aux | grep bash
+28. Visualizzare PID della shell correntemente in esecuzione (*ps*)
+> ps
 
-25. Cosa e' cambiato? Il sistema operativo ha creato un file temporaneo oppure no?
->La pipe e' utile proprio per consentire a processi differenti di comunicare SENZA utilizzare il filesystem, ma collegando lo stdout del primo processo 
+29. Visualizzare il nome del processo con PID = 1 (*ps*)
+> ps fax
 
-26. Utilizzare i comandi ps, grep e wc per contare i processi che eseguono con i diritti del nostro utente e salvare risultato all'interno di un file di log
->ps aux | grep nicola | wc -l > log
+30. Visualizzare il nome del proprio utente (*whoami*)
+> whoami
 
-27. Invocare i comandi true e false e visualizzarne il valore di uscita
->$ true; echo $?
->
->$ false; echo $?
+31. Visualizzare il nome dei gruppi a cui appartiene il proprio utente (*id*)
+> id
 
-28. Utilizzare il comando expr per sommare e moltiplicare 3 e 7
->$ expr 3 + 7; expr 3 \* 7
+32. Utilizzando un editor di testo, creare un file test.sh contenente le seguenti linee:
 
-29. Creare la variabile d'ambiente LOGFILE ed assegnarle il valore "service.log"
->$ export LOGFILE="service.log"
+```
+#!/bin/bash
+echo "Hello World!"
+exit 0
+```
 
-30. Visualizzare il contenuto della variabile LOGFILE
->$ echo "$LOGFILE"
+> nano test.sh
 
-31. Verificare che LOGFILE sia una variabile d'ambiente
->$ bash # apertura di una sotto shell
->
->$ echo "$LOGFILE"
+34. Rendere eseguibile test.sh (*chmod*)
+> chmod 755 test.sh
 
-32. Visualizzare PID della shell correntemente in esecuzione
->$ ps # leggere il pid associato al processo bash
+35. Eseguire test.sh
+> ./test.sh
 
-33. Visualizzare il nome del proprio utente
->$ whoami
+36. Spostare test.sh all'interno della cartella /tmp (*mv*)
+> mv test.sh /tmp
 
-34. Creare lo script test.sh contenente la sola linea #!/bin/bash. A cosa serve questa linea?
->$ echo '#!/bin/sh' > test.sh
->
->La linea #!/bin/sh definisce il percorso dell'interprete dei comandi da utilizzare per eseguire cio' che segue. Ad esempio, per uno script python, si può usare #!/usr/bin/python3
+37. Eseguire test.sh rimanendo nella propria home directory
+> /tmp/test.sh
 
-35. Aggiungere a test.sh la linee "echo Hello World!" e "exit 0"
->$ echo "echo \"Hello World!\"" >> test.sh
->
->$ echo "exit 0" >> test.sh
+38. Mostrare il numero di inode del file test.sh (*stat*)
+> stat /tmp/test.sh
 
-36. Rendere eseguibile test.sh
->$ chmod 755 test.sh
+39. Acquisire i diritti di amministrazione (*sudo*)
+> sudo -i
 
-37. Eseguire test.sh
->$ ./test.sh
+40. Creare l'utente giuda (*adduser*)
+> adduser giuda
 
-38. Spostare test.sh all'interno della cartella /tmp
->$ mv test.sh /tmp/
+41. Cambiare la password dell'utente giuda (*passwd*)
+> passwd giuda
 
-39. Eseguire test.sh rimanendo nella propria home directory
->$ /tmp/test.sh
+42. Eliminare l'utente giuda (*deluser*)
+> deluser giuda
 
-40. Aprire la pagina di manuale del comando apropos. Successivamente, utilizzare apropos per cercare le pagine di manuale del comando basename
->$ man apropos
->
->$ apropos basename
+43. Abbandonare i diritti di amministrazione (*exit*)
+> exit
+
+44. Cambiare la password del proprio utente (*passwd*)
+> passwd
+
+45. Visualizzare il percorso completo del comando ls (*which*)
+> which ls
+
+46. Visualizzare il contenuto html della pagina https://www.gnome.org (*curl*)
+> curl https://www.gnome.org
+
+47. Visualizzare la data corrente nel formato gg-mm-aaaa (*date*)
+> date +%d-%m-%Y
+
+48. Utilizzare il comando expr per sommare e moltiplicare 3 e 7 (*expr*)
+> expr 3 + 7
+
+> expr 3 \\* 7
+
+49. Utilizzare il comando expr per sottrarre e dividere 9 e 3 (*expr*)
+> expr 9 - 3
+
+> expr 9 / 3
+
+50. Avviare il comando mc su un terminale e chiuderlo utilizzando un secondo terminale (*kill/killall*)
+> mc (primo terminale)
+
+> ps fax (secondo terminale, guardare PID)
+
+> kill -9 PID (secondo terminale)
+
+
+
+
 
 
