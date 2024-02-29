@@ -71,7 +71,7 @@ usage: $0 [-h] [-l lines] -f filename d1 .. dn
 **(es44.sh)** Lo script prevede un numero variabile di parametri. Il parametro -f indica un nome semplice di file, mentre gli altri devono essere nomi assoluti di directory (d1, ..., dn). Per ognuna delle n directory, lo script cerca al suo interno tutti i file leggibili di nome indicato da -f. Per ogni file trovato, lo script ne riporta il nome e la dimensione (in bytes e in linee) all'interno del file /tmp/script.log con il seguente formalismo: nomefile:bytes:linee.
 
 ```
-usage: $0 [-h] -f filename d1 .. dn**
+usage: $0 [-h] -f filename d1 .. dn
 ```
 
 **(es45.sh)** Lo script prevede un numero variabile di parametri che rappresentano nomi assoluti di directory (d1, ..., dn). Per ognuna delle n directory, lo script cerca al suo interno tutti i file leggibili modificati nelle ultime 24h (vedi opzioni del comando find). Per ogni file trovato, lo script ne riporta il nome su stdout e ne crea un link simbolico all'interno della cartella /tmp/links. Per evitare omonimie i link terminano con un intero crescente. Ad esempio, fa.1, fb.2, .. , fxyz.n
