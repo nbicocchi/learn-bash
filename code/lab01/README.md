@@ -8,18 +8,17 @@ Per utilizzare questa guida con vim utilizzare i seguenti due comandi
 >:set number
 
 ## Esercizi 
-1. Posizionarsi all'interno della propria home directory (*cd*)
-2. Elencare i file nella directory corrente (*ls*)
-3. Elencare i file nella directory corrente visualizzandone i permessi associati ed includendo anche i file nascosti (i.e., file che iniziano con il carattere .) (*ls*)
-4. Visualizzare il percorso assoluto della directory corrente (*pwd*)
-5. Spostarsi alla radice del filesystem (*cd*)
-6. Spostarsi nella propria home directory utilizzando percorso assoluto (*cd*)
-7. Spostarsi nella radice del filesystem utilizzando un percorso relativo (*cd*)
-8. Ritornare alla propria home utilizzando il comando cd senza argomenti (*cd*)
-9. Copiare il file /etc/passwd nella directory corrente (*cp*)
+01. Posizionarsi all'interno della propria home directory (*cd*)
+02. Elencare i file nella directory corrente (*ls*)
+03. Elencare i file nella directory corrente visualizzandone i permessi associati ed includendo anche i file nascosti (i.e., file che iniziano con il carattere .) (*ls*)
+04. Visualizzare il percorso assoluto della directory corrente (*pwd*)
+05. Spostarsi alla radice del filesystem (*cd*)
+06. Spostarsi nella propria home directory utilizzando percorso assoluto (*cd*)
+07. Spostarsi nella radice del filesystem utilizzando un percorso relativo (*cd*)
+08. Ritornare alla propria home utilizzando il comando cd senza argomenti (*cd*)
+09. Copiare il file /etc/passwd nella directory corrente (*cp*)
 10. Copiare il file /etc/passwd nella directory corrente attribuendo al nuovo file il nome passwd.alt (*cp*)
-11. Rinominare il file passwd.alt in passwd.alt.bak (*mv*)
-11. Verificare che i file passwd e passwd.alt.bak siano identici (*diff*)
+11. Rinominare il file passwd.alt in passwd.alt.bak e verificare che passwd e passwd.alt.bak siano identici (*mv, diff*)
 12. Verificare che il file passwd contenga la stringa root (*grep*)
 13. Contare il numero di caratteri di cui è composto il file passwd (*wc*)
 14. Contare il numero di linee di cui è composto il file passwd (*wc*)
@@ -66,21 +65,7 @@ exit 0
 49. Utilizzare il comando expr per sottrarre e dividere 9 e 3 (*expr*)
 50. Avviare il comando mc su un terminale e chiuderlo utilizzando un secondo terminale (*kill/killall*)
 
----
-
-101. Invocare i comandi *true* e false e visualizzarne il valore di uscita
-102. Utilizzare cat e la ridirezione in input per visualizzare il contenuto di /etc/passwd
-103. Utilizzare echo e la ridirezione della shell per creare un file test contenente la linea "GNU is Not Unix" 
-104. Combinare il comando ps aux con il comando grep usando un file temporaneo per individuare i processi che eseguono una shell (e.g., bash, mosh, dash, sh)
-105. Combinare il comando ps aux con il comando grep usando una pipe per individuare i processi che eseguono una shell (e.g., bash, mosh, dash, sh)
-106. Cosa e' cambiato? Il sistema operativo ha creato un file temporaneo oppure no?
-107. Utilizzare i comandi ps, grep e wc per contare i processi che eseguono con i diritti del nostro utente e salvare risultato all'interno di un file di log
-108. Creare la variabile d'ambiente LOGFILE ed assegnarle il valore "service.log"
-109. Visualizzare il contenuto della variabile LOGFILE
-110. Verificare che LOGFILE sia una variabile d'ambiente
-
 ## Soluzioni 
-
 1. Posizionarsi all'interno della propria home directory (*cd*)
 > cd
 
@@ -111,10 +96,9 @@ exit 0
 10. Copiare il file /etc/passwd nella directory corrente attribuendo al nuovo file il nome passwd.alt (*cp*)
 > cp /etc/passwd passwd.alt
 
-11. Rinominare il file passwd.alt in passwd.alt.bak (*mv*)
+11. Rinominare il file passwd.alt in passwd.alt.bak e verificare che passwd e passwd.alt.bak siano identici (*mv, diff*)
 > mv passwd.alt passwd.alt.bak
 
-11. Verificare che i file passwd e passwd.alt.bak siano identici (*diff*)
 > diff passwd passwd.alt.bak
 
 12. Verificare che il file passwd contenga la stringa root (*grep*)
