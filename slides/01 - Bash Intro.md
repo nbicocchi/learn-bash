@@ -351,10 +351,10 @@ In caso non si voglia modificare manualmente i file /etc/passwd e /etc/group e /
 
 ```
 # aggiunge un nuovo utente 
-$ sudo useradd username 
+$ sudo useradd --create-home username
  
 # rimuove un utente 
-$ sudo userdel username  
+$ sudo userdel --remove username  
 ```
 
 # Filesystem

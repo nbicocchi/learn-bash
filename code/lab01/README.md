@@ -189,14 +189,14 @@ exit 0
 39. Acquisire i diritti di amministrazione (*sudo*)
 > sudo -i
 
-40. Creare l'utente giuda (*adduser*)
-> adduser giuda
+40. Creare l'utente giuda (*useradd*)
+> useradd --create-home giuda
 
 41. Cambiare la password dell'utente giuda (*passwd*)
 > passwd giuda
 
-42. Eliminare l'utente giuda (*deluser*)
-> deluser giuda
+42. Eliminare l'utente giuda (*userdel*)
+> userdel --remove giuda
 
 43. Abbandonare i diritti di amministrazione (*exit*)
 > exit
