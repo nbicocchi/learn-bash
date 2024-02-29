@@ -346,15 +346,15 @@ $ sudo -i
 
 Eleva i diritti di esecuzione in modo permanente.
 
-## adduser, deluser
-In caso non si voglia modificare manualmente i file /etc/passwd e /etc/group e /etc/shadow, è possibile utilizzare i comandi **adduser** e **deluser** per aggiungere e rimuovere utenti dal sistema.
+## useradd, userdel
+In caso non si voglia modificare manualmente i file /etc/passwd e /etc/group e /etc/shadow, è possibile utilizzare i comandi **useradd** e **userdel** per aggiungere e rimuovere utenti dal sistema.
 
 ```
-# aggiunge un nuovo utente al sistema 
-$ sudo adduser utente  
+# aggiunge un nuovo utente 
+$ sudo useradd username 
  
-# rimuove un utente al sistema 
-$ sudo deluser utente  
+# rimuove un utente 
+$ sudo userdel username  
 ```
 
 # Filesystem

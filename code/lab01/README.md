@@ -53,9 +53,9 @@ exit 0
 37. Eseguire test.sh rimanendo nella propria home directory
 38. Mostrare il numero di inode del file test.sh (*stat*)
 39. Acquisire i diritti di amministrazione (*sudo*)
-40. Creare l'utente giuda (*adduser*)
+40. Creare l'utente giuda (*useradd*)
 41. Cambiare la password dell'utente giuda (*passwd*)
-42. Eliminare l'utente giuda (*deluser*)
+42. Eliminare l'utente giuda (*userdel*)
 43. Abbandonare i diritti di amministrazione (*exit*)
 44. Cambiare la password del proprio utente (*passwd*)
 45. Visualizzare il percorso completo del comando ls (*which*)
@@ -99,7 +99,7 @@ exit 0
 11. Rinominare il file passwd.alt in passwd.alt.bak e verificare che passwd e passwd.alt.bak siano identici (*mv, diff*)
 > mv passwd.alt passwd.alt.bak
 
-> diff passwd passwd.alt.bak
+> diff passwd passwd.alt.bak (nessun output significa che sono uguali)
 
 12. Verificare che il file passwd contenga la stringa root (*grep*)
 > grep root /etc/passwd
