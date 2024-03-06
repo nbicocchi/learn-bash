@@ -11,8 +11,8 @@ fontsize: 10pt
 aspectratio: 1610
 lang: it
 ---
-
-# Utilizzo interattivo
+# Bash Shell
+## Utilizzo interattivo
 La shell interpreta i comandi degli utenti. Il compito principale di una shell è di fornire un ambiente per l'utente, che può essere configurato usando i file di configurazione delle risorse di shell.
 
 ```
@@ -26,14 +26,14 @@ $ ls -al .bash*
 
 I comandi possono anche essere letti da un file chiamato script shell. Gli script sono interpretati, non compilati. La shell legge i comandi dallo script riga per riga. Esistono molte varianti di shell. Tratteremo la shell bash, nonostante le sue limitazioni rispetto a shell più recenti ed adatte all'utilizzo interattivo come **zsh** e **fish**, per la sua grande diffusione.
 
-## Freccia su, freccia giù, ctrl-r, tab
+### Freccia su, freccia giù, ctrl-r, tab
 **Tasti freccia (su e giù)** consentono di spostarsi all'interno della lista dei comandi precedenti (lo stesso elenco mostrato dal comando history)
 
 **ctrl-r** consente di inserire una stringa e selezionare tutti i comandi precedenti che la contengono. Ogni pressione successiva della combinazione **ctrl-r** accede agli altri comandi della stessa selezione
 
 **tab** auto-completa i nomi di file. Una doppia pressione (rapida) mostra l'elenco di tutte le possibilità disponibili
 
-## Comandi esterni
+### Comandi esterni
 La maggior parte dei comandi impartiti ad una shell sono nomi di altri programmi shell (sperabilmente installati nel sistema) come ad esempio cp, mv, cat etc. Il comando **which** ritorna il percorso assoluto di un comando con un determinato nome.
 
 ```shell
@@ -44,7 +44,7 @@ $ which which
 /usr/bin/which  
 ```
 
-## Comandi interni (builtin)
+### Comandi interni (builtin)
 Esistono però particolari comandi, detti **builtin**, che non provengono dall'esecuzione di un file binario ma sono **implementati all'interno della shell**. 
 
 ```shell
@@ -73,7 +73,7 @@ pwd: shell built-in command
 
 Vedi lista completa [qui](https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html).
 
-### pwd
+#### pwd
 **pwd** mostra la directory corrente
 
 ```shell
@@ -82,7 +82,7 @@ $ pwd
 /home/nicola
 ```
 
-### cd
+#### cd
 **cd** modifica la directory corrente
 
 ```shell
@@ -90,7 +90,7 @@ $ cd       # home directory
 $ cd /tmp  # directory /tmp
 ```
 
-### echo
+#### echo
 **echo** stampa sul terminal quello che gli viene passato come parametro
 
 ```shell
@@ -100,7 +100,7 @@ $ echo $PATH
 /home/nicola/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:...
 ```
 
-### read
+#### read
 **read** legge una linea da stdin e la inserisce in una variabile. Utile per interazione con utente.
 
 ```shell
@@ -108,7 +108,7 @@ $ read -p "What is your name? " answer
 $ echo "$answer"
 ```
 
-### exit
+#### exit
 **exit** termina l'esecuzione di una shell (e di conseguenza anche di uno script) e ritorna al chiamante un valore [0, 255]
 
 ```shell
@@ -119,7 +119,7 @@ $ echo $?
 $
 ```
 
-### true
+#### true
 **true** comando fittizio. Non fa nulla, e ritorna vero (0)
 
 ```shell
@@ -127,7 +127,7 @@ $ true; echo $?
 0
 ```
 
-### false
+#### false
 **false** comando fittizio. Non fa nulla, e ritorna falso (1)
 
 ```shell
@@ -135,7 +135,7 @@ $ false; echo $?
 1
 ```
 
-### alias
+#### alias
 **alias** definisce degli alias per i comandi. Nell'esempio sotto viene definito l'alias *ll* per il comando *ls -l*. Utile quando comandi lunghi sono frequentemente utilizzati. **unalias** elimina l'alias.
 
 ```shell
@@ -155,7 +155,7 @@ $ ll
 zsh: command not found: ll
 ```
 
-### history 
+#### history 
 **history** permette di visualizzare la cronologia degli ultimi comandi digitati dall'utente. Grazie alla cronologia è possibile ripetere rapidamente un comando già eseguito senza doverlo digitare di nuovo.
 
 ```shell
@@ -169,7 +169,7 @@ $ !!  # esegue ultimo comando (in questo caso 4)
 $ !3  # esegue il comando 3    
 ```
 
-### set
+#### set
 **set** mostra il nome ed il valore di tutte le variabili (locali e d'ambiente) e le funzioni definite all'interno della shell corrente
 
 ```shell
@@ -189,7 +189,7 @@ CDPATH=''
 ...
 ```
 
-### unset
+#### unset
 **unset** rimuove una variabile (sia locale che d'ambiente) dalla shell corrente
 
 ```shell
@@ -201,7 +201,7 @@ $ echo $A
 
 ```
 
-# Ridirezione
+## Ridirezione
 E' possibile ridirigere input e/o output di un comando facendo sì che stdin/stdout/stderr siano sostituiti da file **in modo trasparente al comando**
 
 Ridirezione dell'input  
@@ -251,7 +251,7 @@ $ tr [:lower:] [:upper:] < fin > fout
 $ who >> users
 ```
 
-## Implementazione ridirezione
+### Implementazione ridirezione
 Ridirezione in input
 ![implementazione ridirezione input](images/implementazione-ridirezione-input.avif)
 
@@ -259,7 +259,7 @@ Ridirezione in output
 ![implementazione ridirezione output](images/implementazione-ridirezione-output.avif)
 
 
-## Separazione stdout, stderr
+### Separazione stdout, stderr
 Il comando seguente cerca tutte le directory all'interno di /etc. Alcune non sono accessibili ed il comando produce errori insieme agli elementi trovati. Gli errori vengono stampati su **stderr** mentre gli elementi trovati su **stdout**.
 
 ```shell
@@ -332,7 +332,7 @@ $ ./test.py 2>/dev/null
 Hello stdout!  
 ```
 
-## File speciali
+### File speciali
 **/dev/null** è un file speciale che scarta tutto ciò che gli viene scritto sopra. E' il buco nero di ogni sistema Unix.
 
 **/dev/zero** è un file speciale che produce zeri all'infinito quando viene letto.
@@ -365,9 +365,9 @@ dd if=/dev/urandom bs=1K count=1 of=fout
 dd if=/dev/urandom bs=1M count=1000 of=fout
 ```
 
-# Combinazione di comandi
+## Combinazione di comandi
 
-## Concatenazione semplice
+### Concatenazione semplice
 **cmd1; cmd2**  
 
 Esegue cmd2 a prescindere dal valore di ritorno di cmd1. 
@@ -388,7 +388,7 @@ $ false; echo $?
 
 In shell, 0 è interpretato come successo (vero), > 0 come fallimento (falso).
 
-## AND logico
+### AND logico
 **cmd1 && cmd2**  
 
 Esegue cmd2 solo se cmd1 termina con successo (ritorna 0)  
@@ -400,7 +400,7 @@ Desktop  Devel  Documents  Downloads...
 $ false && ls
 ```
 
-## OR logico
+### OR logico
 **cmd1 || cmd2**  
 Esegue cmd2 solo se il primo fallisce (ritorna 1)  
 
@@ -412,7 +412,7 @@ Desktop  Devel  Documents  Downloads...
 
 ![Combinare comandi (&&, ||)](images/combinare-comandi.avif)
 
-## Pipes 
+### Pipes 
 La seguente scrittura è formalmente corretta ma poco efficiente. L'output del primo comando viene scritto su disco solo per essere letto dal secondo comando.
 
 ```shell
@@ -461,7 +461,7 @@ $ cat /etc/passwd | cut -d ":" -f 7 | uniq -u
 $ sort /etc/passwd | tail -n 10 | head -n 5  
 ```
 
-# Variabili
+## Variabili
 E' possibile definire variabili (trattate come stringhe) ed assegnare loro un valore con l'operatore **=**  
 
 ```shell
@@ -496,7 +496,7 @@ $ echo $A
 $
 ``` 
  
- ## Variabili d'ambiente
+ ### Variabili d'ambiente
 Per espandere la vita delle variabili anche alle sotto shell si utilizzano particolari variabili chiamate **variabili d'ambiente.**
 
 Ogni processo esegue nell'ambiente associato al processo che l'ha messo in esecuzione. Di conseguenza, ogni shell eredita l'ambiente dalla shell che l'ha messa in esecuzione.
@@ -515,7 +515,7 @@ $ echo $A
 $
 ```
 
-## env
+### env
 **env** mostra l'elenco delle variabili d'ambiente della shell corrente.
 
 ```shell
@@ -548,7 +548,7 @@ CDPATH=''
 ...
 ```
 
-## Variabili d'ambiente rilevanti
+### Variabili d'ambiente rilevanti
 ```shell
 PATH=/home/nicola/bin:/usr/local/bin:/usr/bin:/bin:...
 HOME=/home/nicola
@@ -557,9 +557,9 @@ SHELL=/bin/bash
 PWD=/home/nicola
 ```
 
-# Espansioni
+## Espansioni
 
-## Espansione metacaratteri 
+### Espansione metacaratteri 
 La shell riconosce caratteri speciali (wild cards)
 
 \* = una qualunque stringa di zero o più caratteri in un nome di file
@@ -609,7 +609,7 @@ $ ls [a-c,1-3]*[c,f]?
 $ ls *\** 
 ```
 
-## Espansione esecuzione in-line
+### Espansione esecuzione in-line
 E' possibile eseguire un comando ed utilizzarne l'output all'interno di un altro comando attraverso la sintassi **$( cmd )**
 
 ```shell
@@ -627,7 +627,7 @@ $ echo $list
 ...
 ```
 
-## Espansione aritmetica
+### Espansione aritmetica
 E' possibile eseguire operazioni aritmetiche attraverso la sintassi **$(( cmd ))**
 
 ```shell
@@ -647,7 +647,7 @@ $ echo $(( a + b ))
 5
 ```
 
-## Inibizione
+### Inibizione
 Ogni volta che utilizziamo un comando che contiene variabili, metacaratteri o espansioni, la shell li sostituisce nell'ordine seguente:
 
 1. **\$( ) e \$(( ))** sono sostituiti con il risultato prodotto  

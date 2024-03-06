@@ -11,11 +11,12 @@ fontsize: 10pt
 aspectratio: 1610
 lang: it
 ---
+# Bash Scripting
 
-# Scrittura ed esecuzione
+## Scrittura ed esecuzione
 Bash è un linguaggio interpretato (non compilato)! La prima linea di ogni script specifica l'interprete da utilizzare per i comandi successivi (**#!/bin/bash**). Tutte le altre linee che iniziano con **#** sono commenti nel codice.Per ottenere uno script funzionante è necessario seguire i seguenti passaggi:
 
-## Scrittura di uno script
+### Scrittura di uno script
 ```shell
 $ vim script.sh
 
@@ -26,13 +27,13 @@ echo Second input: "$2"
 exit 0
 ```
 
-## Rendere lo script eseguibile
+### Rendere lo script eseguibile
 ```shell
 $ chmod a+x script.sh # oppure  
 $ chmod 755 script.sh
 ```
 
-## Invocazione di uno script
+### Invocazione di uno script
 ```shell
 $ ./script.sh AAPL GOOGL MSFT  
 Total number of inputs: 3  
@@ -50,7 +51,7 @@ $ export PATH=$PATH:.
 $ script.sh
 ```
 
-## Variabili speciali
+### Variabili speciali
 All'interno di uno script Bash è possibile accedere ad un gruppo di [variabili speciali](https://tiswww.case.edu/php/chet/bash/bashref.html#Special-Parameters) che rendono possibile lo sviluppo
 
 * **$0** Il nome dello script in esecuzione  
@@ -82,7 +83,7 @@ echo [$#] $*  # mostra [numero dei parametri] tutti i parametri
 [4] -e -f -g -h
 ```
 
-## ShellCheck (static analysis)
+### ShellCheck (static analysis)
 [ShellCheck](https://github.com/koalaman/shellcheck) è uno strumento GPLv3 che fornisce avvisi e suggerimenti per gli script di shell bash:
 
 Gli obiettivi di ShellCheck sono:
@@ -92,9 +93,9 @@ Gli obiettivi di ShellCheck sono:
 * Evidenziare sottili difetti, casi limite, e insidie ​​che potrebbero causare il fallimento dello script in circostanze future.
 
 
-# Costrutti condizionali
+## Costrutti condizionali
 
-## test
+### test
 **test** è un comando per eseguire verifiche di varia natura sulle stringhe (interpretandole in base ai casi come stringhe, numeri o file). Un controllo avvenuto con successo ritorna 0, altrimenti 1.
 
 ```shell
@@ -106,7 +107,7 @@ $ test -f /etc/passwd; echo $?        # 0
 $ test -d /etc/passwd; echo $?        # 1
 ```
 
-## test (strings)
+### test (strings)
 ```
 -n STRING           the length of STRING is nonzero
 -z STRING           the length of STRING is zero
@@ -114,7 +115,7 @@ STRING1 = STRING2   the strings are equal
 STRING1 != STRING2  the strings are not equal
 ```
 
-## test (numbers)
+### test (numbers)
 ```
 INTEGER1 -eq INTEGER2   INTEGER1 is equal to INTEGER2
 INTEGER1 -ge INTEGER2   INTEGER1 is greater than or equal to INTEGER2
@@ -124,7 +125,7 @@ INTEGER1 -lt INTEGER2   INTEGER1 is less than INTEGER2
 INTEGER1 -ne INTEGER2   INTEGER1 is not equal to INTEGER2
 ```
 
-## test (files)
+### test (files)
 ```
 -d FILE   FILE exists and is a directory
 -e FILE   FILE exists
@@ -137,7 +138,7 @@ INTEGER1 -ne INTEGER2   INTEGER1 is not equal to INTEGER2
 -x FILE   FILE exists and the user has execute (or search) access
 ```
 
-## test (logic)
+### test (logic)
 ```
 ! EXPRESSION                  EXPRESSION is false
 EXPRESSION1 -a EXPRESSION2    both EXPRESSION1 and EXPRESSION2 are true
@@ -165,7 +166,7 @@ $ test ! -d /etc/passwd || test ! -w /etc/passwd; echo $?
 0
 ```
 
-## [ ]
+### [ ]
 Il comando test ha un alter ego che si comporta nello stesso modo ma ha nome diverso ([). Il comando è stato introdotto principalmente per aumentare la leggibilità degli script in particolare per l'utilizzo congiunto con la direttiva **if**.
 
 Gli spazi che vedete nell'esempio sotto, dopo [ e prima di ] sono obbligatori! La loro assenza produce errori!
@@ -185,7 +186,7 @@ $ [ ! -d /etc/passwd ] || [ ! -w /etc/passwd ]; echo $?
 0
 ```
 
-## if
+### if
 **if** consente di verificare il valore di ritorno di un comando e eseguire istruzioni differenziate in caso la condizione risulti vera o falsa.
 
 ```shell
@@ -270,7 +271,7 @@ else
 fi
 ```
 
-## Pattern matching
+### Pattern matching
 Il patter matching consiste nel confrontare un valore con un determinato pattern
 frequentemente specificato utilizzando wildcards.
 
@@ -286,7 +287,7 @@ ABCDEF      ABCNN*      No
 
 Il costrutto test / [ ] non supporta pattern matching!
 
-## [[ ]]
+### [[ ]]
 Il costrutto [[ ]] che si comporta come [ ] aggiungendo (fra altre) la funzione di [pattern matching](https://www.gnu.org/software/bash/manual/html_node/Pattern-Matching.html). Per approfondire, leggi [qui](http://mywiki.wooledge.org/BashFAQ/031).
 
 ```shell
@@ -311,7 +312,7 @@ if [[ "$1" != [0-9]* ]]; then
 fi
 ```
 
-## case
+### case
 Il costrutto switch-case che abbina il [pattern matching](https://www.gnu.org/software/bash/manual/html_node/Pattern-Matching.html) alla possibilità di eseguire più confronti in modo sintetico (evitando else if)
 
 ```shell
@@ -364,9 +365,9 @@ esac
 
 ---
 
-# Costrutti iterativi
+## Costrutti iterativi
 
-## for
+### for
 ```shell
 for argomento in lista; do  
    comando/i  
@@ -412,7 +413,7 @@ done
 5 * 5 = 25
 ```
 
-## while
+### while
 
 ```shell
 while [ condizione ]; do
@@ -429,7 +430,7 @@ while [ "$i" -gt 0 ]; do
 done
 ```
 
-## Espansione nomi di file
+### Espansione nomi di file
 I moderni filesystems supportano nomi di file contenenti spazi. Di conseguenza, per evitare problemi, l'espansione di variabili fuori dal controllo dello sviluppatore (ad es. nomi di file) va effettuata fra doppie virgolette " ".  
 
 ```shell
@@ -453,9 +454,9 @@ $ ./script.sh
 ./script.sh: line 4: [: /home/nicola/Mario: binary operator expected
 ```
 
-# Argomenti avanzati
+## Argomenti avanzati
 
-## Funzioni
+### Funzioni
 
 Bash supporta la definizione di funzioni:
 * Accedono a parametri di invocazione con sintassi \$1 . . . \$n (come gli script)
@@ -494,7 +495,7 @@ exit 0
 ```
 
 
-## Script multi-file 
+### Script multi-file 
 ```shell
 $ vim lib.sh
 
@@ -526,7 +527,7 @@ done
 exit 0
 ```
 
-## Arrays
+### Arrays
 ```shell
 # array definito vuoto
 $ arr=()
@@ -573,7 +574,7 @@ for f in ${files[@]}; do
 done
 ```
 
-## getopts
+### getopts
 Funzione standard (**builtin**) per gestire parametri a linea di comando. Esiste in Java, C, Python, etc.
 * getopts va sempre utilizzata abbinata ad un while e un case
 * La stringa "m:dh" rappresenta i parametri da controllare. Le lettere singole (e.g., d e h) rappresentano parametri senza argomenti. Le lettere seguite da **:** (e.g., m) rappresentano parametri con argomenti
@@ -645,7 +646,7 @@ echo filename = "$1"
 exit 0
 ```
 
-## Buone pratiche
+### Buone pratiche
 * Trattandosi di un linguaggio antico, l'indentazione è ancora facoltativa (in Python, recente, è obbligatoria!). Indentazione è comunque di fondamentale importanza!
 * Variabili globali sono MAIUSCOLE (ad es. USAGE="$0 usage: ...")  
 * Il controllo dei parametri avviene in **via negativa**. Si controllano le condizioni di fallimento e, se verificate, si termina lo script ritornando un codice errore (exit 1). Questa pratica evita indentazione eccessiva  
@@ -698,7 +699,7 @@ echo "#files=$F, #directories=$D"
 exit 0
 ```
 
-## Bash vs Python per la scrittura di script
+### Bash vs Python per la scrittura di script
 
 **Bash**  
 
