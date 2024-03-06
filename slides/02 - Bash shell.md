@@ -73,7 +73,6 @@ pwd: shell built-in command
 
 Vedi lista completa [qui](https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html).
 
-#### pwd
 **pwd** mostra la directory corrente
 
 ```shell
@@ -82,7 +81,6 @@ $ pwd
 /home/nicola
 ```
 
-#### cd
 **cd** modifica la directory corrente
 
 ```shell
@@ -90,7 +88,6 @@ $ cd       # home directory
 $ cd /tmp  # directory /tmp
 ```
 
-#### echo
 **echo** stampa sul terminal quello che gli viene passato come parametro
 
 ```shell
@@ -100,7 +97,6 @@ $ echo $PATH
 /home/nicola/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:...
 ```
 
-#### read
 **read** legge una linea da stdin e la inserisce in una variabile. Utile per interazione con utente.
 
 ```shell
@@ -108,7 +104,6 @@ $ read -p "What is your name? " answer
 $ echo "$answer"
 ```
 
-#### exit
 **exit** termina l'esecuzione di una shell (e di conseguenza anche di uno script) e ritorna al chiamante un valore [0, 255]
 
 ```shell
@@ -119,7 +114,6 @@ $ echo $?
 $
 ```
 
-#### true
 **true** comando fittizio. Non fa nulla, e ritorna vero (0)
 
 ```shell
@@ -127,7 +121,6 @@ $ true; echo $?
 0
 ```
 
-#### false
 **false** comando fittizio. Non fa nulla, e ritorna falso (1)
 
 ```shell
@@ -135,7 +128,6 @@ $ false; echo $?
 1
 ```
 
-#### alias
 **alias** definisce degli alias per i comandi. Nell'esempio sotto viene definito l'alias *ll* per il comando *ls -l*. Utile quando comandi lunghi sono frequentemente utilizzati. **unalias** elimina l'alias.
 
 ```shell
@@ -155,7 +147,6 @@ $ ll
 zsh: command not found: ll
 ```
 
-#### history 
 **history** permette di visualizzare la cronologia degli ultimi comandi digitati dall'utente. Grazie alla cronologia è possibile ripetere rapidamente un comando già eseguito senza doverlo digitare di nuovo.
 
 ```shell
@@ -169,7 +160,6 @@ $ !!  # esegue ultimo comando (in questo caso 4)
 $ !3  # esegue il comando 3    
 ```
 
-#### set
 **set** mostra il nome ed il valore di tutte le variabili (locali e d'ambiente) e le funzioni definite all'interno della shell corrente
 
 ```shell
@@ -189,7 +179,6 @@ CDPATH=''
 ...
 ```
 
-#### unset
 **unset** rimuove una variabile (sia locale che d'ambiente) dalla shell corrente
 
 ```shell
@@ -218,35 +207,44 @@ $ comando >> fileout  # aggiunge alla fine di fileout
 
 Ad esempio:
 
-* cat legge da /etc/passwd e stampa il contenuto su stdout  
+cat legge da /etc/passwd e stampa il contenuto su stdout  
+
 ```shell
 $ cat /etc/passwd  
 ```
 
-* cat legge da stdin, ma il flusso proviene da /etc/passwd  
+cat legge da stdin, ma il flusso proviene da /etc/passwd  
+
 ```shell
 $ cat < /etc/passwd
 ```
 
-* sort legge da stdin, ma il flusso proviene da fin  
-* sort scrive su stdout, ma il flusso è ridiretto su fout 
+sort legge da stdin, ma il flusso proviene da fin  
+
+sort scrive su stdout, ma il flusso è ridiretto su fout 
+
 ```shell
 $ sort < fin > fout
 ```
 
-* head legge da fin  
-* head scrive su stdout, ma il flusso è ridiretto su fout 
+head legge da fin  
+
+head scrive su stdout, ma il flusso è ridiretto su fout 
+
 ```shell
 $ head fin > fout
 ```
  
-* tr legge da stdin, ma il flusso proviene da fin
-* tr scrive su stdout, ma il flusso è ridiretto su fout
+tr legge da stdin, ma il flusso proviene da fin
+
+tr scrive su stdout, ma il flusso è ridiretto su fout
+
 ```shell
 $ tr [:lower:] [:upper:] < fin > fout
 ```
 
-* who scrive su stdout, ma il flusso è ridiretto su users (append)
+who scrive su stdout, ma il flusso è ridiretto su users (append)
+
 ```shell
 $ who >> users
 ```
