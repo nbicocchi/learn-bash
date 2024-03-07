@@ -8,13 +8,13 @@ Per utilizzare questa guida con vim utilizzare i seguenti due comandi
 >:set number
 
 ## Esercizi
-01. Creare una directory con nome `esercizi` e spostarsi al suo interno (*mkdir* e *cd*).
+01. Creare una directory con nome `esercizi` e spostarsi al suo interno con un solo comando concatenato (*mkdir, cd*).
 02. Copiare il file `/etc/passwd` nella directory corrente (*cp*).
 03. Visualizzare le prime 10 righe del file `/etc/passwd` (*head*).
-04. Visualizzare le ultime 5 righe del file `/etc/passwd` (*tail*).
+04. Visualizzare le penultime 5 righe del file `/etc/passwd` (*head, tail*).
 05. Contare il numero di utenti nel sistema (*wc*).
 06. Visualizzare l'elenco degli utenti con shell bash (*cat*, *cut*, *grep*).
-07. Creare un *alias* per il comando `ls -l` (*alias*).
+07. Creare un *alias* per il comando `ls -al` (*alias*).
 08. Visualizzare l'elenco dei file nella directory corrente ordinati per dimensione (*ls*).
 09. Visualizzare l'elenco dei file nella directory corrente ordinati per data di modifica (*ls*).
 10. Creare un file con nome `esempio.txt` e scrivere al suo interno `Questa è una riga di testo` (*echo*).
@@ -26,8 +26,8 @@ Per utilizzare questa guida con vim utilizzare i seguenti due comandi
 16. Cambiare la directory corrente in `/tmp` (*cd*).
 17. Visualizzare la directory corrente (*pwd*).
 18. Uscire dalla shell (*exit*).
-19. Definire una variabile `nome`, assegnarle il proprio nome e stamparla (*echo*).
-20. Definire una variabile `cognome`, assegnarle il tuo cognome e stamparla (*echo*).
+19. Definire una variabile `nome`, assegnarle il proprio nome, e stamparla (*echo*).
+20. Definire una variabile `cognome`, assegnarle il proprio cognome, e stamparla (*echo*).
 21. Concatenare le variabili `nome` e `cognome` in un'unica stringa (*echo*).
 22. Creare una variabile `numero` con il valore 42, incrementarla di 10 e stamparla.
 23. Creare una variabile `lista` contenente tutti i file nella directory corrente e stamparla (*ls*).
@@ -38,8 +38,8 @@ Per utilizzare questa guida con vim utilizzare i seguenti due comandi
 28. Visualizzare l'elenco dei file nella directory `/etc` che contengono la parola `config` (*grep*).
 29. Ordinare i file nella directory corrente per dimensione in ordine decrescente (*ls*).
 30. Visualizzare le prime 10 righe del file `/etc/passwd` ordinati per nome utente (*sort, head*).
-31. Trovare tutte le directory all'interno di `/etc` che non sono accessibili e mostra solo i messaggi di errore (*find*).
-32. Creare un file di 10 KB con caratteri casuali usando `/dev/urandom` (*dd*).
+31. Trovare tutte le directory all'interno di `/etc` che non sono accessibili e mostrare solo i messaggi di errore (*find*).
+32. Creare un file di 10 KB con caratteri casuali usando il file `/dev/urandom` (*dd*).
 33. Eseguire il comando *ls* solo se il comando *true* ha successo (*true, ls*).
 34. Contare il numero di utenti unici nel file `/etc/passwd` (*sort, uniq, wc*).
 35. Eseguire un comando che stampi il risultato dell'operazione aritmetica 3 * (2 + 5).
@@ -70,7 +70,7 @@ Per utilizzare questa guida con vim utilizzare i seguenti due comandi
 > head -n 10 /etc/passwd
 
 04. Visualizzare le ultime 5 righe del file /etc/passwd (*tail*).
-> tail -n 5 /etc/passwd
+> tail -n 10 /etc/passwd | head -n 5
 
 05. Contare il numero di utenti nel sistema (*wc*).
 > wc -l /etc/passwd
@@ -79,7 +79,7 @@ Per utilizzare questa guida con vim utilizzare i seguenti due comandi
 > cat /etc/passwd | cut -d ":" -f 7 | grep -E "^/bin/bash$"
 
 07. Creare un alias per il comando "ls -l".
-> alias ll='ls -l'
+> alias ll='ls -al'
 
 08. Visualizzare l'elenco dei file nella directory corrente ordinati per dimensione.
 > ls -lS
