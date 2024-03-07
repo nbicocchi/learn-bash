@@ -20,8 +20,8 @@ Per utilizzare questa guida con vim utilizzare i seguenti due comandi
 10. Creare un file con nome "esempio.txt" e scrivere al suo interno "Questa è una riga di testo" (*echo*).
 11. Appendere "Questa è la seconda riga di testo" al file "esempio.txt" (*echo*).
 12. Visualizzare il contenuto del file "esempio.txt" (*cat*).
-13. Visualizzare l'elenco dei file nella directory corrente con estensione .txt. (*ls*)
-14. Visualizzare l'elenco dei file nella directory /etc con dimensione superiore a 100 KB. (*find*)
+13. Visualizzare l'elenco dei file nella directory corrente con estensione .txt (*ls*).
+14. Visualizzare l'elenco dei file nella directory /etc con dimensione superiore a 100 KB (*find*).
 15. Eliminare il file "esempio.txt" (*rm*).
 16. Cambiare la directory corrente in /tmp (*cd*).
 17. Visualizzare la directory corrente (*pwd*).
@@ -54,9 +54,9 @@ Per utilizzare questa guida con vim utilizzare i seguenti due comandi
 44. Individuare tutti i processi che eseguono una shell (e.g., bash, mosh, dash, sh) utilizzando una pipe (*ps aux, grep*).
 45. Cosa e' cambiato? Il sistema operativo ha creato in modo automatico un file temporaneo oppure no?
 46. Contare tutti i processi che eseguono con i diritti del nostro utente e salvare risultato all'interno di un file di log (*ps, grep, wc*).
-47. Creare la variabile d'ambiente "LOGFILE" ed assegnarle il valore "service.log"
-48. Visualizzare il contenuto della variabile "LOGFILE" (*echo*)
-49. Verificare che "LOGFILE" sia una variabile d'ambiente
+47. Creare la variabile d'ambiente "LOGFILE" ed assegnarle il valore "service.log".
+48. Visualizzare il contenuto della variabile "LOGFILE" (*echo*).
+49. Verificare che "LOGFILE" sia una variabile d'ambiente.
 50. Elencare tutti i file nella directory corrente che hanno nomi composti solo da caratteri numerici (*echo*).
 
 ## Soluzioni
