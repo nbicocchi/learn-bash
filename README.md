@@ -21,6 +21,7 @@
 Una volta terminata l'installazione di EndeavourOS, aprire un terminale ed inserire i seguenti comandi. 
 
 ```
+$ yay -Syyu
 $ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply nbicocchi
 $ ./install_scripts/install_script.sh --zsh --base-cli --base-gui --aur
 $ git clone https://github.com/nbicocchi/learn-bash.git
