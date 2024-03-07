@@ -9,21 +9,21 @@ Per utilizzare questa guida con vim utilizzare i seguenti due comandi
 
 ## Esercizi
 01. Creare una directory con nome `esercizi` e spostarsi al suo interno (*mkdir* e *cd*).
-02. Copiare il file /etc/passwd nella directory corrente (*cp*).
-03. Visualizzare le prime 10 righe del file /etc/passwd (*head*).
-04. Visualizzare le ultime 5 righe del file /etc/passwd (*tail*).
+02. Copiare il file `/etc/passwd` nella directory corrente (*cp*).
+03. Visualizzare le prime 10 righe del file `/etc/passwd` (*head*).
+04. Visualizzare le ultime 5 righe del file `/etc/passwd` (*tail*).
 05. Contare il numero di utenti nel sistema (*wc*).
 06. Visualizzare l'elenco degli utenti con shell bash (*cat*, *cut*, *grep*).
-07. Creare un *alias* per il comando "ls -l" (*alias*).
+07. Creare un *alias* per il comando `ls -l` (*alias*).
 08. Visualizzare l'elenco dei file nella directory corrente ordinati per dimensione (*ls*).
 09. Visualizzare l'elenco dei file nella directory corrente ordinati per data di modifica (*ls*).
-10. Creare un file con nome "esempio.txt" e scrivere al suo interno "Questa è una riga di testo" (*echo*).
-11. Appendere "Questa è la seconda riga di testo" al file "esempio.txt" (*echo*).
-12. Visualizzare il contenuto del file "esempio.txt" (*cat*).
-13. Visualizzare l'elenco dei file nella directory corrente con estensione .txt (*ls*).
-14. Visualizzare l'elenco dei file nella directory /etc con dimensione superiore a 100 KB (*find*).
-15. Eliminare il file "esempio.txt" (*rm*).
-16. Cambiare la directory corrente in /tmp (*cd*).
+10. Creare un file con nome `esempio.txt` e scrivere al suo interno `Questa è una riga di testo` (*echo*).
+11. Appendere `Questa è la seconda riga di testo` al file `esempio.txt` (*echo*).
+12. Visualizzare il contenuto del file `esempio.txt` (*cat*).
+13. Visualizzare l'elenco dei file nella directory corrente con estensione `.txt` (*ls*).
+14. Visualizzare l'elenco dei file nella directory `/etc` con dimensione superiore a 100 KB (*find*).
+15. Eliminare il file `esempio.txt` (*rm*).
+16. Cambiare la directory corrente in `/tmp` (*cd*).
 17. Visualizzare la directory corrente (*pwd*).
 18. Uscire dalla shell (*exit*).
 19. Definire una variabile "nome", assegnarle il proprio nome e stamparla (*echo*).
