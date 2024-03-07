@@ -8,7 +8,7 @@ Per utilizzare questa guida con vim utilizzare i seguenti due comandi
 >:set number
 
 ## Esercizi
-01. Creare una directory con nome "esercizi" e spostarsi al suo interno (*mkdir* e *cd*).
+01. Creare una directory con nome `esercizi` e spostarsi al suo interno (*mkdir* e *cd*).
 02. Copiare il file /etc/passwd nella directory corrente (*cp*).
 03. Visualizzare le prime 10 righe del file /etc/passwd (*head*).
 04. Visualizzare le ultime 5 righe del file /etc/passwd (*tail*).
@@ -50,8 +50,8 @@ Per utilizzare questa guida con vim utilizzare i seguenti due comandi
 40. Se la copia del file "file1.txt" in "file2.txt" fallisce, mostrare un messaggio di errore (*cp, echo*).
 41. Utilizzare la ridirezione in input per visualizzare il contenuto di /etc/passwd (*cat*).
 42. Utilizzare la ridirezione in output per creare un file test contenente la linea "GNU is Not Unix" (*echo*).
-43. Individuare tutti i processi che eseguono una shell (e.g., bash, mosh, dash, sh) utilizzando un file temporaneo (*ps aux, grep*).
-44. Individuare tutti i processi che eseguono una shell (e.g., bash, mosh, dash, sh) utilizzando una pipe (*ps aux, grep*).
+43. Individuare tutti i processi che eseguono una shell (e.g., bash, zsh, ...) utilizzando un file temporaneo (*ps aux, grep*).
+44. Individuare tutti i processi che eseguono una shell (e.g., bash, zsh, ...) utilizzando una pipe (*ps aux, grep*).
 45. Cosa e' cambiato? Il sistema operativo ha creato in modo automatico un file temporaneo oppure no?
 46. Contare tutti i processi che eseguono con i diritti del nostro utente e salvare risultato all'interno di un file di log (*ps, grep, wc*).
 47. Creare la variabile d'ambiente "LOGFILE" ed assegnarle il valore "service.log".
