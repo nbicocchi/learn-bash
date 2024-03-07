@@ -54,7 +54,7 @@ Per utilizzare questa guida con vim utilizzare i seguenti due comandi
 44. Individuare tutti i processi che eseguono una shell (e.g., bash, zsh, ...) utilizzando una pipe (*ps aux, grep*).
 45. Cosa e' cambiato? Il sistema operativo ha creato in modo automatico un file temporaneo oppure no?
 46. Contare tutti i processi che eseguono con i diritti del nostro utente e salvare risultato all'interno di un file di log (*ps, grep, wc*).
-47. Creare la variabile d'ambiente `LOGFILE` ed assegnarle il valore `service.log`.
+47. Creare la variabile d'ambiente `LOGFILE` ed assegnarle il valore `service.log` (*export*).
 48. Visualizzare il contenuto della variabile `LOGFILE` (*echo*).
 49. Verificare che `LOGFILE` sia una variabile d'ambiente.
 50. Elencare tutti i file nella directory corrente che hanno nomi composti solo da caratteri numerici (*echo*).
