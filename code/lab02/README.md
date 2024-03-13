@@ -151,7 +151,7 @@ Per utilizzare questa guida con vim utilizzare i seguenti due comandi
 > sort /etc/passwd | head -n 10
 
 31. Trovare tutte le directory all'interno di `/etc` che non sono accessibili e mostrare solo i messaggi di errore (*find*).
-> find /etc -type d 2>/dev/null
+> find /etc -type d 1>/dev/null
 
 32. Creare un file di 10 KB con caratteri casuali usando il file `/dev/urandom` (*dd*).
 > dd if=/dev/urandom of=fout bs=1K count=10 
