@@ -302,7 +302,7 @@ fi
 ```
 
 ```shell
-# [[ ]] pattern matching
+# [[ ]] supporta pattern matching
 if [[ "$1" == n?co* ]]; then
   echo "success"
 fi
