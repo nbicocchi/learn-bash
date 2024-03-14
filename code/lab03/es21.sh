@@ -1,15 +1,16 @@
 #!/bin/bash
 
-USAGE="usage: $0 filename permissions"
+usage() {
+	echo "usage: $0 filename permissions"
+	exit 1
+}
 
 if [ $# -ne 2 ]; then
-	echo "$USAGE"
-	exit 1
+	usage
 fi
 
 if [ -f "$1" ]; then
-	echo "$USAGE"
-	exit 1
+	usage
 fi
 
 touch "$1"
