@@ -3,30 +3,28 @@
 # Da invocare nel seguente modo per rispettare la specifica riguardo l'ordinamento
 # $ ./es35.sh D N | sort -rn | cut -d ':' -f 2
 
-USAGE="usage: $0 dirname(abs) n"
+usage() {
+  echo "usage: $0 dirname(abs) n"
+  exit 1
+}
 
 # Check arguments
 if [ $# -ne 2 ]; then
-  echo "$USAGE"
-  exit 1
+  usage
 fi
 
 case "$1" in 
   /*) ;;
-  *) echo "$USAGE"
-     exit 1
+  *) usage
      ;;
 esac
 
 if [ ! -d "$1" ] || [ ! -x "$1" ]; then
-  echo "$USAGE"
-  exit 1
+  usage
 fi
 
 case "$2" in
-  ''|*[!0-9]*)
-    echo "$USAGE"
-    exit 1
+  ''|*[!0-9]*) usage
     ;;
   *) 
     ;;

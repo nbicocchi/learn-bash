@@ -1,29 +1,27 @@
 #!/bin/bash
 
-USAGE="usage: $0 dir(abs) str n1 n2"
+usage() {
+  echo "usage: $0 dir(abs) str n1 n2"
+  exit 1
+}
 
 # Check arguments
 if [ $# -ne 4 ]; then
-  echo "$USAGE"
-  exit 1
+  usage
 fi
 
 case "$1" in 
   /*) ;;
-  *) echo "$USAGE"
-     exit 1
+  *) usage
      ;;
 esac
 
 if [ ! -d "$1" ] || [ ! -x "$1" ]; then
-  echo "$USAGE"
-  exit 1
+  usage
 fi
 
 case "$3" in
-  ''|*[!0-9]*)
-    echo "$USAGE"
-    exit 1
+  ''|*[!0-9]*) usage
     ;;
   *) 
     ;;
@@ -31,8 +29,7 @@ esac
 
 case "$4" in
   ''|*[!0-9]*)
-    echo "$USAGE"
-    exit 1
+    usage
     ;;
   *) 
     ;;
