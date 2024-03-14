@@ -83,6 +83,17 @@ echo [$#] $*  # mostra [numero dei parametri] tutti i parametri
 [4] -e -f -g -h
 ```
 
+### Commenti
+E' possibile inserire commenti nel codice utilizzando il carattere #.
+
+```shell
+#!/bin/bash
+
+# Questo è un commento
+
+exit 0
+```
+
 ### ShellCheck (static analysis)
 [ShellCheck](https://github.com/koalaman/shellcheck) è uno strumento GPLv3 che fornisce avvisi e suggerimenti per gli script di shell bash:
 
