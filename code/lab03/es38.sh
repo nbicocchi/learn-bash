@@ -1,37 +1,35 @@
 #!/bin/bash
 
-USAGE="usage: $0 dirname(abs) filename filename"
+usage() {
+  echo "usage: $0 dirname(abs) filename filename"
+  exit 1
+}
 
 # Check arguments
 if [ $# -ne 3 ]; then
-  echo "$USAGE"
-  exit 1
+  usage
 fi
 
 case "$1" in 
   /*) ;;
-  *) echo "$USAGE"
-     exit 1
+  *) usage
      ;;
 esac
 
 if [ ! -d "$1" ] || [ ! -x "$1" ]; then
-  echo "$USAGE"
-  exit 1
+  usage
 fi
 
 case "$2" in
-  */*)  echo "$USAGE"
-        exit 1
-        ;;
-    *)  ;;
+  */*) usage
+       ;;
+    *) ;;
 esac
 
 case "$3" in
-  */*)  echo "$USAGE"
-        exit 1
-        ;;
-    *)  ;;
+  */*) usage
+       ;;
+    *) ;;
 esac
 
 # Main body

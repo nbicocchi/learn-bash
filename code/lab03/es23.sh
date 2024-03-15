@@ -1,15 +1,16 @@
 #!/bin/bash
 
-USAGE="usage: $0 arg (readable directory)"
+usage() {
+  echo "usage: $0 arg (readable directory)"
+  exit 1
+}
 
 if [ $# -ne 1 ]; then
-  echo "$USAGE"
-  exit 1
+  usage
 fi
 
 if [ ! -d "$1" ] || [ ! -r "$1" ]; then
-  echo "$USAGE"
-  exit 1
+  usage
 fi
 
 exit 0

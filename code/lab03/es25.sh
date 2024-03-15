@@ -1,10 +1,12 @@
 #!/bin/bash
 
-USAGE="usage: $0 arg1 arg2 .. argn"
+usage() {
+  echo "usage: $0 arg1 arg2 .. argn"
+  exit 1
+}
 
 if [ $# -lt 2 ]; then
-  echo "$USAGE"
-  exit 1
+  usage
 fi
 
 echo "first arg: $1"

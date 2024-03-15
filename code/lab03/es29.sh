@@ -1,17 +1,18 @@
 #!/bin/bash
 
-USAGE="usage: $0 dirname"
+usage() {
+  echo "usage: $0 dirname"
+  exit 1
+}
 
 # Check the number of parameters
 if [ $# -ne 1 ]; then 
-  echo "$USAGE"
-  exit 1
+  usage
 fi
 
 # Check if "$1" is a directory and explorable
 if [ ! -d "$1" ] || [ ! -x "$1" ]; then
-  echo "$USAGE"
-  exit 1
+  usage
 fi
 
 # Main body
@@ -29,7 +30,7 @@ for fname in "$1"/*; do
   fi
 done
 
-echo "#files =" $F
-echo "#directories =" $D
+echo "#files =" "$F"
+echo "#directories =" "$D"
 
 exit 0

@@ -1,6 +1,9 @@
 #!/bin/bash
 
-USAGE="usage: $0 dirname(abs)"
+usage() {
+  echo "usage: $0 dirname(abs)"
+  exit 1
+}
 
 # Functions
 recurse_dir() {
@@ -24,20 +27,17 @@ recurse_dir() {
 
 # Check arguments
 if [ $# -ne 1 ]; then
-  echo "$USAGE"
-  exit 1
+  usage
 fi
 
 case "$1" in
   /*) ;;
-  *)  echo "$USAGE"
-      exit 1
+  *)  usage
       ;;
 esac
 
 if [ ! -d "$1" ] || [ ! -x "$1" ]; then
-  echo "$USAGE"
-  exit 1
+  usage
 fi
 
 # Variables

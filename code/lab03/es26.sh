@@ -1,10 +1,12 @@
 #!/bin/bash
 
-USAGE="usage: $0 arg"
+usage() {
+  echo "usage: $0 arg"
+  exit 1
+}
 
 if [ $# -ne 1 ]; then
-  echo "$USAGE"
-  exit 1
+  usage
 fi
 
 case "$1" in

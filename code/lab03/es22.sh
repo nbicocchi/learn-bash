@@ -1,15 +1,16 @@
 #!/bin/bash
 
-USAGE="usage: $0 filename"
-
-if [ $# -ne 1 ]; then
-	echo "$USAGE"
+usage() {
+	echo "usage: $0 filename"
 	exit 1
+}
+if [ $# -ne 1 ]; then
+	usage
 fi
 
 echo '#!/bin/bash' > "$1"
-echo "echo \"Hello World!\"" >> "$1"
-echo "exit 0" >> "$1"
+echo 'echo "Hello World!"' >> "$1"
+echo 'exit 0' >> "$1"
 
 chmod 755 "$1"
 

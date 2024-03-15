@@ -1,23 +1,23 @@
 #!/bin/bash
 
-USAGE="usage: $0 dirname(abs)"
+usage() {
+  echo "usage: $0 dirname(abs)"
+  exit 1
+}
 
 # Check arguments
 if [ $# -ne 1 ]; then
-  echo "$USAGE"
-  exit 1
+  usage
 fi
 
 case "$1" in
   /*) ;;
-  *)  echo "$USAGE"
-      exit 1
+  *)  usage
       ;;
 esac
 
 if [ ! -d "$1" ] || [ ! -x "$1" ]; then
-  echo "$USAGE"
-  exit 1
+  usage
 fi
 
 # Main body
