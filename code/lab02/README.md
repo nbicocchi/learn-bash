@@ -36,7 +36,7 @@ Per utilizzare questa guida con vim utilizzare i seguenti due comandi
 26. Calcolare la somma dei numeri da 1 a 5 utilizzando l'espansione aritmetica.
 27. Visualizzare l'elenco dei file nella directory corrente che iniziano per la lettera `a` (*ls*).
 28. Visualizzare l'elenco dei file nella directory `/etc` che contengono la parola `config` (*grep*).
-29. Ordinare i file nella directory corrente per dimensione in ordine decrescente (*ls*).
+29. Ordinare i file nella directory corrente per dimensione in ordine crescente (*ls*).
 30. Visualizzare le prime 10 righe del file `/etc/passwd` ordinati per nome utente (*sort, head*).
 31. Trovare tutte le directory all'interno di `/etc` che non sono accessibili e mostrare solo i messaggi di errore (*find*).
 32. Creare un file di 10 KB con caratteri casuali usando il file `/dev/urandom` (*dd*).
@@ -144,7 +144,7 @@ Per utilizzare questa guida con vim utilizzare i seguenti due comandi
 28. Visualizzare l'elenco dei file nella directory `/etc` che contengono la parola `config` (*grep*).
 > grep -r config /etc
 
-29. Ordinare i file nella directory corrente per dimensione in ordine decrescente (*ls*).
+29. Ordinare i file nella directory corrente per dimensione in ordine crescente (*ls*).
 > ls -lSr
 
 30. Visualizzare le prime 10 righe del file `/etc/passwd` ordinati per nome utente (*sort, head*).
