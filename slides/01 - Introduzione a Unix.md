@@ -82,7 +82,7 @@ Il codice dei programmi viene eseguito sulle CPU in modalità kernel o in modali
 
 ## Quanto è complesso un kernel
 * 20K SLOC (XV6), https://github.com/mit-pdos/xv6-public
-* 30M SLOC (Linux Kernel 5), https://www.kernel.org/
+* 30M SLOC (Linux Kernel 6), https://www.kernel.org/
 
 ![Linux kernel map](images/linux-kernel-map.avif)
 
@@ -334,7 +334,7 @@ Retype new UNIX password:
 ## sudo
 **sudo** eleva i diritti di esecuzione (da utente a root) per un solo comando. In questo esempio, l'aggiornamento del sistema richiede i diritti di amministrazione.
 ```
-$ sudo apt-get update  
+$ sudo pacman -Syyu  
 $ <-- Prompt utente normale  
 ```
 
@@ -369,7 +369,7 @@ I file ordinari si dividono in:
 * **file di testo**: leggibile da un essere umano. I dati contenuti rappresentano caratteri (ASCII o Unicode)  
 * **file binarii**: richiede specifica interpretazione di un software per essere letto (mp3, avif, mp4)  
 
-Si definisce **estensione** il gruppo di 2-4 caratteri terminali del nome di un file che alcuni sistemi, ad esempio Windows utilizzano per rappresentare il tipo del file (ad es. img.avif, song.mp3 etc). I sistemi Unix analizzano invece il contenuto del file per determinarne il tipo. 
+Si definisce **estensione** il gruppo di 2-4 caratteri terminali del nome di un file che alcuni sistemi, ad esempio Windows le utilizza per rappresentare il tipo del file (ad es. img.avif, song.mp3 etc). I sistemi Unix analizzano invece il contenuto del file per determinarne il tipo. 
 
 ```
 $ file /etc/passwd                                              
@@ -407,15 +407,18 @@ Per motivi di efficienza, le scritture su di un file system sono eseguite in blo
 ## Percorsi assoluti e relativi
 Ogni file può essere identificato da:  
 * 1 **percorso assoluto**: riferito alla radice della gerarchia. Inizia SEMPRE con /  
+
 ```
-# /etc/passwd osservato dalla radice /
-$ cat /etc/passwd
+$ cat /home/local/README (osservato dalla radice /)
 ```
 * n **percorso relativi**: riferiti alla posizione dell'utente nel file system (n=numero di directory nell'intero filesystem).  
+
 ```
-# /etc/passwd osservato da /home/nicola
-$ cat ../../etc/passwd
+$ cat ../local/README (osservato da /home/users)
 ```
+
+![nomi assoluti e relativi](images/nomi-assoluti-e-relativi.avif)
+
 
 Nomi speciali:  
 * **.** direttorio corrente 
@@ -473,9 +476,6 @@ $ chmod 0755 test.txt
 # sudo è necessario in questo caso
 $ sudo chown root:root test.txt  
 ```
-
-## Nomi assoluti e relativi
-![nomi assoluti e relativi](images/nomi-assoluti-e-relativi.avif)
 
 ## i-node
 Ogni file può avere uno o più nomi simbolici ma è associato un solo **i-node**
