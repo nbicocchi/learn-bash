@@ -76,7 +76,7 @@ Per utilizzare questa guida con vim utilizzare i seguenti due comandi
 > wc -l /etc/passwd
 
 06. Visualizzare l'elenco degli utenti con shell bash (*cat*, *cut*, *grep*).
-> cat /etc/passwd | cut -d ":" -f 7 | grep -E "^/bin/bash$"
+> cat /etc/passwd | grep "/bin/bash" | cut -d: -f 1
 
 07. Creare un *alias* per il comando `ls -al` (*alias*).
 > alias ll='ls -al'
