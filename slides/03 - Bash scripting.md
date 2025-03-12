@@ -389,7 +389,7 @@ done
 ```shell
 # Esempio: tabellina del 5  
 for i in 1 2 3 4 5; do  
-  echo "5 * %i = $(expr 5 \* $i)"  
+  echo "5 * $i = $(( 5 * i ))"  
 done
 ```
 
@@ -414,7 +414,7 @@ $ seq 1 5
 ```shell
 # Esempio: tabellina del 5  
 for i in $(seq 1 5); do
-  echo "5 * $i = $(expr 5 \* $i)"
+  echo "5 * $i = $(( 5 * i ))"  
 done
 
 5 * 1 = 5
@@ -663,7 +663,7 @@ exit 0
 * Il controllo dei parametri avviene in **via negativa**. Si controllano le condizioni di fallimento e, se verificate, si termina lo script ritornando un codice errore (exit 1). Questa pratica evita indentazione eccessiva  
 * I valori di uscita (exit) utilizzano valori diversi per distinguere successo (exit 0) da fallimento (exit 1).Per differenziare fra diversi tipi di fallimento si possono utilizzare numeri positivi > 1 (ad es. exit 2)  
 * I filesystem moderni supportano la presenza di spazi. Per questo motivo, tutte le variabili fuori dal controllo del programmatore (ad es. nomi di file) vanno espanse fra doppie virgolette (ad es. echo "$filename") 
-* E'  buona norma (best practice) aderire ad un canovaccio noto e consolidato:
+* Aderire ad una struttura nota:
   * Definizione interprete  
   * Definizione variabili globali
   * Definizione funzioni  
