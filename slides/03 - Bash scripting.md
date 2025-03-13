@@ -111,7 +111,7 @@ Gli obiettivi di ShellCheck sono:
 
 ```shell
 $ test 5 -gt 3; echo $?               # 0  
-$ test 5 -gt 3; echo $?               # 1  
+$ test 3 -gt 5; echo $?               # 1  
 $ test "nicola" == "nicola"; echo $?  # 0  
 $ test "nicola" == "mario"; echo $?   # 1  
 $ test -f /etc/passwd; echo $?        # 0  
