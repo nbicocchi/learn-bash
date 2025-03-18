@@ -609,7 +609,7 @@ while getopts "m:dh" o; do
       ;;  
   esac  
 done
-shift $(expr $OPTIND - 1)
+shift $(($OPTIND - 1))
 ```
 
 Ad esempio:
@@ -629,7 +629,7 @@ usage() {
 
 # In case of optional [] parameters default values are overriden
 while getopts "m:dh" o; do
-    case "$0" in
+    case "$o" in
         m) 
           MESSAGE="$OPTARG"
           ;;
@@ -645,7 +645,7 @@ while getopts "m:dh" o; do
     esac
 done
 # Shift parameters away. $1 becomes filename
-shift $(expr $OPTIND - 1) 
+shift $(($OPTIND - 1))
 
 # Additional checks
 # Check if filename exists
