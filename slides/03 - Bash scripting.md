@@ -629,7 +629,7 @@ usage() {
 
 # In case of optional [] parameters default values are overriden
 while getopts "m:dh" o; do
-    case "$0" in
+    case "$o" in
         m) 
           MESSAGE="$OPTARG"
           ;;
