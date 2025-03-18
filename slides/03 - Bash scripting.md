@@ -609,7 +609,7 @@ while getopts "m:dh" o; do
       ;;  
   esac  
 done
-shift $(expr $OPTIND - 1)
+shift $(($OPTIND - 1))
 ```
 
 Ad esempio:
@@ -645,7 +645,7 @@ while getopts "m:dh" o; do
     esac
 done
 # Shift parameters away. $1 becomes filename
-shift $(expr $OPTIND - 1) 
+shift $(($OPTIND - 1))
 
 # Additional checks
 # Check if filename exists
