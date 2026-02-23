@@ -444,18 +444,51 @@ Per ogni terna, per ogni bit di protezione: 1 = *attivato*, 0 = *disattivato*. N
 
 ![bit di protezione](images/bit-di-protezione.avif)
 
+Ecco una versione molto sintetica e adatta a slide 👇
+
+---
+
 ## SUID, SGID, Sticky
-**SUID (Set User ID)**: si applica ad un file di programma eseguibile. Se attivo, l'utente che esegue assume i diritti del proprietario (per la durata dell'esecuzione).
 
-**SGID (Set Group ID)**: si applica ad un file di programma eseguibile. Se attivo, l'utente che esegue assume i diritti del gruppo proprietario (per la durata dell'esecuzione).
+### SUID (Set User ID)
 
-**STICKY**: il sistema cerca di mantenere in memoria l'immagine del programma, anche se non è in esecuzione  
+Si applica a file eseguibili.
+Se attivo, il programma viene eseguito con i diritti del proprietario del file.
 
-L'esempio seguente mostra una **s** al posto della **x** sulla terna di sinistra. Il processo acquisirà i diritti del proprietario del file (root) e NON dell'utente che lo lancia (implicazioni di sicurezza).
 ```
 $ ls -al /usr/bin/passwd
 -rwsr-xr-x 1 root root 51552 gen 25  2023 /usr/bin/passwd
 ```
+
+* La **s** indica SUID.
+* Anche un utente normale può cambiare la propria password perché il programma viene eseguito con privilegi di **root**.
+
+
+### SGID (Set Group ID)
+
+Su directory: i nuovi file ereditano il gruppo della directory.
+
+```
+$ mkdir progetto
+$ chmod g+s progetto
+drwxr-sr-x 2 user gruppo 4096 feb 23 10:00 progetto
+```
+
+* Utile per directory condivise tra più utenti.
+
+
+### Sticky bit
+
+Usato sulle directory condivise.
+Permette a tutti di creare file, ma solo il proprietario può cancellarli.
+
+```
+$ ls -ld /tmp
+drwxrwxrwt 10 root root 4096 feb 23 10:00 /tmp
+```
+
+* Evita che utenti cancellino file di altri.
+
 
 ## chmod, chown
 ```
