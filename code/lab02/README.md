@@ -124,7 +124,7 @@ Per utilizzare questa guida con vim utilizzare i seguenti due comandi
 > echo "$nome $cognome"
 
 22. Creare una variabile `numero` con il valore 42, incrementarla di 10 e stamparla.
-> numero=42; ((numero+=10)); echo $numero
+> numero=42; numero=$((numero + 10)); echo $numero
 
 23. Creare una variabile `lista` contenente tutti i file nella directory corrente e stamparla (*ls*).
 > lista=$(ls); echo $lista
